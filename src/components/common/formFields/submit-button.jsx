@@ -4,7 +4,7 @@ import { Button, Spinner } from "react-bootstrap";
 import { useFormStatus } from "react-dom";
 import { IoLogInOutline } from "react-icons/io5";
 const SubmitButton = ({
-	title = "Submit",
+	title = "Giriş",
 	spinnerVariant = "secondary",
 	...rest
 }) => {
