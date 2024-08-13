@@ -1,8 +1,10 @@
-import LoginForm from "@/components/login/loginForm";
-import React from "react";
+import Menu from "@/components/common/menu/menu";
+
 
 const home = () => {
-  return <div></div>;
+  return <div>
+    <Menu/>
+  </div>;
 };
 
 export default home;

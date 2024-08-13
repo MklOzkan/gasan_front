@@ -5,8 +5,8 @@ import LoginForm from "@/components/login/loginForm";
 const LoginPage = () => {
   return (
     <>
-      <PageHeader>Login</PageHeader>
-      <Spacer height={200} />
+      <PageHeader>Giriş</PageHeader>
+      <Spacer height={300} />
       <LoginForm />
       <Spacer />
     </>
