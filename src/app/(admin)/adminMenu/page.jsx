@@ -1,14 +1,12 @@
-import Menu from "@/components/common/menu/menu";
-import data from "./adminMenu.json";
+import AdminMenu from '@/components/admin/adminComp'
+import React from 'react'
 
-
-const AdminMenu = () => {
+const AdminPage = () => {
   return (
-    <div>
-     
-      <Menu menu="YÖNETİCİ EKRANI" jsonData={data} />
-    </div>
-  );
-};
+    <>
+   <AdminMenu/>
+   </>
+  )
+}
 
-export default AdminMenu;
+export default AdminPage

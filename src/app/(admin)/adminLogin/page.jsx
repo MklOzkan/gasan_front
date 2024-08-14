@@ -1,11 +1,13 @@
 import "@/components/common/menu/menuDiv.scss"
 import LoginForm from "@/components/login/loginForm";
 import Spacer from "@/components/common/spacer";
+import PageHeader from "@/components/common/page-header";
 const AdminPage = () => {
 
   return (
    <>
-   <Spacer height={300}/>
+   <PageHeader>YÖNETİCİ GİRİŞ SAYFASI</PageHeader>
+   <Spacer height={250}/>
    <LoginForm role="admin"/>
   
    </>
