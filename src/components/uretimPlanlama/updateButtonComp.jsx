@@ -1,7 +1,7 @@
 import { Form, Button } from "react-bootstrap";
 import "./uretimStyle.scss";
 
-const UpdateButtonComp = ({ item, onClose }) => {
+const UpdateButtonComp = ({ item, onClose, onSubmit }) => {
   const formFields = [
     { label: "Sipariş No", key: "siparis_no", type: "text" },
     { label: "Müşteri No", key: "musteri_adi", type: "text" },
@@ -13,10 +13,20 @@ const UpdateButtonComp = ({ item, onClose }) => {
     { label: "Hazır Mil", key: "hazir_mil", type: "number" },
   ];
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const updatedItem = {};
+    formFields.forEach((field) => {
+      updatedItem[field.key] = e.target[field.key].value;
+    });
+    onSubmit(updatedItem);
+    onClose();
+  };
+
   return (
     <div className="updateAnaDiv">
       <div className="uretimDiv">
-        <Form className="w-100 p-4">
+        <Form className="w-100 p-4" onSubmit={handleSubmit}>
           {formFields.map((field) => (
             <Form.Group
               className="mb-3"
@@ -26,7 +36,14 @@ const UpdateButtonComp = ({ item, onClose }) => {
               <Form.Label>{field.label}</Form.Label>
               <Form.Control
                 type={field.type}
-                defaultValue={item ? item[field.key] : ""}
+                name={field.key}
+                defaultValue={
+                  item && field.type === "date" && item[field.key]
+                    ? !isNaN(new Date(item[field.key])) // Tarih geçerli mi kontrol et
+                      ? new Date(item[field.key]).toISOString().split("T")[0]
+                      : "" // Geçersizse boş string döndür
+                    : item ? item[field.key] : ""
+                }
               />
             </Form.Group>
           ))}
