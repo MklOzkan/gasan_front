@@ -8,15 +8,19 @@ import { useState } from 'react';
 
 
 const Password = () => {
-  // State to manage which input is visible
+  
   const [visibleInputId, setVisibleInputId] = useState(null);
 
-  // Function to handle div click
+
   const handleDivClick = (id) => {
     setVisibleInputId(id);
+   if(visibleInputId) {
+    setVisibleInputId(null);
+   }
+    
   };
 
-  // Function to handle button click
+  
   const handleButtonClick = () => {
     setVisibleInputId(null);
   };
@@ -35,7 +39,7 @@ const Password = () => {
               </div>
               {visibleInputId === item.id && (
                 <div className="inputDiv">
-                  <input  className = "input" type="text" placeholder="Belirlemek Istediginiz Sifreyi Giriniz" />
+                  <input  className = "input" name = "password" type="text" placeholder="Belirlemek Istediginiz Sifreyi Giriniz" />
                   <button onClick={handleButtonClick}>Submit</button>
                 </div>
               )}
