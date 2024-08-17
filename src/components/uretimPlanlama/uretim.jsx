@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import UpdateButtonComp from './updateButtonComp';
 import "./uretimStyle.scss";
+import PageHeader from '../common/page-header';
 
 
 
@@ -46,6 +47,7 @@ const Uretim = () => {
 
   return (
     <>
+    
       {show && (
         <UpdateButtonComp
           item={selectedItem}
