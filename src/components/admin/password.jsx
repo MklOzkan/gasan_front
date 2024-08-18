@@ -3,12 +3,15 @@ import { Col, Container, Row } from 'react-bootstrap'
 import data from "/src/json/menu.json";
 import "./password.scss";
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import PageHeader from '../common/page-header';
 
 
 
 
 const Password = () => {
-  
+  const pathname = usePathname()
+
   const [visibleInputId, setVisibleInputId] = useState(null);
 
 
@@ -27,6 +30,7 @@ const Password = () => {
 
   return (
     <>
+    {pathname === "/deneme1" && <PageHeader>ASD</PageHeader>}
       <Container className="text-center m-auto">
         <Row className="menuRow">
           {data.map((item) => (
