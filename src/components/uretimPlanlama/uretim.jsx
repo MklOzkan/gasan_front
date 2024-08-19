@@ -15,6 +15,8 @@ const Uretim = () => {
   const [show, setShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
+  
+
   const handleClick = (item) => {
     setShow(true);
     setSelectedItem(item);
