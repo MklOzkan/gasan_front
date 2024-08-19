@@ -24,6 +24,7 @@ const UpdateButtonComp = ({ item, onClose, onSubmit }) => {
    
     if (!updatedItem.siparis_onay_tarihi) {
       updatedItem.siparis_onay_tarihi = new Date().toISOString().split("T")[0];
+
     }
 
     onSubmit(updatedItem);
