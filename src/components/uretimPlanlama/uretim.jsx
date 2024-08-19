@@ -7,15 +7,11 @@ import UpdateButtonComp from './updateButtonComp';
 import "./uretimStyle.scss";
 import PageHeader from '../common/page-header';
 
-
-
 const Uretim = () => {
   const router = useRouter();
   const [update, setUpdate] = useState(data);
   const [show, setShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-
-  
 
   const handleClick = (item) => {
     setShow(true);
@@ -29,14 +25,14 @@ const Uretim = () => {
 
   const handleUpdateSubmit = (updatedItem) => {
     if (selectedItem) {
-      // Mevcut siparişi güncelle
+     
       setUpdate((prevData) =>
         prevData.map((item) =>
           item.siparis_no === updatedItem.siparis_no ? { ...item, ...updatedItem } : item
         )
       );
     } else {
-      // Yeni siparişi ekle
+     
       setUpdate((prevData) => [...prevData, { ...updatedItem, id: prevData.length + 1 }]);
     }
     handleClose();
@@ -44,12 +40,15 @@ const Uretim = () => {
 
   const handleNewOrderClick = () => {
     setShow(true);
-    setSelectedItem(null); // Yeni sipariş için selectedItem'ı null yap
+    setSelectedItem(null); 
+  };
+
+  const handleDelete = (siparisNo) => {
+    setUpdate((prevData) => prevData.filter(item => item.siparis_no !== siparisNo));
   };
 
   return (
     <>
-    
       {show && (
         <UpdateButtonComp
           item={selectedItem}
@@ -68,7 +67,8 @@ const Uretim = () => {
             <th>Ürün Tipi</th>
             <th>Siparis Adedi</th>
             <th>Hazir Mil</th>     
-            <th>Buttons</th>     
+            <th>Duzenle Buttons</th>     
+            <th>Sil Buttons</th>
           </tr>
         </thead>
         <tbody>
@@ -83,8 +83,16 @@ const Uretim = () => {
               <td>{item.siparis_adedi}</td>
               <td>{item.hazir_mil}</td>
               <td>
-                <Button variant="info" onClick={() => handleClick(item)} className = "updatedBtn">
+                <Button variant="info" onClick={() => handleClick(item)} className="updatedBtn">
                   Düzenle
+                </Button>
+              </td>
+              <td>
+                <Button 
+                  variant="danger" 
+                  onClick={() => handleDelete(item.siparis_no)} 
+                  className="deleteBtn">
+                  Sil
                 </Button>
               </td>
             </tr>
@@ -92,7 +100,7 @@ const Uretim = () => {
         </tbody>
       </Table>
       <div className="d-grid gap-2">
-        <Button  size="lg" onClick={handleNewOrderClick} className="newOrderBtn">
+        <Button size="lg" onClick={handleNewOrderClick} className="newOrderBtn">
           Yeni Siparis Giriniz
         </Button>
       </div>
