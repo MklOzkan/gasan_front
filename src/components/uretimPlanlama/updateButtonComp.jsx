@@ -1,12 +1,15 @@
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
+import { useState } from "react";
 import "./uretimStyle.scss";
 
 const UpdateButtonComp = ({ item, onClose, onSubmit }) => {
+  const [showAlert, setShowAlert] = useState(false);
+
   const formFields = [
     { label: "Sipariş No", key: "siparis_no", type: "text" },
-    { label: "Müşteri No", key: "musteri_adi", type: "text" },
+    { label: "Müşteri Adı", key: "musteri_adi", type: "text" },
     { label: "GASAN No", key: "gasan_no", type: "text" },
-    { label: "Sipariş Onay Tarihi", key: "siparis_onay_tarihi", type: "date" },
+    // { label: "Sipariş Onay Tarihi", key: "siparis_onay_tarihi", type: "date" },
     { label: "Teslimat Tarihi", key: "teslim_tarihi", type: "date" },
     { label: "Ürün Tipi", key: "urun_tipi", type: "text" },
     { label: "Sipariş Adedi", key: "siparis_adedi", type: "number" },
@@ -16,15 +19,23 @@ const UpdateButtonComp = ({ item, onClose, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedItem = {};
+    let formValid = true;
 
     formFields.forEach((field) => {
-      updatedItem[field.key] = e.target[field.key].value;
+      const value = e.target[field.key].value;
+      if (!value) {
+        formValid = false;
+      }
+      updatedItem[field.key] = value;
     });
 
-   
+    if (!formValid) {
+      setShowAlert(true);
+      return;
+    }
+
     if (!updatedItem.siparis_onay_tarihi) {
       updatedItem.siparis_onay_tarihi = new Date().toISOString().split("T")[0];
-
     }
 
     onSubmit(updatedItem);
@@ -34,6 +45,11 @@ const UpdateButtonComp = ({ item, onClose, onSubmit }) => {
   return (
     <div className="updateAnaDiv">
       <div className="uretimDiv">
+        {showAlert && (
+          <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+            Lütfen tüm alanlari eksiksiz doldurun.
+          </Alert>
+        )}
         <Form className="w-100 p-4" onSubmit={handleSubmit}>
           {formFields.map((field) => (
             <Form.Group
@@ -47,9 +63,9 @@ const UpdateButtonComp = ({ item, onClose, onSubmit }) => {
                 name={field.key}
                 defaultValue={
                   item && field.type === "date" && item[field.key]
-                    ? !isNaN(new Date(item[field.key])) // Tarih geçerli mi kontrol et
+                    ? !isNaN(new Date(item[field.key]))
                       ? new Date(item[field.key]).toISOString().split("T")[0]
-                      : "" // Geçersizse boş string döndür
+                      : ""
                     : item ? item[field.key] : ""
                 }
               />
