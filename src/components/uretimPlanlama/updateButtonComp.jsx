@@ -16,9 +16,16 @@ const UpdateButtonComp = ({ item, onClose, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedItem = {};
+
     formFields.forEach((field) => {
       updatedItem[field.key] = e.target[field.key].value;
     });
+
+   
+    if (!updatedItem.siparis_onay_tarihi) {
+      updatedItem.siparis_onay_tarihi = new Date().toISOString().split("T")[0];
+    }
+
     onSubmit(updatedItem);
     onClose();
   };
