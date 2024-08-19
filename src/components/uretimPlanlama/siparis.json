@@ -1,0 +1,24 @@
+[
+    {
+        "id":"1",
+        "siparis_no": "ORD001",
+        "musteri_adi": "MÜŞTERİ ADI 1",
+        "gasan_no": "SK001",
+        "siparis_onay_tarihi": "12.03.2024",
+        "teslim_tarihi": "19.03.2024",
+        "urun_tipi":"okunmuyor",
+        "siparis_adedi": 5000,
+        "hazir_mil": "YOK"
+      },
+      {
+       "id":"2",
+       "siparis_no": "ORD002",
+        "musteri_adi": "MÜŞTERİ ADI 2",
+        "gasan_no": "SK002",
+        "siparis_onay_tarihi": "13.03.2024",
+        "teslim_tarihi": "20.03.2024",
+        "urun_tipi":"okunmuyor",
+        "siparis_adedi": 3000,
+        "hazir_mil": "Var"
+      }
+    ]
