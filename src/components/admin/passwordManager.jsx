@@ -43,6 +43,9 @@ function PasswordManager() {
     };
 
     const handleSubmit = async (role) => {
+        const selectedRole = rolesData.find((r) => r.text === role);
+        const username = selectedRole ? selectedRole.username : ''; // Retrieve username based on role
+
         if (errors[role] || !passwords[role] || !isValid[role]) {
             alert('Please fix the errors before submitting.');
             return;
@@ -53,17 +56,17 @@ function PasswordManager() {
 
         try {
             const response = await fetch(
-                `${config.api.baseUrl}/api/set-password`,
+                `${config.api.baseUrl}/users/updatePassword/${username}`,
                 {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ role, password: passwords[role] })
+                    body: JSON.stringify({ role, password: passwords[role], username })
                 }
             );
 
-            const result = await response.json();
+            const result = await response.json();// Response'u json'a cevirir
 
             if (response.ok) {
                 setSuccessMessage(
