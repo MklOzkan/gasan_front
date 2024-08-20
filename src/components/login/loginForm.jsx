@@ -15,10 +15,17 @@ import { useFormState } from "react-dom";
 import "./loginForm.scss";
 import PasswordInput from "../common/formFields/password-input";
 import SubmitButton from "../common/formFields/submit-button";
+import { useRouter } from "next/navigation";
 
-const LoginForm = ({ role = "customer" }) => {
+const LoginForm = ({ role = "Yonetici" }) => {
   const [state, dispatch] = useFormState(loginAction, initialResponse);
-
+  const router=useRouter();
+ 
+  const handleClick = () => {
+    router.push("/");
+  }
+  
+//BURAYI SONRA DUZENLE
   return (
     <Container className="login-form">
       <Row className="justify-content-center">
@@ -30,22 +37,15 @@ const LoginForm = ({ role = "customer" }) => {
               ) : null}
 
               <Form action={dispatch} noValidate>
-                {role === "admin" ? (
-                  <Form.Group className="mb-3" controlId="email">
-                    <Form.Label className="text-start w-100 fs-4">
-                      Email adresi
-                    </Form.Label>
+              
+                  <Form.Group className="mb-3" controlId="username">
                     <Form.Control
-                      type="text"
-                      placeholder="Lütfen email adresinizi giriniz"
-                      name="email"
-                      isInvalid={state?.errors?.email}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {state?.errors?.email}
-                    </Form.Control.Feedback>
+                      type="hidden"
+                      name="username"
+                      value={`${role}`}
+                      />
                   </Form.Group>
-                ) : null}
+              
 
                 <Form.Group className="mb-3" controlId="password">
                   <Form.Label className="text-start w-100 fs-4">
@@ -54,12 +54,11 @@ const LoginForm = ({ role = "customer" }) => {
                   <PasswordInput
                     placeholder="Lütfen şifrenizi giriniz"
                     name="password"
-                    //defaultValue="123456Aa."
                     error={state?.errors?.password}
                   />
                 </Form.Group>
 
-                <SubmitButton></SubmitButton>
+                <SubmitButton onClick={handleClick}></SubmitButton>
               </Form>
             </Card.Body>
           </Card>

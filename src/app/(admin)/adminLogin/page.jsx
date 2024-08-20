@@ -8,7 +8,7 @@ const AdminPage = () => {
    <>
    <PageHeader>YÖNETİCİ GİRİŞ SAYFASI</PageHeader>
    <Spacer height={250}/>
-   <LoginForm role="admin"/>
+   <LoginForm/>
   
    </>
   )
