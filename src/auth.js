@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { getIsTokenValid, getIsUserAuthorized } from "./helpers/auth-helper";
 import { login } from "./service/auth-service";
+import { NextResponse } from 'next/server';
 
 const config = {
 	providers: [
@@ -12,25 +13,23 @@ const config = {
 				if (!res.ok) return null;
 
 				const payload = {
-					user: { ...data },
-					accessToken: data.token.split(" ")[1],
+					user: { ...data }
 				};
-				delete payload.user.token;
-
+			
+				console.log(payload);
 				return payload;
 			},
 		}),
 	],
 	callbacks: {
-		// middleware in kapsama alanina giren sayfalara yapilan isteklerden hemen once calisir
 		authorized({ auth, request }) {
 			const { pathname } = request.nextUrl;
 			const userRole = auth?.user?.role;
 
 			const isLoggedIn = !!userRole;
-			const isInLoginPage = pathname.startsWith("/login");
+			const isInLoginPage = pathname.startsWith("/adminLogin");
 			const isInDashboardPages = pathname.startsWith("/dashboard");
-			const isTokenValid = getIsTokenValid(auth?.accessToken);
+			const isTokenValid = getIsTokenValid(auth?.token);
 
 			if (isLoggedIn && isTokenValid) {
 				if (isInDashboardPages) {
@@ -40,14 +39,12 @@ const config = {
 					);
 					if (isUserAuthorized) return true;
 
-					return Response.redirect(
+					return NextResponse.redirect(
 						new URL("/unauthorized", request.nextUrl)
 					);
-
-					
 				} else if (isInLoginPage) {
-					return Response.redirect(
-						new URL("/dashboard", request.nextUrl)
+					return NextResponse.redirect(
+						new URL("/adminMenu", request.nextUrl)
 					);
 				}
 			} else if (isInDashboardPages) {
@@ -56,25 +53,26 @@ const config = {
 
 			return true;
 		},
-		// JWT datasina ihtiyac duyan her yerde
 		async jwt({ token, user }) {
-			//console.log("JWT", token, user);
-			return { ...user, ...token };
+			if (user) {
+				token.user = user.user;
+				token.accessToken = user.token;
+			}
+			return token;
 		},
-		// Session datasina ihtiyac duyan her yerde
 		async session({ session, token }) {
 			const isTokenValid = getIsTokenValid(token.accessToken);
 			if (!isTokenValid) return null;
 
-			session.accessToken = token.accessToken;
 			session.user = token.user;
+			session.accessToken = token.accessToken;
 			return session;
 		},
 	},
-
 	pages: {
-		signIn: "/login",
+		signIn: "/",
 	},
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
+
