@@ -20,12 +20,12 @@ import { useRouter } from "next/navigation";
 const LoginForm = ({ role = "Yonetici" }) => {
   const [state, dispatch] = useFormState(loginAction, initialResponse);
   const router=useRouter();
- 
+
   const handleClick = () => {
-    router.push("/");
-  }
+    router.push("/deneme1");
+  } 
   
-//BURAYI SONRA DUZENLE
+
   return (
     <Container className="login-form">
       <Row className="justify-content-center">
