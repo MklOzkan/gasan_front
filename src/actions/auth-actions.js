@@ -1,5 +1,6 @@
 "use server";
 
+import { signIn } from "@/auth";
 import {
   YupValidationError,
   convertFormDataToJSON,
@@ -7,7 +8,9 @@ import {
   transformYupErrors,
 } from "@/helpers/form-validation";
 import { AuthSchema } from "@/helpers/schemas/auth-schema";
-import { signIn } from "@/auth";
+
+//import { signIn } from "next-auth/react";
+
 
 export const loginAction = async (prevState, formData) => {
   const fields = convertFormDataToJSON(formData);
@@ -15,8 +18,8 @@ export const loginAction = async (prevState, formData) => {
   try {
     AuthSchema.validateSync(fields, { abortEarly: false });
 
-    await signIn("credentials", fields);
-
+     await signIn("credentials", fields);
+  
 
   } catch (err) {
     if (err instanceof YupValidationError) {
