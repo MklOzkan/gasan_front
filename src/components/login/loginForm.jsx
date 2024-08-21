@@ -15,16 +15,11 @@ import { useFormState } from "react-dom";
 import "./loginForm.scss";
 import PasswordInput from "../common/formFields/password-input";
 import SubmitButton from "../common/formFields/submit-button";
-import { useRouter } from "next/navigation";
+
 
 const LoginForm = ({ role = "Yonetici" }) => {
   const [state, dispatch] = useFormState(loginAction, initialResponse);
-  const router=useRouter();
 
-  const handleClick = () => {
-    router.push("/deneme1");
-  } 
-  
 
   return (
     <Container className="login-form">
@@ -58,7 +53,7 @@ const LoginForm = ({ role = "Yonetici" }) => {
                   />
                 </Form.Group>
 
-                <SubmitButton onClick={handleClick}></SubmitButton>
+                <SubmitButton ></SubmitButton>
               </Form>
             </Card.Body>
           </Card>
