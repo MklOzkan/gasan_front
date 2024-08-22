@@ -1,10 +1,45 @@
 [
-    { "id": "1", "text": "TALASLI IMALAT AMIRI", "username": "TalasliImalatAmiri" },
-    { "id": "2", "text": "POLISAJ AMIRI", "username": "PolisajAmiri" },
-    { "id": "3", "text": "LIFT MONTAJ AMIRI", "username": "LiftMontajAmiri" },
-    { "id": "4", "text": "BLOKLIFT MONTAJ AMIRI", "username": "BlMontajAmiri" },
-    { "id": "5", "text": "BOYAMA VE PAKETLEME AMIRI", "username": "BoyamaPaketlemeAmiri" },
-    { "id": "6", "text": "KALITE KONTROL AMIRI", "username": "KaliteKontrol" },
-    { "id": "7", "text": "ÜRETIM PLANLAMA", "username": "UretimPlanlama" },
-    { "id": "8", "text": "YÖNETIM", "username": "Yonetici" }
+    { "id": "1", "text": "TALASLI IMALAT AMIRI", "username": "TalasliImalatAmiri", "roleName":"Employee" },
+    {
+        "id": "2",
+        "text": "POLISAJ AMIRI",
+        "username": "PolisajAmiri",
+        "roleName": "Employee"
+    },
+    {
+        "id": "3",
+        "text": "LIFT MONTAJ AMIRI",
+        "username": "LiftMontajAmiri",
+        "roleName": "Employee"
+    },
+    {
+        "id": "4",
+        "text": "BLOKLIFT MONTAJ AMIRI",
+        "username": "BlMontajAmiri",
+        "roleName": "Employee"
+    },
+    {
+        "id": "5",
+        "text": "BOYAMA VE PAKETLEME AMIRI",
+        "username": "BoyamaPaketlemeAmiri",
+        "roleName": "Employee"
+    },
+    {
+        "id": "6",
+        "text": "KALITE KONTROL AMIRI",
+        "username": "KaliteKontrol",
+        "roleName": "Employee"
+    },
+    {
+        "id": "7",
+        "text": "ÜRETIM PLANLAMA",
+        "username": "UretimPlanlama",
+        "roleName": "Employee"
+    },
+    {
+        "id": "8",
+        "text": "YÖNETIM",
+        "username": "Yonetici",
+        "roleName": "Admin"
+    }
 ]
