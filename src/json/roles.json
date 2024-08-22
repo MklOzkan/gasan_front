@@ -1,10 +1,10 @@
 [
     { "id": "1", "text": "TALASLI IMALAT AMIRI", "username": "TalasliImalatAmiri" },
-    { "id": "2", "text": "POLISAJ AMIRI", "color": "PolisajAmiri" },
-    { "id": "3", "text": "LIFT MONTAJ AMIRI", "color": "LiftMontajAmiri" },
-    { "id": "4", "text": "BLOKLIFT MONTAJ AMIRI", "color": "BlMontajAmiri" },
-    { "id": "5", "text": "BOYAMA VE PAKETLEME AMIRI", "color": "BoyamaPaketlemeAmiri" },
-    { "id": "6", "text": "KALITE KONTROL AMIRI", "color": "KaliteKontrol" },
-    { "id": "7", "text": "ÜRETIM PLANLAMA", "color": "UretimPlanlama" },
-    { "id": "8", "text": "YÖNETIM", "color": "Yonetici" }
+    { "id": "2", "text": "POLISAJ AMIRI", "username": "PolisajAmiri" },
+    { "id": "3", "text": "LIFT MONTAJ AMIRI", "username": "LiftMontajAmiri" },
+    { "id": "4", "text": "BLOKLIFT MONTAJ AMIRI", "username": "BlMontajAmiri" },
+    { "id": "5", "text": "BOYAMA VE PAKETLEME AMIRI", "username": "BoyamaPaketlemeAmiri" },
+    { "id": "6", "text": "KALITE KONTROL AMIRI", "username": "KaliteKontrol" },
+    { "id": "7", "text": "ÜRETIM PLANLAMA", "username": "UretimPlanlama" },
+    { "id": "8", "text": "YÖNETIM", "username": "Yonetici" }
 ]
