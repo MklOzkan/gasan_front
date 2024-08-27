@@ -1,42 +1,49 @@
 "use client";
-import { Col, Container, Row } from "react-bootstrap";
-import data from "@/json/menu.json";
-import "./menuDiv.scss";
-import PageHeader from "../page-header";
+
+import { Col, Container, Row} from "react-bootstrap";
+import "./menu.scss";
 import { useRouter } from "next/navigation";
-import Spacer from "@/components/common/spacer.jsx";
+import PageHeader from "../page-header";
+import Spacer from "../spacer";
+import menuItems from "@/helpers/data/update-password-and-main-menu.json";
+
 const Menu = () => {
-  const router = useRouter();
+    const router = useRouter();
 
-  const handleClick = (param) => {
-    if (param === "8") {
-      router.push("/adminLogin");
-      return;
-    }
-    router.push("/login");
-  };
+    const handleClick = (username, link, text) => {
+        if (typeof username === 'string') {
+            router.push(
+                `/login?username=${encodeURIComponent(
+                    username
+                )}&link=${encodeURIComponent(link)}
+                &user=${encodeURIComponent(text)}`
+            );
+        } else {
+            console.error('Username must be a string');
+        }
+    };
 
-  return (
-    <>
-      <PageHeader>ANA SAYFA</PageHeader>
-      <Spacer height={50} />
-      <Container className="text-center m-auto">
-        <Row className="menuRow">
-          {data.map((item) => (
-            <Col key={item.id}>
-              <div
-                style={{ backgroundColor: item.color }}
-                onClick={() => handleClick(item.id)}
-                className={`menuDiv`}
-              >
-                {item.text}
-              </div>
-            </Col>
-          ))}
-        </Row>
-      </Container>
-    </>
-  );
+    return (
+        <>
+            <PageHeader>ANA SAYFA</PageHeader>
+            <Spacer height={50} />
+            <Container className="text-center m-auto">
+                <Row className="menuRow">
+                    {menuItems.map((item) => (
+                        <Col key={item.id}>
+                            <div
+                                style={{ backgroundColor: item.color }}
+                                onClick={() => handleClick(item.username, item.link, item.text)}
+                                className={`menuDiv`}
+                            >
+                                {item.text}
+                            </div>
+                        </Col>
+                    ))}
+                </Row>
+            </Container>
+        </>
+    );
 };
 
 export default Menu;

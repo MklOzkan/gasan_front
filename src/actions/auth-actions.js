@@ -1,31 +1,41 @@
-"use server";
+'use server';
 
-import { signIn } from "@/auth";
+import { signIn } from '@/auth';
 import {
-  YupValidationError,
-  convertFormDataToJSON,
-  response,
-  transformYupErrors,
-} from "@/helpers/form-validation";
-import { AuthSchema } from "@/helpers/schemas/auth-schema";
+    YupValidationError,
+    convertFormDataToJSON,
+    response,
+    transformYupErrors
+} from '@/helpers/form-validation';
+import { AuthSchema } from '@/helpers/schemas/auth-schema';
+import { AuthError } from 'next-auth';
 
-//import { signIn } from "next-auth/react";
+export const loginAction = async (prevState, formData, onSuccess) => {
+    const fields = convertFormDataToJSON(formData);
 
+    try {
+        AuthSchema.validateSync(fields, { abortEarly: false });
+        console.log("fields",fields);
 
-export const loginAction = async (prevState, formData) => {
-  const fields = convertFormDataToJSON(formData);
+        const result = await signIn('credentials', fields);
 
-  try {
-    AuthSchema.validateSync(fields, { abortEarly: false });
+        if(result.ok){
+            console.log("result in login-action",result.ok);
+            if (onSuccess) {
+                onSuccess();
+            }
+            
+        }else{
+            return response(false, 'from try Invalid credentials');
+        }
 
-     await signIn("credentials", fields);
-  
+    } catch (err) {
+        if (err instanceof YupValidationError) {
+            return transformYupErrors(err.inner);
+        } else if (err instanceof AuthError) {
+            return response(false, 'from catch Invalid credentials');
+        }
 
-  } catch (err) {
-    if (err instanceof YupValidationError) {
-      return transformYupErrors(err.inner);
-    } 
-
-    throw err;
-  }
+        throw err;
+    }
 };

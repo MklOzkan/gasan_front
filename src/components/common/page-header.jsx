@@ -1,11 +1,19 @@
-import React from "react";
-import "./page-header.scss";
+import React from 'react';
+import './page-header.scss';
+import { signOut } from 'next-auth/react';
 
-const PageHeader = ({ role, children }) => {
+const PageHeader = ({ children }) => {
 
-	return <div>
-	{role ? <span className="role">{role}</span>:null}
-	<h1 className="page-header">{children}</h1>;</div>
+    const handleSignOut = () => {
+        signOut({ callbackUrl: '/' });
+    };
+    return (
+        <div className="page-header-container">
+            <h1 className="page-header">{children}</h1>
+            
+            
+        </div>
+    );
 };
 
 export default PageHeader;
