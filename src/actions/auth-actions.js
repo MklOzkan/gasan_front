@@ -26,14 +26,14 @@ export const loginAction = async (prevState, formData, onSuccess) => {
             }
             
         }else{
-            return response(false, 'from try Invalid credentials');
+            return response(false, 'Girdiğiniz şifre eksik veya hatalı');
         }
 
     } catch (err) {
         if (err instanceof YupValidationError) {
             return transformYupErrors(err.inner);
         } else if (err instanceof AuthError) {
-            return response(false, 'from catch Invalid credentials');
+            return response(false, 'Girdiğiniz şifre eksik veya hatalı');
         }
 
         throw err;
