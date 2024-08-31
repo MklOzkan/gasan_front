@@ -1,17 +1,18 @@
 import React from 'react';
 import './page-header.scss';
-import { signOut } from 'next-auth/react';
+import LogoutButton from './form-fields/logout-button';
+import BackButton from './form-fields/back-button';
 
 const PageHeader = ({ children }) => {
-
-    const handleSignOut = () => {
-        signOut({ callbackUrl: '/' });
-    };
     return (
         <div className="page-header-container">
+            <div>
+                <BackButton />
+            </div>
             <h1 className="page-header">{children}</h1>
-            
-            
+            <div>
+                <LogoutButton />
+            </div>
         </div>
     );
 };
