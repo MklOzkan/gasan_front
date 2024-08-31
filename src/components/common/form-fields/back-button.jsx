@@ -5,22 +5,22 @@ import Icon from "../icon";
 import { useRouter } from "next/navigation";
 
 const BackButton = ({
-	title = "Return back",
-	icon = "MdOutlineArrowBack",
-	iconfamily = "md",
-	...rest
+    title = 'Geri Dön',
+    icon = 'MdOutlineArrowBack',
+    iconfamily = 'md',
+    ...rest
 }) => {
-	const router = useRouter();
+    const router = useRouter();
 
-	const handleClick = () => {
-		router.back();
-	};
+    const handleClick = () => {
+        router.back();
+    };
 
-	return (
-		<Button type="button" variant="secondary" {...rest} onClick={handleClick}>
-			<Icon family={iconfamily} icon={icon} /> {title}
-		</Button>
-	);
+    return (
+        <Button type="button" variant="primary" {...rest} onClick={handleClick}>
+            <Icon family={iconfamily} icon={icon} /> {title}
+        </Button>
+    );
 };
 
 export default BackButton;
