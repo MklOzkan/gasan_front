@@ -88,7 +88,7 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                 <div className="buttons">
                     <div className="btn downlod">
                         <Button variant="secondary">
-                            <FaDownload /> Download Orders
+                            <FaDownload /> Excel'e Aktar
                         </Button>
                     </div>
                     <div className="btn create">
@@ -96,7 +96,7 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                             type="submit"
                             onClick={() => setShowOrderForm(true)}
                         >
-                            <FaPlus /> Create Order
+                            <FaPlus /> Sipariş Oluştur
                         </Button>
                     </div>
                 </div>
@@ -104,7 +104,7 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                     <div className="d-flex gap-3">
                         <Col md={2}>
                             <Form.Group controlId="sortBy">
-                                <Form.Label>Sort By</Form.Label>
+                                <Form.Label>Sırala</Form.Label>
                                 <Form.Control
                                     as="select"
                                     name="sortBy"
@@ -112,16 +112,16 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                                     onChange={handleSortChange}
                                 >
                                     <option value="orderDate">
-                                        Order Date
+                                        Sipariş Tarihi
                                     </option>
                                     <option value="deliveryDate">
-                                        Delivery Date
+                                        Teslim Tarihi
                                     </option>
                                     <option value="orderNumber">
-                                        Order Number
+                                        Sipaş No
                                     </option>
                                     <option value="customerName">
-                                        Customer Name
+                                        Müşteri Adı
                                     </option>
                                     {/* Add more options as needed */}
                                 </Form.Control>
@@ -129,15 +129,15 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                         </Col>
                         <Col md={2}>
                             <Form.Group controlId="sortOrder">
-                                <Form.Label>Sort Order</Form.Label>
+                                <Form.Label>Siparişi Sırala</Form.Label>
                                 <Form.Control
                                     as="select"
                                     name="sortOrder"
                                     value={sortOrder}
                                     onChange={handleSortChange}
                                 >
-                                    <option value="asc">Ascending</option>
-                                    <option value="desc">Descending</option>
+                                    <option value="asc">Artan</option>
+                                    <option value="desc">Azalan</option>
                                 </Form.Control>
                             </Form.Group>
                         </Col>
@@ -157,15 +157,15 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Customer Name</th>
+                                <th>Müşter Adı</th>
                                 <th>Gasan No</th>
-                                <th>Order Number</th>
-                                <th>Order Date</th>
-                                <th>Delivery Date</th>
-                                <th>Order Type</th>
-                                <th>Order Quantity</th>
-                                <th>Order Status</th>
-                                <th>Ready Mil Count</th>
+                                <th>Sipariş No</th>
+                                <th>Sipariş Tarihi</th>
+                                <th>Teslim Tarihi</th>
+                                <th>Sipariş Türü</th>
+                                <th>Sipariş Adedi</th>
+                                <th>Sipariş Durumu</th>
+                                <th>Hazır Mil Adedi</th>
                                 <th>Düzenle</th>
                                 <th>Sil</th>
                             </tr>

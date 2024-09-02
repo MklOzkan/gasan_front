@@ -89,8 +89,7 @@ const UpdatePassword = () => {
         // <div>update password</div>
         <>
             <PageHeader>
-                <BackButton />
-                Şıfre Atama Ekranı <LogoutButton />
+                Şıfre Atama Ekranı 
             </PageHeader>
             <Spacer height={50} />
             <Container className="text-center m-auto">
