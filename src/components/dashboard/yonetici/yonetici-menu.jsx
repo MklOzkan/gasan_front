@@ -19,7 +19,7 @@ const YoneticiMenu = async () => {
     return (
         <>
             <div className='menu'>
-                <PageHeader >YÖNETİCİ EKRANI <Logout /></PageHeader>
+                <PageHeader >YÖNETİCİ EKRANI </PageHeader>
                 
             </div>
             <Spacer height={50} />
