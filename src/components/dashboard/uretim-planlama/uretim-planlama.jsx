@@ -24,6 +24,7 @@ import {
 } from 'react-icons/fa';
 import styles from './uretim.css';
 import CreateOrder from './order-helper/order-form';
+import OrderDelete from './order-helper/delete-order';
 
 const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
     const { content, totalPages } = data;
@@ -172,10 +173,7 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                         </thead>
                         <tbody>
                             {content.map((order, index) => (
-                                <tr
-                                    key={index}
-                                    className="eachRow"
-                                >
+                                <tr key={index} className="eachRow">
                                     <td>
                                         {order.orderStatus === 'Tamamlandı' ? (
                                             <FaCheck color="green" />
@@ -213,14 +211,9 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                                                 'İşlenmeyi Bekliyor' ||
                                             order.orderStatus == 'İşlenmekte') &
                                         (order.orderStatus !== 'Tamamlandi') ? (
-                                            <Button
-                                                variant="danger"
-                                                onClick={() =>
-                                                    onDelete(order.orderNumber)
-                                                }
-                                            >
-                                                <FaTrash />
-                                            </Button>
+                                            <OrderDelete
+                                                orderNumber={order.orderNumber}
+                                            />
                                         ) : null}
                                     </td>
                                 </tr>
