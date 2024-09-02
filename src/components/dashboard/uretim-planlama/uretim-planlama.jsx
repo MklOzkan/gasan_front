@@ -174,9 +174,7 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                             {content.map((order, index) => (
                                 <tr
                                     key={index}
-                                    className={`eachRow ${getRowClass(
-                                        order.orderStatus
-                                    )}`}
+                                    className="eachRow"
                                 >
                                     <td>
                                         {order.orderStatus === 'Tamamlandı' ? (
