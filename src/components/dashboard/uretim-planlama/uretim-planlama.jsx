@@ -88,7 +88,7 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                 <div className="buttons">
                     <div className="btn downlod">
                         <Button variant="secondary">
-                            <FaDownload /> Excel'e Aktar
+                            <FaDownload /> Siparişleri İndir
                         </Button>
                     </div>
                     <div className="btn create">
@@ -174,9 +174,7 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                             {content.map((order, index) => (
                                 <tr
                                     key={index}
-                                    className={`eachRow ${getRowClass(
-                                        order.orderStatus
-                                    )}`}
+                                    className="eachRow"
                                 >
                                     <td>
                                         {order.orderStatus === 'Tamamlandı' ? (
