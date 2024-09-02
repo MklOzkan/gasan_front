@@ -4,35 +4,13 @@ import React, { useState } from 'react';
 import {Container, Form, Button, Card, Col, Row, CardBody } from 'react-bootstrap';
 import { createOrderAction, updateOrderAction } from '@/actions/order-actions';
 import { swAlert } from '@/helpers/swal';
-import { useFormState } from "react-dom";
 import { initialResponse } from '@/helpers/form-validation';
 import {
-    BackButton,
-    MaskedInput,
-    SelectInput,
-    SubmitButton,
     TextInput
 } from '@/components/common/form-fields';
-import { useRouter } from 'next/navigation';
 
 const OrderForm = ({ onSuccess }) => {
-    //const [state, dispatch] = useFormState(createOrderAction, initialResponse);
     const [state, setState] = useState(initialResponse); // Manage state locally
-    const router = useRouter();
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const formData = new FormData(e.target);
-    //     console.log('formData======================', formData);
-    //     const result = await dispatch(formData);
-
-    //     if (result.ok) {
-    //         swAlert(result.message, 'success');
-    //         router.push('/dashboard/uretim-planlama');
-    //     } else if (result.message) {
-    //         swAlert(result.message, 'error');
-    //     }
-    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
