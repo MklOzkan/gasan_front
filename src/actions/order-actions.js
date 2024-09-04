@@ -17,12 +17,15 @@ import {
 
 export const createOrderAction = async (formData) => {
     try {
-        console.log('formData======================', formData);
+        console.log(
+            'formData from createOrderAction======================',
+            formData
+        );
         const fields = convertFormDataToJSON(formData);
         const res = await createOrder(fields);
 
         revalidatePath('/dashboard/urun-planlama');
-        return response(true, 'Order created successfully');
+        return response(true, 'Sipariş başarıyla oluşturuldu');
     } catch (err) {
         if (err instanceof YupValidationError) {
             return transformYupErrors(err.inner);
@@ -31,13 +34,15 @@ export const createOrderAction = async (formData) => {
     }
 };
 
-export const updateOrderAction = async (orderNumber, formData) => {
+export const updateOrderAction = async (formData) => {
+    if (!formData.get('id')) throw new Error('Id is missing');
     try {
         const fields = convertFormDataToJSON(formData);
-        const res = await updateOrder(orderNumber, fields);
+
+        const res = await updateOrder(fields);
 
         revalidatePath('/dashboard/urun-planlama');
-        return response(true, 'Order updated successfully');
+        return response(true, 'Sipariş başarıyla güncellendi');
     } catch (err) {
         if (err instanceof YupValidationError) {
             return transformYupErrors(err.inner);
@@ -51,7 +56,7 @@ export const deleteOrderAction = async (orderNumber) => {
         const res = await deleteOrder(orderNumber);
 
         revalidatePath('/dashboard/urun-planlama');
-        return response(true, 'Order deleted successfully');
+        return response(true, 'Sipariş başarıyla silindi');
     } catch (err) {
         throw err;
     }
