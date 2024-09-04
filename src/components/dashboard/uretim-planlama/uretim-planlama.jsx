@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -10,8 +9,7 @@ import {
     Modal,
     Form,
     Table,
-    Pagination,
-   
+    Pagination
 } from 'react-bootstrap';
 import PageHeader from '@/components/common/page-header';
 import {
@@ -72,15 +70,9 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
     };
 
     const handleOrderSuccess = () => {
-        
         setShowOrderForm(false);
-
-
+        //window.location.reload(); // Reload page to reflect the changes after order creation
     };
-
-
-
-  
 
     return (
         <>
@@ -89,7 +81,7 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                 <div className="buttons">
                     <div className="btn downlod">
                         <Button variant="secondary">
-                            <FaDownload /> Siparişleri İndir
+                            <FaDownload /> Sipariş Listesi İndir
                         </Button>
                     </div>
                     <div className="btn create">
@@ -113,13 +105,13 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                                     onChange={handleSortChange}
                                 >
                                     <option value="orderDate">
-                                        Sipariş Tarihi
+                                        Sırala Tarihi
                                     </option>
                                     <option value="deliveryDate">
                                         Teslim Tarihi
                                     </option>
                                     <option value="orderNumber">
-                                        Sipaş No
+                                        Sipariş Numarası
                                     </option>
                                     <option value="customerName">
                                         Müşteri Adı
@@ -130,7 +122,7 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                         </Col>
                         <Col md={2}>
                             <Form.Group controlId="sortOrder">
-                                <Form.Label>Siparişi Sırala</Form.Label>
+                                <Form.Label>Sipariş Sırala</Form.Label>
                                 <Form.Control
                                     as="select"
                                     name="sortOrder"
@@ -148,7 +140,7 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                                 variant="secondary"
                                 onClick={handleReset}
                             >
-                                Reset
+                                Sıfırla
                             </Button>
                         </Col>
                     </div>
@@ -156,7 +148,7 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                 <div className="table-responsive">
                     <Table striped bordered hover>
                         <thead>
-                            <tr>
+                            <tr className="table border-success">
                                 <th></th>
                                 <th>Müşter Adı</th>
                                 <th>Gasan No</th>
@@ -173,7 +165,12 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                         </thead>
                         <tbody>
                             {content.map((order, index) => (
-                                <tr key={index} className="eachRow">
+                                <tr
+                                    key={index}
+                                    className={`eachRow border-success ${getRowClass(
+                                        order.orderStatus
+                                    )}`}
+                                >
                                     <td>
                                         {order.orderStatus === 'Tamamlandı' ? (
                                             <FaCheck color="green" />
@@ -242,22 +239,6 @@ const UretimPlanlama = ({ data, currentPage, sortBy, sortOrder }) => {
                         <CreateOrder onSuccess={handleOrderSuccess} />
                     </Modal.Body>
                 </Modal>
-
-                {/* <OrderList
-                    orders={orders}
-                    onEdit={handleEditOrder}
-                    onDelete={handleDeleteOrder}
-                />
-                <Modal
-                    show={showOrderForm}
-                    onHide={() => setShowOrderForm(false)}
-                >
-                    <OrderForm
-                        order={editOrderData}
-                        onSuccess={fetchOrders}
-                        onClose={() => setShowOrderForm(false)}
-                    />
-                </Modal> */}
             </div>
         </>
     );
