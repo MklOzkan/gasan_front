@@ -51,9 +51,24 @@ export const config = {
             roles: ['Yonetici']
         },
         {
-            urlRegex:
-                /\/dashboard\/yonetici-menu\/update-password$/,
+            urlRegex: /\/dashboard\/yonetici-menu\/update-password$/,
             roles: ['Yonetici']
+        },
+        {
+            urlRegex: /\/dashboard\/uretim-planlama\/[0-9]+$/,
+            roles: ['UretimPlanlama']
+        },
+        {
+            urlRegex: /\/dashboard\/uretim\/[0-9]+$/,
+            roles: ['UretimPlanlama']
+        },
+        {
+            urlRegex: /\/dashboard\/uretim$/,
+            roles: ['UretimPlanlama']
+        },
+        {
+            urlRegex: /\/dashboard\/uretim\/new$/,
+            roles: ['UretimPlanlama']
         }
     ]
 };

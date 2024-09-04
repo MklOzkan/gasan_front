@@ -35,25 +35,16 @@ export const createOrder = async (orderData) => {
     return response;
 };
 
-export const updateOrder = async (orderNumber, orderData) => {
-    const response = await fetch(
-        `${API_URL}/orders/updateOrder${orderNumber}`,
-        {
-            method: 'PUT',
-            headers: {
-                ...(await getAuthHeader()),
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(orderData)
-        }
-    );
-    if (!response.ok) {
-        throw new Error(`Error updating order: ${response.statusText}`);
-    }
-    return response;
+export const updateOrder = async (payload) => {
+    return fetch(`${API_URL}/orders/updateOrder/${payload.id}`, {
+        method: 'put',
+        body: JSON.stringify(payload),
+        headers: await getAuthHeader()
+    });
 };
 
 export const deleteOrder = async (orderNumber) => {
+    console.log('orderNumber======================', orderNumber);
     const response = await fetch(
         `${API_URL}/orders/deleteOrder/${orderNumber}`,
         {
@@ -76,4 +67,17 @@ export const downloadOrders = async (filters = {}) => {
         throw new Error(`Error downloading orders: ${response.statusText}`);
     }
     return response.blob(); // For downloading the Excel file
+};
+
+export const getOrderById = async (id) => {
+    const response = await fetch(`${API_URL}/orders/getOrderById/${id}`, {
+        method: 'GET',
+        headers: await getAuthHeader()
+    });
+
+    if (!response.ok) {
+        throw new Error(`Error fetching order: ${response.statusText}`);
+    }
+
+    return response; // Return the order data as JSON
 };
