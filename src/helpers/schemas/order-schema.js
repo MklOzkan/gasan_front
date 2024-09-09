@@ -34,7 +34,11 @@ export const OrderSchema = Yup.object().shape({
 
     readyMilCount: Yup.number()
         .min(0, 'Hazır Mil Miktarı negatif olamaz')
-        .optional() // Optional field
+        .optional()
+        .nullable()
+        .transform((value, originalValue) =>
+            originalValue === '' ? null : value
+        )
 });
 
 
