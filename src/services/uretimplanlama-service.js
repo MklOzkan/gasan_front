@@ -29,9 +29,9 @@ export const createOrder = async (orderData) => {
         },
         body: JSON.stringify(orderData)
     });
-    if (!response.ok) {
-        throw new Error(`Error creating order: ${response.statusText}`);
-    }
+    // if (!response.ok) {
+    //     throw new Error(`Error creating order: ${response.statusText}`);
+    // }
     return response;
 };
 

@@ -17,6 +17,7 @@ const BackButton = ({
     };
 
     return (
+        window.location.pathname === "/" ?(null):
         <Button type="button" variant="primary" {...rest} onClick={handleClick}>
             <Icon family={iconfamily} icon={icon} /> {title}
         </Button>

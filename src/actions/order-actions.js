@@ -14,6 +14,7 @@ import {
     convertFormDataToJSON,
     transformYupErrors
 } from '@/helpers/form-validation';
+import { OrderSchema } from '@/helpers/schemas/order-schema';
 
 export const createOrderAction = async (formData) => {
     try {
@@ -22,15 +23,23 @@ export const createOrderAction = async (formData) => {
             formData
         );
         const fields = convertFormDataToJSON(formData);
+
+        OrderSchema.validateSync(fields, { abortEarly: false });
+
         const res = await createOrder(fields);
+        const data = await res.json();
+
+        if(!res.ok) {
+            return response(false, data.message || 'Bir hata oluştu');
+        }
 
         revalidatePath('/dashboard/urun-planlama');
-        return response(true, 'Sipariş başarıyla oluşturuldu');
+        return response(true, data.message || 'Sipariş başarıyla oluşturuldu');
     } catch (err) {
         if (err instanceof YupValidationError) {
             return transformYupErrors(err.inner);
         }
-        throw err;
+         throw err;
     }
 };
 
