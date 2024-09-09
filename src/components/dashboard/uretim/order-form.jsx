@@ -9,7 +9,7 @@ import { SubmitButton, TextInput } from '@/components/common/form-fields';
 import { useRouter } from 'next/navigation';
 import PageHeader from '@/components/common/page-header';
 
-const orderTypes = ['LIFT', 'DAMPER', 'BLOKLIFT', 'PASLANMAZ'];
+const orderTypes = ['Lift', 'Damper', 'Blok Lift', 'Paslanmaz'];
 
 const OrderForm = () => {
     const [state, setState] = useState(initialResponse);
@@ -84,14 +84,14 @@ const OrderForm = () => {
 
         if (response.ok) {
             swAlert(response.message, 'success');
-            // Clear localStorage after successful form submission
-            localStorage.removeItem('orderFormData');
+            
+            localStorage.removeItem('orderFormData');// localStorage'daki form verisini temizler
             router.push('/dashboard/uretim');
         } else if (response.message) {
             swAlert(response.message, 'error');
             setTimeout(() => {
-                window.location.reload(); // Reload the page after showing the error
-            }, 5000); // Slight delay for the error message to be visible
+                window.location.reload(); // Hata mesajini gösterdikten sonra sayfayi yeniler
+            }, 5000); // Hata mesajını belli bir süre görünür olmaisini sağlar
         }
     };
 
