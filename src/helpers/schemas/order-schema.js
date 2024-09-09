@@ -26,6 +26,7 @@ export const OrderSchema = Yup.object().shape({
 
     orderQuantity: Yup.number()
         .min(1, 'Sipariş adedi en az 1 olmalıdır')
+        .max(100000, 'Sipariş adedi çok yüksek')
         .required('Sipariş adedi boş olamaz'),
 
     orderStatus: Yup.string()
