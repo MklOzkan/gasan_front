@@ -41,13 +41,6 @@ const UpdatePassword = () => {
         const isValid = passwordRegex.test(password);
         setPasswordValid(isValid);
         setInvalidPasswordMessage(ErrorMessage);
-        // if (passwordRegex.test(password)) {
-        //     setPasswordValid(true);
-        //     setPasswordError('');
-        // } else {
-        //     setPasswordValid(false);
-        //     setPasswordError({invalidPasswordMessage});
-        // }
     };
 
     const handleTogglePassword = () => {
@@ -56,11 +49,6 @@ const UpdatePassword = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // if (!passwordRegex.test(newPassword)) {
-        //     swAlert(invalidPasswordMessage, 'error');
-        //     return;
-        // }
 
         // Creating a FormData object
         const formData = new FormData();

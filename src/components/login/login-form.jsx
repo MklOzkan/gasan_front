@@ -86,7 +86,7 @@ const LoginForm = () => {
                                         error={state?.errors?.password}
                                     />
                                 </Form.Group>
-                                <SubmitButton onSuccess={handleLoginSuccess}>
+                                <SubmitButton onSubmit={handleLoginSuccess}>
                                     Login
                                 </SubmitButton>
                             </Form>

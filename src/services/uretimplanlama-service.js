@@ -81,3 +81,17 @@ export const getOrderById = async (id) => {
 
     return response; // Return the order data as JSON
 };
+
+export const updateStatus = async (orderId) => {
+    console.log('orderId', orderId);
+    const response = await fetch(`${API_URL}/talasli/startStop/${orderId}`, {
+        method: 'PUT',
+        headers: {
+            ...(await getAuthHeader()),
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}
+
+

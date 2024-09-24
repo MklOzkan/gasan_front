@@ -21,3 +21,60 @@ export const fetchOrders = async (
         console.log('RESPONSE STATUS:', response.status);
         return response;
 };
+
+export const fetchOrderById = async (orderId) => {
+    const response = await fetch(
+        `${API_URL}/orders/getMultipleResponseById/${orderId}`,
+        {
+            method: 'GET',
+            headers: await getAuthHeader()
+        }
+    );
+    return response;
+}
+
+export const updateMilKoparma = async (payload, orderId) => {
+    
+    const response = await fetch(
+        `${API_URL}/talasli/milkoparma/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+}
+
+export const updateMilTornalama = async (payload, operationId) => {
+    const response = await fetch(`${API_URL}/talasli/miltornalama/${operationId}`, {
+        method: 'PUT',
+        headers: await getAuthHeader(),
+        body: JSON.stringify(payload)
+    });
+    return response;
+};
+
+export const updateMilTaslama = async (payload, operationId) => {
+    const response = await fetch(
+        `${API_URL}/talasli/miltaslama/${operationId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const updateisilIslem = async (payload, operationId) => {
+    const response = await fetch(
+        `${API_URL}/talasli/isilislem/${operationId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};

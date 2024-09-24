@@ -12,8 +12,6 @@ import './yonetici-menu.scss';
 const YoneticiMenu = async () => {
     const session = await auth();
     const username = session.user.username.toLowerCase();
-    console.log("username form yoneti-menu",username);
-    console.log("Session from yonetici-menu",session);
     const adminMenu = data[username];
 
     return (

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Container,
     Row,
@@ -11,37 +11,87 @@ import {
     Button
 } from 'react-bootstrap';
 import PageHeader from '@/components/common/page-header';
+import { useRouter } from 'next/navigation'; // Use Next.js router for redirection
+import { updateOrderStatus } from '@/actions/order-actions'; // External function for API call
 import './talasli.scss';
+import { revalidatePath } from 'next/cache';
 
 const Order = ({ data, currentPage, sortBy, sortOrder }) => {
     const { content, totalPages } = data;
+    const [orders, setOrders] = useState(content); // State to hold orders
+    const router = useRouter();
+    const [isProcessing, setIsProcessing] = useState(false); // To track if an order is "İşlenmekte"
 
-    // Kısa değişiklikleri hallederken, URL'deki sıralama ve sayfa bilgilerini güncellemek için kullanılır.
+    // Check if any order has the status 'İşlenmekte'
+    useEffect(() => {
+        const processingOrder = orders.find(
+            (order) => order.orderStatus === 'İşlenmekte'
+        );
+        setIsProcessing(!!processingOrder); // Set to true if any order is being processed
+    }, [orders]);
+
+    // Handle order status change (start or stop processing an order)
+    const handleStatusChange = async (order, newStatus) => {
+        
+        try {
+            
+            const response = await updateOrderStatus(order.id, newStatus); // Call external function
+
+            console.log('response', response);
+            
+            
+            if (response.success) {
+                
+                // Reload the page to reflect the new status after 2 seconds
+                
+                    window.location.reload();
+            } else {
+                console.error('Failed to update order status');
+            }
+        } catch (error) {
+            console.error('Error updating order status:', error);
+        }
+    };
+
+    // Redirect the user based on orderType when the row is clicked
+    const handleRowClick = (order) => {
+        const routeByOrderType = {
+            LIFT: `/dashboard/talasli-imalat-amiri/lift/${order.id}`,
+            DAMPER: `/dashboard/talasli-imalat-amiri/damper/${order.id}`,
+            BLOKLIFT: `/dashboard/talasli-imalat-amiri/bloklift/${order.id}`,
+            PASLANMAZ: `/dashboard/talasli-imalat-amiri/paslanmaz/${order.id}`
+        };
+
+        // Redirect to the appropriate operation page
+        const route = routeByOrderType[order.orderType];
+        if (route) {
+            router.push(route); // Use Next.js router for redirection
+        } else {
+            console.error('No route found for orderType:', order.orderType);
+        }
+    };
+
+    // Handle sorting change (set sortBy and sortOrder in the URL)
     const handleSortChange = (e) => {
         const { name, value } = e.target;
         const url = new URL(window.location);
+
         if (name === 'sortBy') {
             url.searchParams.set('sortBy', value);
         } else if (name === 'sortOrder') {
             url.searchParams.set('sortOrder', value);
         }
+
         window.location.href = url.toString();
     };
 
-    // Handle reset
+    // Handle sorting reset (Reset button functionality)
     const handleReset = () => {
         const url = new URL(window.location);
-        url.searchParams.set('sortBy', 'orderDate');
-        url.searchParams.set('sortOrder', 'desc');
-        url.searchParams.delete('currentPage'); // Optional: reset to first page
-        window.location.href = url.toString();
-    };
-
-    // Handle page change
-    const handlePageChange = (page) => {
-        const url = new URL(window.location);
-        url.searchParams.set('currentPage', page);
-        window.location.href = url.toString();
+        url.searchParams.delete('sortBy');
+        url.searchParams.delete('sortOrder');
+        url.searchParams.delete('currentPage'); // Reset to the first page
+        window.location.href = url.toString(); // Reload with cleared params
     };
 
     return (
@@ -50,6 +100,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
             <Container>
                 <Row className="my-3">
                     <div className="d-flex gap-3">
+                        {/* Sorting controls */}
                         <Col md={2}>
                             <Form.Group controlId="sortBy">
                                 <Form.Label>Sırala</Form.Label>
@@ -57,7 +108,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                     as="select"
                                     name="sortBy"
                                     value={sortBy}
-                                    onChange={handleSortChange}
+                                    onChange={(e) => handleSortChange(e)}
                                 >
                                     <option value="orderDate">
                                         Sipariş Tarihi
@@ -66,12 +117,11 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                         Teslim Tarihi
                                     </option>
                                     <option value="orderNumber">
-                                        Sipaş No
+                                        Sipariş No
                                     </option>
                                     <option value="customerName">
                                         Müşteri Adı
                                     </option>
-                                    {/* Add more options as needed */}
                                 </Form.Control>
                             </Form.Group>
                         </Col>
@@ -82,7 +132,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                     as="select"
                                     name="sortOrder"
                                     value={sortOrder}
-                                    onChange={handleSortChange}
+                                    onChange={(e) => handleSortChange(e)}
                                 >
                                     <option value="asc">Artan</option>
                                     <option value="desc">Azalan</option>
@@ -93,7 +143,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                             <Button
                                 className="p-1"
                                 variant="secondary"
-                                onClick={handleReset}
+                                onClick={handleReset} // Reset sorting and pagination
                             >
                                 Reset
                             </Button>
@@ -104,6 +154,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                     <Table striped bordered hover>
                         <thead>
                             <tr>
+                                <th>Siparis No</th>
                                 <th>Müşter Adı</th>
                                 <th>Gasan No</th>
                                 <th>Sipariş No</th>
@@ -117,8 +168,23 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {content.map((order, index) => (
-                                <tr key={index} className="eachRow">
+                            {orders.map((order, index) => (
+                                <tr
+                                    key={index}
+                                    className="eachRow"
+                                    onClick={() =>
+                                        order.orderStatus === 'İşlenmekte'
+                                            ? handleRowClick(order)
+                                            : null
+                                    } // Make the row clickable only if the status is 'İşlenmekte'
+                                    style={{
+                                        cursor:
+                                            order.orderStatus === 'İşlenmekte'
+                                                ? 'pointer'
+                                                : 'default'
+                                    }} // Change cursor style for clickable rows
+                                >
+                                    <td>{order.id}</td>
                                     <td>{order.customerName}</td>
                                     <td>{order.gasanNo}</td>
                                     <td>{order.orderNumber}</td>
@@ -131,13 +197,46 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                     <td>
                                         {order.orderStatus ===
                                         'İşlenmeyi Bekliyor' ? (
-                                            <Button variant="primary">
+                                            <Button
+                                                variant="primary"
+                                                //disabled={isProcessing} // Disable if another order is in progress
+                                                onClick={(e) => {
+                                                    e.stopPropagation(); // Prevent row click event
+                                                    handleStatusChange(
+                                                        order,
+                                                        'İşlenmekte'
+                                                    );
+                                                }}
+                                            >
                                                 Basla
                                             </Button>
                                         ) : order.orderStatus ===
                                           'İşlenmekte' ? (
-                                            <Button variant="danger">
+                                            <Button
+                                                variant="danger"
+                                                onClick={(e) => {
+                                                    e.stopPropagation(); // Prevent row click event
+                                                    handleStatusChange(
+                                                        order,
+                                                        'Beklemede'
+                                                    );
+                                                }}
+                                            >
                                                 Durdur
+                                            </Button>
+                                        ) : order.orderStatus ===
+                                          'Beklemede' ? (
+                                            <Button
+                                                variant="success"
+                                                onClick={(e) => {
+                                                    e.stopPropagation(); // Prevent row click event
+                                                    handleStatusChange(
+                                                        order,
+                                                        'İşlenmekte'
+                                                    );
+                                                }}
+                                            >
+                                                Tekrar Baslat
                                             </Button>
                                         ) : null}
                                     </td>

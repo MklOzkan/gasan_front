@@ -35,6 +35,7 @@ const OrderForm = () => {
     // Handle form value changes
     const handleChange = (e) => {
         const { name, value } = e.target;
+
         setFormValues((prevValues) => {
             const newValues = {
                 ...prevValues,
@@ -182,6 +183,7 @@ const OrderForm = () => {
                                 value={formValues.readyMilCount}
                                 onChange={handleChange}
                                 error={state?.errors?.readyMilCount}
+                                disabled={formValues?.orderType !== 'Lift'}
                             />
 
                             <TextInput

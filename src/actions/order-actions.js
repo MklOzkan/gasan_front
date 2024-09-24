@@ -6,7 +6,8 @@ import {
     createOrder,
     updateOrder,
     deleteOrder,
-    downloadOrders
+    downloadOrders,
+    updateStatus
 } from '@/services/uretimplanlama-service';
 import {
     YupValidationError,
@@ -63,10 +64,21 @@ export const updateOrderAction = async (formData) => {
 export const deleteOrderAction = async (orderNumber) => {
     try {
         const res = await deleteOrder(orderNumber);
-
-        revalidatePath('/dashboard/urun-planlama');
-        return response(true, 'Sipariş başarıyla silindi');
+        const data = await res.json();
+        if (!res.ok) {
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
+        }
+        return {
+            success: true, 
+            message: 'Sipariş başarıyla silindi'
+        };
     } catch (err) {
+       if (err instanceof YupValidationError) {
+            return transformYupErrors(err.inner);
+        }
         throw err;
     }
 };
@@ -79,3 +91,27 @@ export const downloadOrdersAction = async (filters) => {
         throw err;
     }
 };
+
+export const updateOrderStatus = async (orderId) => {
+    try {
+        const res = await updateStatus(orderId); // Renamed from response to res
+
+        // Determine content type to parse correctly
+        const data = await res.json(); // Gelecek olan response'ı json formatına çeviriyoruz
+
+        if (res.ok) {
+            revalidatePath('/dashboard/talasli-imalat-amiri');
+            return { success: true, data };
+            
+        } else {
+            return { success: false, message: data.message || 'Bir hata oluştu' };
+        }
+
+    
+    } catch (err) {
+        console.error('Error in updateOrderStatus:', err);
+        throw err;
+    }
+};
+
+
