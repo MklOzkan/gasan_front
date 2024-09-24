@@ -1,7 +1,15 @@
 import React from 'react';
 import './page-header.scss';
 import LogoutButton from './form-fields/logout-button';
-import BackButton from './form-fields/back-button';
+import dynamic from 'next/dynamic';
+
+// Dynamically import the BackButton component, disabling SSR
+const BackButton = dynamic(
+    () => import('@/components/common/form-fields/back-button'),
+    {
+        ssr: false
+    }
+);
 
 const PageHeader = ({ children }) => {
     return (

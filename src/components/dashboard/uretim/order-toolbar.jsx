@@ -2,18 +2,29 @@
 import { deleteOrderAction } from '@/actions/order-actions';
 import { swAlert, swConfirm } from '@/helpers/swal';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { TfiPencil, TfiTrash } from 'react-icons/tfi';
 
 const OrderToolbar = ({ row }) => {
+    const [orderNumber, setOrderNumber] = useState(null);
+
+    useEffect(() => {
+        // Update orderNumber whenever row changes
+        if (row && row.orderNumber) {
+            setOrderNumber(row.orderNumber);
+        }
+    }, [row]);
+
     const handleDelete = async () => {
         const answer = await swConfirm(`${row.orderNumber} numaralı siparişi silmek istediğinize emin misiniz?`);
         if (!answer.isConfirmed) return;
         console.log('row.id', row.id);
 
         const res = await deleteOrderAction(row.orderNumber);
-        if (res.ok) {
+        
+        if (res.success) {
+            window.location.reload();
             swAlert(res.message, 'success');
         } else {
             swAlert(res.message, 'error');

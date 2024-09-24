@@ -69,6 +69,22 @@ export const config = {
         {
             urlRegex: /\/dashboard\/uretim\/new$/,
             roles: ['UretimPlanlama']
+        },
+        {
+            urlRegex: /\/dashboard\/talasli-imalat-amiri\/bloklift\/[0-9]+$/,
+            roles: ['TalasliImalatAmiri']
+        },
+        {
+            urlRegex: /\/dashboard\/talasli-imalat-amiri\/lift\/[0-9]+$/,
+            roles: ['TalasliImalatAmiri']
+        },
+        {
+            urlRegex: /\/dashboard\/talasli-imalat-amiri\/paslanmaz\/[0-9]+$/,
+            roles: ['TalasliImalatAmiri']
+        },
+        {
+            urlRegex: /\/dashboard\/talasli-imalat-amiri\/damper\/[0-9]+$/,
+            roles: ['TalasliImalatAmiri']
         }
     ]
 };

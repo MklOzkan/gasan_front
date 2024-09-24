@@ -1,0 +1,61 @@
+/* Container adjustments for better spacing */
+.container {
+    padding: 0 15px; /* Add horizontal padding */
+    width: 100%; /* Full width */
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Basic table styling */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse; /* Ensure border collapsing for a clean look */
+    table-layout: fixed;
+}
+
+
+
+.table-bordered {
+    border: 1px solid #dee2e6; /* Light border around table */
+}
+
+.table th,
+.table td {
+    padding: 0.75rem; /* Add padding inside cells */
+    border-top: 1px solid #dee2e6; /* Border between rows */
+}
+
+.table thead th { /* Align header cells at the bottom */
+    border-bottom: 2px solid #dee2e6; /* Border under the header row */
+    background-color: #f8f9fa; /* Light background for header */
+    font-weight: 600; /* Make header text bold */
+    
+}
+
+/* Center align content in cells */
+.text-center {
+    text-align: center;
+}
+
+
+@media screen and (max-width: 767px) {
+    .table-wrapper {
+        overflow-x: auto; /* Küçük ekranlarda yatay kaydırma etkinleştirilir */
+        margin-bottom: 1rem; /* Tablo altında boşluk bırak */
+    }
+
+    /* Küçük ekranlarda tablo genişliğini ayarla */
+    
+
+    .table th,
+    .table td {
+        padding: 0.5rem; /* Küçük ekranlarda daha az padding */
+        font-size: 0.875rem; /* Yazı boyutunu küçült */
+    }
+}
+
+
+
+
