@@ -4,19 +4,12 @@ import React, { useState } from 'react';
 import {
     Container,
     Form,
-    Button,
     Card,
-    Col,
-    Row
 } from 'react-bootstrap';
 import {  updateOrderAction } from '@/actions/order-actions';
 import { swAlert } from '@/helpers/swal';
-import { useFormState } from 'react-dom';
 import { initialResponse } from '@/helpers/form-validation';
 import {
-    BackButton,
-    MaskedInput,
-    SelectInput,
     SubmitButton,
     TextInput
 } from '@/components/common/form-fields';
@@ -37,11 +30,7 @@ const OrderEdit = ({ order}) => {
      const handleSubmit = async (e) => {
          e.preventDefault();
          const formData = new FormData(e.target);
-         setState(initialResponse);
-
          const response = await updateOrderAction(formData);
-         setState(response);
-         console.log('response from order-form', response);
 
          if (response.ok) {
              swAlert(response.message, 'success');

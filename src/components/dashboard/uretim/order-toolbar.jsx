@@ -10,10 +10,11 @@ const OrderToolbar = ({ row }) => {
     const [orderNumber, setOrderNumber] = useState(null);
 
     useEffect(() => {
-        // Update orderNumber whenever row changes
-        if (row && row.orderNumber) {
-            setOrderNumber(row.orderNumber);
+
+        return () => {
+            console.log('cleanup');
         }
+        
     }, [row]);
 
     const handleDelete = async () => {

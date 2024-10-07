@@ -78,3 +78,39 @@ export const updateisilIslem = async (payload, operationId) => {
     );
     return response;
 };
+
+export const updateboruKesme = async (payload, operationId) => {
+    const response = await fetch(
+        `${API_URL}/talasli/borukesme/${operationId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const updateEzme = async (payload, operationId) => {
+    const response = await fetch(
+        `${API_URL}/talasli/ezme/${operationId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const rollBackLastChange = async ( operationId) => {
+    console.log('operationId from rollBackLastChange:', operationId);
+    const response = await fetch(
+        `${API_URL}/talasli/removelastchange/${operationId}`,
+        {
+            method: 'GET',
+            headers: await getAuthHeader()
+        }
+    );
+    return response;
+};

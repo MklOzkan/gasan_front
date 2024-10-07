@@ -14,7 +14,6 @@ import PageHeader from '@/components/common/page-header';
 import { useRouter } from 'next/navigation'; // Use Next.js router for redirection
 import { updateOrderStatus } from '@/actions/order-actions'; // External function for API call
 import './talasli.scss';
-import { revalidatePath } from 'next/cache';
 
 const Order = ({ data, currentPage, sortBy, sortOrder }) => {
     const { content, totalPages } = data;
@@ -55,20 +54,11 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
 
     // Redirect the user based on orderType when the row is clicked
     const handleRowClick = (order) => {
-        const routeByOrderType = {
-            LIFT: `/dashboard/talasli-imalat-amiri/lift/${order.id}`,
-            DAMPER: `/dashboard/talasli-imalat-amiri/damper/${order.id}`,
-            BLOKLIFT: `/dashboard/talasli-imalat-amiri/bloklift/${order.id}`,
-            PASLANMAZ: `/dashboard/talasli-imalat-amiri/paslanmaz/${order.id}`
-        };
-
-        // Redirect to the appropriate operation page
-        const route = routeByOrderType[order.orderType];
-        if (route) {
-            router.push(route); // Use Next.js router for redirection
-        } else {
-            console.error('No route found for orderType:', order.orderType);
-        }
+        
+        
+        
+            router.push(`/dashboard/talasli-imalat-amiri/lift/${order.id}`); // Use Next.js router for redirection
+        
     };
 
     // Handle sorting change (set sortBy and sortOrder in the URL)
@@ -97,8 +87,8 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
     return (
         <>
             <PageHeader>Talasli Imalat Amiri</PageHeader>
-            <Container>
-                <Row className="my-3">
+            <Container fluid className=''>
+                <Row className="my-3 ">
                     <div className="d-flex gap-3">
                         {/* Sorting controls */}
                         <Col md={2}>

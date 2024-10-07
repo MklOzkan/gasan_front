@@ -1,7 +1,7 @@
 'use client';
 import DataTable, { Column } from '@/components/common/form-fields/data-table';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect} from 'react';
 import { Container } from 'react-bootstrap';
 import OrderToolbar from './order-toolbar';
 import PageHeader from '@/components/common/page-header';
@@ -12,6 +12,10 @@ import {
 
 const OrderList = ({ data }) => {
     const { content, totalPages, number, size } = data;
+
+    useEffect(() => {
+        console.log('data', data);
+    }, [data]);
 
     const handleToolbar = (row) => {
         return <OrderToolbar row={row} />;

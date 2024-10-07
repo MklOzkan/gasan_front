@@ -10,21 +10,35 @@ import './order-for-operation.scss'
 const OrderForOperation = ({ order }) => {
     return (
         <>
-            <Container>
+            <Container className="table-container">
                 <div className="table-wrapper">
                     {/* Table Header */}
                     <div className="table-head">
-                        <Table className="table table-bordered text-center border-0">
+                        <Table className="container-head table table-bordered text-center border-0">
                             <thead>
-                                <tr>
-                                    <th>Müşter Adı</th>
-                                    <th>Gasan No</th>
-                                    <th>Teslim Tarihi</th>
-                                    <th>Sipariş Türü</th>
-                                    <th>Sipariş Adedi</th>
-                                    <th>Sipariş Durumu</th>
+                                <tr className="inner-head">
+                                    <th className="inner-box head-box">
+                                        Müşter Adı
+                                    </th>
+                                    <th className="inner-box head-box">
+                                        Gasan No
+                                    </th>
+                                    <th className="inner-box head-box">
+                                        Teslim Tarihi
+                                    </th>
+                                    <th className="inner-box head-box">
+                                        Sipariş Türü
+                                    </th>
+                                    <th className="inner-box head-box">
+                                        Sipariş Adedi
+                                    </th>
+                                    <th className="inner-box head-box">
+                                        Sipariş Durumu
+                                    </th>
                                     {order.orderType === 'LIFT' ? (
-                                        <th>Hazır Mil Adedi</th>
+                                        <th className="inner-box head-box">
+                                            Hazır Mil Adedi
+                                        </th>
                                     ) : null}
                                 </tr>
                             </thead>
@@ -34,15 +48,29 @@ const OrderForOperation = ({ order }) => {
                     <div className="table-body">
                         <Table className="table table-bordered text-center border-0">
                             <tbody>
-                                <tr>
-                                    <td>{order.customerName}</td>
-                                    <td>{order.gasanNo}</td>
-                                    <td>{order.deliveryDate}</td>
-                                    <td>{order.orderType}</td>
-                                    <td>{order.orderQuantity}</td>
-                                    <td>{order.orderStatus}</td>
+                                <tr className="inner-body">
+                                    <th className="inner-box">
+                                        {order.customerName}
+                                    </th>
+                                    <th className="inner-box">
+                                        {order.gasanNo}
+                                    </th>
+                                    <th className="inner-box">
+                                        {order.deliveryDate}
+                                    </th>
+                                    <th className="inner-box">
+                                        {order.orderType}
+                                    </th>
+                                    <th className="inner-box">
+                                        {order.orderQuantity}
+                                    </th>
+                                    <th className="inner-box">
+                                        {order.orderStatus}
+                                    </th>
                                     {order.orderType === 'LIFT' ? (
-                                        <td>{order.readyMilCount}</td>
+                                        <th className="inner-box">
+                                            {order.readyMilCount}
+                                        </th>
                                     ) : null}
                                 </tr>
                             </tbody>

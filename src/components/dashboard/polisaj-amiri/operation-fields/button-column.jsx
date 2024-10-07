@@ -1,8 +1,11 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+
 
 const OperationCol = ({
     operation,
+    order,
     index,
     togglePopup,
     isPopupOpen,
@@ -10,33 +13,39 @@ const OperationCol = ({
     handleSubmit,
     productionQuantity
 }) => {
-    const isDisabled = operation.remainingQuantity === 0;
+    let txColor = ''; // Default text color
     const bgColor =
-        operation.remainingQuantity === 0
-            ? 'green'
-            : operation.completedQuantity > 0
-            ? 'yellow'
-            : 'rgb(158, 156, 156)';
-
-    const color =
-        operation.remainingQuantity === 0
-            ? 'white'
-            : operation.completedQuantity > 0
-            ? 'black'
-            : 'white';
-
-
+        
+            operation.completedQuantity === 0 &&
+              operation.remainingQuantity === 0
+            ? (() => {
+                  txColor = 'white'; // Set text txColor to gray
+                  return 'rgb(158, 156, 156)'; // Background txColor for this condition
+              })()
+            : operation.completedQuantity >=
+                  (order.orderQuantity - order.readyMilCount) &&
+              (operation.remainingQuantity) <= 0
+            ? (() => {
+                  txColor = 'white'; // Set text txColor to white for fully completed
+                  return 'green'; // Background txColor for fully completed
+              })()
+            : operation.remainingQuantity > 0
+            ? (() => {
+                  txColor = 'black'; // Set text txColor to black for partially completed
+                  return 'yellow'; // Background txColor for partially completed
+              })()
+            : 'rgb(158, 156, 156)' // Default background color)
     return (
         <div>
-            <button
+            <Button
                 onClick={() => togglePopup(operation.id)} // **Highlight: Pass the specific operation ID to togglePopup**
                 className={`polygon-button index-${index}`}
-                style={{ backgroundColor: bgColor, color: color }}
-                disabled={operation.remainingQuantity === 0}
+                style={{ backgroundColor: bgColor, color: txColor }}
+                 disabled={operation.remainingQuantity === 0 }
                 data-operation-type={operation.operationType}
             >
                 <span>{operation.operationType}</span>
-            </button>
+            </Button>
             {isPopupOpen === operation.id && ( // **Highlight: Ensure the popup is open only for the specific operation**
                 <div className="popup">
                     <div
@@ -47,6 +56,7 @@ const OperationCol = ({
                         <h2>Üretilen Adedi Giriniz</h2>
                         <input
                             type="number"
+                            min={0}
                             value={productionQuantity}
                             onChange={handleQuantityChange}
                         />
@@ -80,6 +90,7 @@ const OperationCol = ({
 };
 
 OperationCol.propTypes = {
+    order: PropTypes.object.isRequired,
     operation: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
     togglePopup: PropTypes.func.isRequired,

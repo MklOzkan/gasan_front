@@ -12,9 +12,16 @@ import {
 } from 'react-bootstrap';
 import PageHeader from '@/components/common/page-header';
 import './kalite-kontrol.scss';
+import { useRouter } from 'next/navigation';
 
 const KaliteKontrol = ({ data, currentPage, sortBy, sortOrder }) => {
     const { content, totalPages } = data;
+    const router = useRouter();
+
+
+    const handleRowClick = (order) => {
+        router.push(`/dashboard/kalite-kontrol-amiri/${order.id}`); // Use Next.js router for redirection
+    };
 
     const handleSortChange = (e) => {
         const { name, value } = e.target;
@@ -70,7 +77,6 @@ const KaliteKontrol = ({ data, currentPage, sortBy, sortOrder }) => {
                                     <option value="customerName">
                                         Müşteri Adı
                                     </option>
-                                
                                 </Form.Control>
                             </Form.Group>
                         </Col>
@@ -112,12 +118,15 @@ const KaliteKontrol = ({ data, currentPage, sortBy, sortOrder }) => {
                                 <th>Sipariş Adedi</th>
                                 <th>Sipariş Durumu</th>
                                 <th>Hazır Mil Adedi</th>
-                                <th>Başla/Durdur</th>
                             </tr>
                         </thead>
                         <tbody>
                             {content.map((order, index) => (
-                                <tr key={index} className="eachRow">
+                                <tr
+                                    key={index}
+                                    className="eachRow"
+                                    onClick={() => handleRowClick(order)}
+                                >
                                     <td>{order.customerName}</td>
                                     <td>{order.gasanNo}</td>
                                     <td>{order.orderNumber}</td>
@@ -127,19 +136,6 @@ const KaliteKontrol = ({ data, currentPage, sortBy, sortOrder }) => {
                                     <td>{order.orderQuantity}</td>
                                     <td>{order.orderStatus}</td>
                                     <td>{order.readyMilCount}</td>
-                                    <td>
-                                        {order.orderStatus ===
-                                        'İşlenmeyi Bekliyor' ? (
-                                            <Button variant="primary">
-                                                Basla
-                                            </Button>
-                                        ) : order.orderStatus ===
-                                          'İşlenmekte' ? (
-                                            <Button variant="danger">
-                                                Durdur
-                                            </Button>
-                                        ) : null}
-                                    </td>
                                 </tr>
                             ))}
                         </tbody>

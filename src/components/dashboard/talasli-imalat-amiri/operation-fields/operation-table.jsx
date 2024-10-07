@@ -1,31 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './operation-table.scss';
 import EditPopup from './edit-biten-popup.jsx'; // Import the popup component
+import { Button } from 'react-bootstrap';
+import { swAlert, swConfirm } from '@/helpers/swal';
+import { rollBackLastChangeAction } from '@/actions/talasli-actions';
 
 const OperationsInfo = ({ operations, productionProcess }) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedOperation, setSelectedOperation] = useState(null);
     const [newValue, setNewValue] = useState('');
+    const [operationId, setOperationId] = useState(null);
 
-    const handleEditClick = (operation) => {
-        setSelectedOperation(operation);
-        setNewValue(operation.biten); // Set current value in the input
-        setIsPopupOpen(true);
-    };
 
-    const handleClosePopup = () => {
-        setIsPopupOpen(false);
-        setSelectedOperation(null);
-    };
 
-    const handleSave = () => {
-        // Update the "Biten" value of the selected operation
-        selectedOperation.biten = newValue;
-        handleClosePopup();
-    };
+    const rollBack = async (operation) => {
+        setOperationId(operation);
+        console.log('Selected Operation:', operation);
+        const answer = await swConfirm(
+            `En son girilen ${operation.lastCompletedQty} adetlik üretimi geri almak istediğinize emin misiniz??`
+        );
+        if (!answer.isConfirmed) return;
 
-    const handleInputChange = (e) => {
-        setNewValue(e.target.value);
+        const res = await rollBackLastChangeAction(operation.id);
+
+        if (res.success) {
+            setTimeout(()=>{
+                swAlert(res.message, 'success');}, 1000);
+            window.location.reload();
+            
+        } else {
+            swAlert(res.message, 'error');
+        }
     };
 
     return (
@@ -45,23 +50,29 @@ const OperationsInfo = ({ operations, productionProcess }) => {
                             {operation.operationType === 'BORU_KESME_HAVSA' && (
                                 <tr className="total-row">
                                     <td>Toplam Üretilen Mil</td>
-                                    <td>{productionProcess.completedQuantity}</td>
+                                    
+                                    <td>
+                                        {productionProcess.completedQuantity}
+                                    
+                                    </td>
                                     <td>{productionProcess.remainingQuantity}</td>
                                 </tr>
                             )}
                             <tr>
                                 <td>{operation.operationType}</td>
                                 <td>
-                                    <button
+                                {}
+                                    <Button
                                         className="edit-button"
+                                        disabled={operation.completedQuantity === 0 ||operation.lastCompletedQty === 0}
                                         onClick={() =>
-                                            handleEditClick(operation)
+                                            rollBack(operation)
                                         }
                                     >
                                         {operation.completedQuantity}
-                                    </button>
+                                    </Button>
                                 </td>
-                                <td>{operation.remainingQuantity}</td>
+                                <td>{operation.remainingQuantity<=0 ?(0) :(operation.remainingQuantity)}</td>
                             </tr>
                         </React.Fragment>
                     ))}

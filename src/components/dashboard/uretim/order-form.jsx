@@ -20,7 +20,7 @@ const OrderForm = () => {
             ? JSON.parse(savedFormData)
             : {
                   customerName: '',
-                  gasanNo: '**** *** ******', // Default value
+                  gasanNo: '', // Default value
                   orderNumber: '',
                   deliveryDate: '',
                   orderType: '',
@@ -127,6 +127,7 @@ const OrderForm = () => {
                                 value={formValues.gasanNo}
                                 onChange={handleChange}
                                 error={state?.errors?.gasanNo}
+                                placeholder="1234 AB 123456"
                                 required
                             />
 

@@ -24,11 +24,11 @@ const YoneticiMenu = async () => {
             <Container className="text-center m-auto">
                 <Row className="menuRow">
                     {adminMenu.map((item) => (
-                        <Col key={item.id}>
+                        <Col key={item.id} className='inner-column'>
                             <Link
                                 href={item.link}
                                 style={{ backgroundColor: item.color }}
-                                className="btn btn-outline-secondary w-100 h-100 align-items-center justify-content-center "
+                                className="btn btn-outline-secondary w-100 h-100 align-items-center justify-content-center inner-button "
                             >
                                 {item.text}
                             </Link>

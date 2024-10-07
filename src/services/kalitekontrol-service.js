@@ -12,7 +12,7 @@ export const fetchDataKaliteKontrol = async (
 ) => {
     const qs = `page=${page}&size=${size}&sort=${sort}&type=${type}`;
         const response = await fetch(
-            `${API_URL}/orders/getAllOrdersForSupervisor?${qs}`,
+            `${API_URL}/orders/getOrdersForOtherAmir?${qs}`,
             {
                 method: 'GET',
                 headers: await getAuthHeader()
@@ -20,4 +20,26 @@ export const fetchDataKaliteKontrol = async (
         );
         console.log('RESPONSE STATUS:', response.status);
         return response;
+};
+
+export const getMultipleResponses = async (orderId) => {
+    const response = await fetch(
+        `${API_URL}/kalitekontrol/getAllForOrder/${orderId}`,
+        {
+            method: 'GET',
+            headers: await getAuthHeader()
+        }
+    );
+    return response;
+};
+
+export const getOrderAndStage = async (orderId) => {
+    const response = await fetch(
+        `${API_URL}/kalitekontrol/getOrderAndStage/${orderId}`,
+        {
+            method: 'GET',
+            headers: await getAuthHeader()
+        }
+    );
+    return response;
 };
