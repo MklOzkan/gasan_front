@@ -9,18 +9,20 @@ export const swAlert = (title, icon = "info", text = "") => {
 };
 
 export const swConfirm = (
-	title,
-	icon = "info",
-	text = "",
-	confirmButtonText = "Yes"
+    title,
+    icon = 'info',
+    text = '',
+    confirmButtonText = 'Onayla',
+    cancelButtonText = 'İptal'
 ) => {
-	return Swal.fire({
-		title,
-		text,
-		icon,
-		showCancelButton: true,
-		confirmButtonText,
-	});
+    return Swal.fire({
+        title,
+        text,
+        icon,
+        showCancelButton: true,
+        confirmButtonText,
+        cancelButtonText
+    });
 };
 
 export const swToast = (title, icon = "info") => {

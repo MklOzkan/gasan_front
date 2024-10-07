@@ -58,12 +58,10 @@
 .polygon-button {
     width: 400px; /* CHANGED: Limit max width */
     height: 120px;
-    background-color: rgb(158, 156, 156); /* Default background color */
-    color: white;
     font-size: 18px;
     font-weight: bold;
     font-family: Arial, sans-serif;
-    border: none;
+    border: 1px solid black;
     cursor: pointer;
     position: relative;
     text-align: center;
@@ -72,47 +70,22 @@
     margin: 0; /* Remove margin */
     padding: 0; /* Remove padding */
     margin-bottom: -30px;
+    clip-path: polygon(
+        0% 0%,   /* Top left corner */
+        100% 0%, /* Top right corner */
+        100% 50%,/* Right side of rectangle */
+        50% 100%,/* Bottom point of triangle */
+        0% 50%   /* Left side of rectangle */
+    );
+
+
     &:hover {
         background-color: orange; /* Change color on hover */
     }
 }
 
-/* Shape for the first button (Index 0) */
-.polygon-button.index-0 {
-    clip-path: polygon(
-        0% 0%,   /* Top left corner */
-        100% 0%, /* Top right corner */
-        100% 70%,/* Right side of rectangle */
-        50% 100%,/* Bottom point of triangle */
-        0% 70%   /* Left side of rectangle */
-    );
-}
 
-/* Chevron shape for subsequent buttons (Index 1, 2, 3...) */
-.polygon-button.index-1,
-.polygon-button.index-2,
-.polygon-button.index-3,
-.polygon-button.index-4 {
-    clip-path: polygon(
-        0% 0%,    /* Top left */
-    50% 30%,    /* Top middle inward point */
-    100% 0%,  /* Top right */
-    100% 70%,  /* Bottom right */
-    50% 100%,  /* Bottom middle inward point */
-    0% 70%     /* Bottom left */
-    );
-}
 
-/* Hover effect */
-.polygon-button:hover {
-    background-color: orange; /* Change color on hover */
-}
-
-/* Disabled state */
-.polygon-button:disabled {
-    background-color: green !important; /* Disabled color */
-    cursor: not-allowed;
-}
 
 
 

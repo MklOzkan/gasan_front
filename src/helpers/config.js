@@ -35,6 +35,14 @@ export const config = {
             roles: ['KaliteKontrol']
         },
         {
+            urlRegex: /\/dashboard\/kalite-kontrol-amiri\/[0-9]+$/,
+            roles: ['KaliteKontrol']
+        },
+        {
+            urlRegex: /\/dashboard\/kalite-kontrol-amiri\/stage\/[0-9]+$/,
+            roles: ['KaliteKontrol']
+        },
+        {
             urlRegex: /\/dashboard\/uretim-planlama$/,
             roles: ['UretimPlanlama']
         },
@@ -71,19 +79,11 @@ export const config = {
             roles: ['UretimPlanlama']
         },
         {
-            urlRegex: /\/dashboard\/talasli-imalat-amiri\/bloklift\/[0-9]+$/,
-            roles: ['TalasliImalatAmiri']
+            urlRegex: /\/dashboard\/polisaj-amiri\/[0-9]+$/,
+            roles: ['PolisajAmiri']
         },
         {
             urlRegex: /\/dashboard\/talasli-imalat-amiri\/lift\/[0-9]+$/,
-            roles: ['TalasliImalatAmiri']
-        },
-        {
-            urlRegex: /\/dashboard\/talasli-imalat-amiri\/paslanmaz\/[0-9]+$/,
-            roles: ['TalasliImalatAmiri']
-        },
-        {
-            urlRegex: /\/dashboard\/talasli-imalat-amiri\/damper\/[0-9]+$/,
             roles: ['TalasliImalatAmiri']
         }
     ]

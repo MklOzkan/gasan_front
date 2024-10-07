@@ -13,7 +13,10 @@ import {
     updateMilKoparma,
     updateMilTornalama,
     updateMilTaslama,
-    updateisilIslem
+    updateisilIslem,
+    updateboruKesme,
+    updateEzme,
+    rollBackLastChange
 } from '@/services/talasliimalamiri-service';
 
 export const updateQuantity = async (producedQuantity,orderId, processId) => {
@@ -51,10 +54,7 @@ export const milKoparmaAction = async (formData, operationId ) => {
         const data = await res.json();  
 
         if (!res.ok) {
-            return {
-                success: false,
-                message: data.message || 'Bir hata oluştu'
-            };
+            throw new Error(`${data.message}`);
         }
         
         return {
@@ -79,10 +79,7 @@ export const milTornalamaAction = async (formData, operationId) => {
         const data = await res.json();
 
         if (!res.ok) {
-            return {
-                success: false,
-                message: data.message || 'Bir hata oluştu'
-            };
+            throw new Error(`${data.message}`);
         }
 
         return {
@@ -90,6 +87,7 @@ export const milTornalamaAction = async (formData, operationId) => {
             message: data.message || 'Sipariş başarıyla güncellendi'
         };
     } catch (err) {
+        console.error('Error in milTornalamaAction:', err);
         if (err instanceof YupValidationError) {
             return transformYupErrors(err.inner);
         }
@@ -106,10 +104,7 @@ export const milTaslamaAction = async (formData, operationId) => {
         const data = await res.json();
 
         if (!res.ok) {
-            return {
-                success: false,
-                message: data.message || 'Bir hata oluştu'
-            };
+            throw new Error(`${data.message}`);
         }
 
         return {
@@ -133,10 +128,77 @@ export const isilIslemAction = async (formData, operationId) => {
         const data = await res.json();
 
         if (!res.ok) {
-            return {
-                success: false,
-                message: data.message || 'Bir hata oluştu'
-            };
+            throw new Error(`${data.message}`);
+        }
+
+        return {
+            success: true,
+            message: data.message || 'Sipariş başarıyla güncellendi'
+        };
+    } catch (err) {
+        if (err instanceof YupValidationError) {
+            return transformYupErrors(err.inner);
+        }
+        throw err;
+    }
+};
+
+export const boruKesmeAction = async (formData, operationId) => {
+    try {
+        console.log('formData from boruKesmeActıon:', formData, operationId);
+
+        const fields = convertFormDataToJSON(formData);
+        const res = await updateboruKesme(fields, operationId);
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(`${data.message}`);
+        }
+
+        return {
+            success: true,
+            message: data.message || 'Sipariş başarıyla güncellendi'
+        };
+    } catch (err) {
+        if (err instanceof YupValidationError) {
+            return transformYupErrors(err.inner);
+        }
+        throw err;
+    }
+};
+
+export const ezmeAction = async (formData, operationId) => {
+    try {
+        console.log('formData from ezmeAction:', formData, operationId);
+
+        const fields = convertFormDataToJSON(formData);
+        const res = await updateEzme(fields, operationId);
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(`${data.message}`);
+        }
+
+        return {
+            success: true,
+            message: data.message || 'Sipariş başarıyla güncellendi'
+        };
+    } catch (err) {
+        if (err instanceof YupValidationError) {
+            return transformYupErrors(err.inner);
+        }
+        throw err;
+    }
+};
+
+export const rollBackLastChangeAction = async ( operationId) => {
+    try {
+        console.log('formData from boruKesmeActıon:', operationId);
+        const res = await rollBackLastChange(operationId);
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(`${data.message}`);
         }
 
         return {

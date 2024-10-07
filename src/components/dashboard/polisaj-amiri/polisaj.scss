@@ -3,6 +3,10 @@
     text-align: center;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    &:hover {
+        background-color: #83df8f !important;
+    }
 }
 
 .table-responsive {

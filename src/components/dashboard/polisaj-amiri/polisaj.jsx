@@ -12,9 +12,17 @@ import {
 } from 'react-bootstrap';
 import PageHeader from '@/components/common/page-header';
 import './polisaj.scss';
+import { useRouter } from 'next/navigation';
+
 
 const Polisaj = ({ data, currentPage, sortBy, sortOrder }) => {
+    const router = useRouter();
     const { content, totalPages } = data;
+
+
+    const handleRowClick = (order) => {
+            router.push(`/dashboard/polisaj-amiri/${order.id}`); 
+    };
 
     const handleSortChange = (e) => {
         const { name, value } = e.target;
@@ -111,13 +119,14 @@ const Polisaj = ({ data, currentPage, sortBy, sortOrder }) => {
                                 <th>Sipariş Türü</th>
                                 <th>Sipariş Adedi</th>
                                 <th>Sipariş Durumu</th>
-                                <th>Hazır Mil Adedi</th>
-                                <th>Başla/Durdur</th>
                             </tr>
                         </thead>
                         <tbody>
                             {content.map((order, index) => (
-                                <tr key={index} className="eachRow">
+                                <tr key={index} 
+                                    className="eachRow"
+                                    onClick={() => handleRowClick(order)}
+                                    >
                                     <td>{order.customerName}</td>
                                     <td>{order.gasanNo}</td>
                                     <td>{order.orderNumber}</td>
@@ -126,20 +135,6 @@ const Polisaj = ({ data, currentPage, sortBy, sortOrder }) => {
                                     <td>{order.orderType}</td>
                                     <td>{order.orderQuantity}</td>
                                     <td>{order.orderStatus}</td>
-                                    <td>{order.readyMilCount}</td>
-                                    <td>
-                                        {order.orderStatus ===
-                                        'İşlenmeyi Bekliyor' ? (
-                                            <Button variant="primary">
-                                                Basla
-                                            </Button>
-                                        ) : order.orderStatus ===
-                                          'İşlenmekte' ? (
-                                            <Button variant="danger">
-                                                Durdur
-                                            </Button>
-                                        ) : null}
-                                    </td>
                                 </tr>
                             ))}
                         </tbody>

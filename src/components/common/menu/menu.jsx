@@ -26,7 +26,7 @@ const Menu = () => {
     return (
         <>
             <PageHeader>ANA SAYFA</PageHeader>
-            <Spacer height={50} />
+            <Spacer height={25} />
             <Container className="text-center m-auto">
                 <Row className="menuRow">
                     {menuItems.map((item) => (

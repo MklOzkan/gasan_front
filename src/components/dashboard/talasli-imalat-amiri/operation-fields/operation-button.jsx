@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Container,
     Row,
@@ -17,7 +17,11 @@ import {
     milTornalamaAction,
     milTaslamaAction,
     isilIslemAction,
+    boruKesmeAction,
+    ezmeAction
 } from '@/actions/talasli-actions';
+import { swAlert, swConfirm } from '@/helpers/swal';
+import { response } from '@/helpers/form-validation';
 
 const OperationButton = ({order, operations, productionProcess}) => {
     const [isPopupOpen, setIsPopupOpen] = useState(null); // **Highlight: Initialize state as null**
@@ -30,6 +34,10 @@ const OperationButton = ({order, operations, productionProcess}) => {
         'EZME',
         'BORU_KESME_HAVSA'
     ];
+
+    useEffect(() => {
+        console.log('Operations:', operations);
+    }, [operations]);
 
     const compareOperations = (a, b) => {
         return (
@@ -55,9 +63,7 @@ const OperationButton = ({order, operations, productionProcess}) => {
     };
 
     const handleSubmit = async (operationId, operationType, producedAmount) => {
-        console.log('Produced Amount:', producedAmount);
-        console.log('Operation ID:', operationId);
-        console.log('Operation Type:', operationType);
+    
         try {
             // Construct the payload
             const formData = new FormData();
@@ -95,20 +101,26 @@ const OperationButton = ({order, operations, productionProcess}) => {
                     throw new Error(`Unknown operation type: ${operationType}`);
             }
 
+            console.log('Response:', response);
+
             if (response.success) {
-                console.log('Response:', response);
-                window.location.reload();
+                swAlert(response.message);
+                setTimeout(() => {   
+                    window.location.reload();
+                }, 2000);
             }
         } catch (error) {
-            console.error('Error:', error);
+            swAlert(error.message, 'error');
         } finally {
             togglePopup();
             setProductionQuantity('');
         }
     };
+
+    
     return (
         <>
-            <Container className="d-flex gap-5 justify-content-center operation_button">
+            <Container className="d-flex gap-5 justify-content-center operation_button ">
                 <Row className="d-inline-block gap-5">
                     {Array.isArray(sortedOperations) &&
                     sortedOperations.length > 0 ? (
@@ -122,7 +134,9 @@ const OperationButton = ({order, operations, productionProcess}) => {
                                 <Col key={index} className="d-flex gap-1">
                                     <div>
                                         <ButtonColumn
+                                            order={order}
                                             operation={operation}
+                                            list={sortedOperations}
                                             index={index}
                                             togglePopup={togglePopup}
                                             isPopupOpen={isPopupOpen}
@@ -153,12 +167,14 @@ const OperationButton = ({order, operations, productionProcess}) => {
                                 <ButtonColumn
                                     key={index}
                                     operation={operation}
+                                    order={order}
                                     index={index}
                                     togglePopup={togglePopup}
                                     isPopupOpen={isPopupOpen}
                                     handleQuantityChange={handleQuantityChange}
                                     handleSubmit={handleSubmit}
                                     productionQuantity={productionQuantity}
+                                    list={sortedOperations}
                                 />
                             ))}
                     </Col>
@@ -166,6 +182,7 @@ const OperationButton = ({order, operations, productionProcess}) => {
                         <OperationsInfo
                             operations={sortedOperations}
                             productionProcess={productionProcess}
+                            order={order}
                         />
                     </Col>
                 </Row>

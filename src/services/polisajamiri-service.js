@@ -12,7 +12,7 @@ export const fetchDataPolisaj = async (
 ) => {
     const qs = `page=${page}&size=${size}&sort=${sort}&type=${type}`;
         const response = await fetch(
-            `${API_URL}/orders/getAllOrdersForSupervisor?${qs}`,
+            `${API_URL}/orders/getOrdersForOtherAmir?${qs}`,
             {
                 method: 'GET',
                 headers: await getAuthHeader()
@@ -20,4 +20,36 @@ export const fetchDataPolisaj = async (
         );
         console.log('RESPONSE STATUS:', response.status);
         return response;
+};
+
+export const getMultipleResponseByOrderId = async (orderId) => {
+    const response = await fetch(
+        `${API_URL}/orders/getMultipleResponseByIdForPolisaj/${orderId}`,
+        {
+            method: 'GET',
+            headers: await getAuthHeader()
+        }
+    );
+    return response;
+};
+
+export const updatePolisaj = async (payload, orderId) => {
+    const response = await fetch(`${API_URL}/polisaj/${orderId}`, {
+        method: 'PUT',
+        headers: await getAuthHeader(),
+        body: JSON.stringify(payload)
+    });
+    return response;
+};
+
+export const rollBackLastChange = async (operationId) => {
+    console.log('operationId from rollBackLastChange:', operationId);
+    const response = await fetch(
+        `${API_URL}/polisaj/removeLastChange/${operationId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader()
+        }
+    );
+    return response;
 };
