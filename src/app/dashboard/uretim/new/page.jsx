@@ -1,7 +1,15 @@
-import OrderCrateForm from '@/components/dashboard/uretim/order-form';
+import dynamic from 'next/dynamic';
 import React from 'react';
 
-const OrderCreatePage = async () => {
+const OrderCrateForm = dynamic(
+    () => import('@/components/dashboard/uretim/order-form.jsx'),
+    {
+        ssr: false // This disables server-side rendering for this component
+    }
+);
+
+
+const OrderCreatePage = () => {
     return (
         <>
             <OrderCrateForm />

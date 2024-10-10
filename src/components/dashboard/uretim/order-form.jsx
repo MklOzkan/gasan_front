@@ -98,7 +98,7 @@ const OrderForm = () => {
 
     return (
         <>
-            <PageHeader> Yeni Sipariş </PageHeader>
+            <PageHeader> Yenİ Sİparİş </PageHeader>
             <Container
                 fluid
                 className="d-flex justify-content-center align-items-center "

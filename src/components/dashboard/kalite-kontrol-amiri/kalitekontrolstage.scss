@@ -1,3 +1,5 @@
+@use "@/styles/variables" as v;
+
 .popup {
     position: fixed;
     top: 0;
@@ -72,8 +74,46 @@
         padding: 0; /* Remove padding */
         margin-bottom: -30px;
         &:hover {
-            background-color: rgb(71, 71, 71); /* Darker background color on hover */
+            background-color: rgb(175, 142, 72); /* Darker background color on hover */
         }
     }
     
+}
+
+.kalite-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-image: linear-gradient(270deg, v.$color1-op-50, v.$color1, v.$color1-op-50);
+    position: sticky;
+    top: 0;
+}
+
+.kalite {
+    font-weight: 400;
+    color: v.$color3;
+    text-transform: uppercase;
+    text-shadow: 0 3px 7px v.$color1;
+    letter-spacing: 0.2rem;
+    font-size: 20px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.signout-button {
+    background-color: v.$color3;
+    color: v.$color1;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: darken(v.$color3, 10%);
+    }
 }

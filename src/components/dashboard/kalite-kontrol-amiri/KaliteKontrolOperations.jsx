@@ -30,31 +30,31 @@ const KaliteKontrolOperations = ({ responses }) => {
           <Spacer height={5} />
           <OrderForOperation order={returnBody} />
 
-          <Table className="table table-border-1">
-              <thead>
+          <Table>
+              <thead className="table table-bordered border-3 border-dark">
                   <tr>
-                      <th>Kontrol Aşaması</th>
-                      <th>Onay Bekleyen Adedi</th>
-                      
+                      <th className="border-3">Kontrol Aşaması</th>
+                      <th className="border-3">Onay Bekleyen Adedi</th>
                   </tr>
               </thead>
               {returnBody3.map((stage, index) => (
                   <tbody
                       key={index}
-                      className="stage-button table table-bordered table-hover"
+                      className="stage-button table table-bordered border-3 border-dark"
                       onClick={() => handleRowClick(stage)}
                   >
                       {kaliteKontrolStages[stage.kaliteKontrolStage] && (
                           <tr>
-                              <th>
+                              <th className="border-3">
                                   {
                                       kaliteKontrolStages[
                                           stage.kaliteKontrolStage
                                       ]
                                   }
                               </th>
-                              <th>{stage.milCount}</th>
-                              
+                              <th className="border-3 border-dark">
+                                  {stage.milCount}
+                              </th>
                           </tr>
                       )}
                   </tbody>

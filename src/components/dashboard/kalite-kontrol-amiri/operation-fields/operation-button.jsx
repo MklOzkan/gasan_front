@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Container,
     Row,
@@ -13,13 +13,16 @@ import './operation-button.scss';
 import ButtonColumn from './button-column';
 import OperationsInfo from './operation-table';
 import {
-    milKoparmaAction,
-    milTornalamaAction,
-    milTaslamaAction,
-    isilIslemAction,
-    boruKesmeAction,
-    ezmeAction
-} from '@/actions/talasli-actions';
+    afterEzmeAction,
+    afterMilTaslamaAction,
+    afterMontajAction,
+    afterPolisajAction,
+    rollBackEzmeAction,
+    rollBackMilTaslamaAction,
+    rollBackMontajAction,
+    rollBackPolisajAction
+
+} from '@/actions/kalite-kontrol-actions';
 import { swAlert, swConfirm } from '@/helpers/swal';
 import { response } from '@/helpers/form-validation';
 

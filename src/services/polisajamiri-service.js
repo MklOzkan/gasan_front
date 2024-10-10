@@ -12,7 +12,7 @@ export const fetchDataPolisaj = async (
 ) => {
     const qs = `page=${page}&size=${size}&sort=${sort}&type=${type}`;
         const response = await fetch(
-            `${API_URL}/orders/getOrdersForOtherAmir?${qs}`,
+            `${API_URL}/orders/getOrdersForPolisajAmir?${qs}`,
             {
                 method: 'GET',
                 headers: await getAuthHeader()
