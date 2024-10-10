@@ -12,7 +12,7 @@ export const fetchDataKaliteKontrol = async (
 ) => {
     const qs = `page=${page}&size=${size}&sort=${sort}&type=${type}`;
         const response = await fetch(
-            `${API_URL}/orders/getOrdersForOtherAmir?${qs}`,
+            `${API_URL}/orders/getAllOrdersForSupervisor?${qs}`,
             {
                 method: 'GET',
                 headers: await getAuthHeader()
@@ -43,3 +43,88 @@ export const getOrderAndStage = async (orderId) => {
     );
     return response;
 };
+
+export const updateAFterMontaj = async (payload, orderId) => {
+    const response = await fetch(
+        `${API_URL}/kalitekontrol/aftermontaj/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const updateAFterMilTaslama = async (payload, orderId) => {
+    const response = await fetch(
+        `${API_URL}/kalitekontrol/aftermiltaslama/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const updateAFterPolisaj = async (payload, orderId) => {
+    const response = await fetch(
+        `${API_URL}/kalitekontrol/afterpolisaj/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const updateAFterEzme = async (payload, orderId) => {
+    const response = await fetch(
+        `${API_URL}/kalitekontrol/afterezme/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const rollbackAfterMontaj = async (payload, orderId) => {
+    const response = await fetch(
+        `${API_URL}/kalitekontrol/rollbackAfterMontaj/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const rollbackAfterPolisaj = async (payload, orderId) => {
+    const response = await fetch(
+        `${API_URL}/kalitekontrol/rollbackAfterPolisaj/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const rollbackAfterEzme = async (payload, orderId) => {
+    const response = await fetch(
+        `${API_URL}/kalitekontrol/rollbackAfterEzme/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+

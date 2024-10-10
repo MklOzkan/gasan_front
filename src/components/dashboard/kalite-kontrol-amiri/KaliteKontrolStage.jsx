@@ -9,18 +9,27 @@ import OperationButton from '@/components/dashboard/kalite-kontrol-amiri/operati
 
 const KaliteKontrolStage = ({ responses }) => {
     const { returnBody, returnBody3 } = responses;
+    const stages = {
+        AFTER_POLISAJ: 'Polisaj Sonrası Kalite Kontrol',
+        AFTER_MONTAJ: 'Montaj Sonrası Kalite Kontrol',
+        AFTER_EZME: 'Ezme Sonrası Kalite Kontrol',
+        AFTER_MIL_TASLAMA: 'Mil Taşlama Sonrası Kalite Kontrol',
+    };
+
+    console.log('returnBody3 from KaliteKontrolStage', returnBody3);
 
     return (
         <>
             <Container fluid>
                 <PageHeader>Kalite Kontrol amİrİ</PageHeader>
+                <h1 className="kalite-container kalite border">
+                    {stages?.[returnBody3?.kaliteKontrolStage] ||
+                        'Unknown Stage'}
+                </h1>
                 <Spacer height={5} />
                 <OrderForOperation order={returnBody} />
                 <Spacer height={0} />
-                <OperationButton
-                    order={returnBody}
-                    stage={returnBody3}
-                />
+                <OperationButton order={returnBody} stage={returnBody3} />
             </Container>
         </>
     );

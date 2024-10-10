@@ -112,7 +112,6 @@ const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
                                 <th>Sipariş Adedi</th>
                                 <th>Sipariş Durumu</th>
                                 <th>Hazır Mil Adedi</th>
-                                <th>Başla/Durdur</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -127,19 +126,6 @@ const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
                                     <td>{order.orderQuantity}</td>
                                     <td>{order.orderStatus}</td>
                                     <td>{order.readyMilCount}</td>
-                                    <td>
-                                        {order.orderStatus ===
-                                        'İşlenmeyi Bekliyor' ? (
-                                            <Button variant="primary">
-                                                Basla
-                                            </Button>
-                                        ) : order.orderStatus ===
-                                          'İşlenmekte' ? (
-                                            <Button variant="danger">
-                                                Durdur
-                                            </Button>
-                                        ) : null}
-                                    </td>
                                 </tr>
                             ))}
                         </tbody>

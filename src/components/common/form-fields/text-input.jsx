@@ -1,8 +1,17 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 
 const TextInput = ({ className, label, error, readOnly, onChange, options, ...rest }) => {
+    const [orderType, setOrderType] = useState('');
+    if(window.location.pathname === '/dashboard/uretim/order-edit') {
+        if (rest.name === 'orderType') {
+            setOrderType(rest.value);
+        }
+    }
+
+    
+
 	return (
         <Form.Group className={className} controlId={rest.name}>
             <Form.Label>{label}</Form.Label>

@@ -37,18 +37,25 @@ const OperationCol = ({
             >
                 <span>Hurda</span>
             </Button>
-            <Button
-                className="polygon-button next-button"
-                onClick={handlePopupClick}
-            >
-                <span>Mil Taşlamaya Geri Gidecek</span>
-            </Button>
-            <Button
-                className="polygon-button next-button"
-                onClick={handlePopupClick}
-            >
-                <span>Mil Isıl İşleme Geri Gidecek</span>
-            </Button>
+            {stage.kaliteKontrolStage === 'AFTER_POLISAJ' || 
+            stage.kaliteKontrolStage === 'AFTER_MIL_TASLAMA' ||
+            stage.kaliteKontrolStage === 'AFTER_EZME'
+             ? (
+                <Button
+                    className="polygon-button next-button"
+                    onClick={handlePopupClick}
+                >
+                    <span>Mil Taşlamaya Geri Gidecek</span>
+                </Button>
+            ) : null}
+            {stage.kaliteKontrolStage === 'AFTER_POLISAJ' ? (
+                <Button
+                    className="polygon-button next-button"
+                    onClick={handlePopupClick}
+                >
+                    <span>Mil Isıl İşleme Geri Gidecek</span>
+                </Button>
+            ) : null}
 
             {/* Show the popup only if isPopupOpen is true */}
             {isPopupOpen && (

@@ -78,7 +78,6 @@ const Polisaj = ({ data, currentPage, sortBy, sortOrder }) => {
                                     <option value="customerName">
                                         Müşteri Adı
                                     </option>
-                                
                                 </Form.Control>
                             </Form.Group>
                         </Col>
@@ -123,10 +122,21 @@ const Polisaj = ({ data, currentPage, sortBy, sortOrder }) => {
                         </thead>
                         <tbody>
                             {content.map((order, index) => (
-                                <tr key={index} 
-                                    className="eachRow"
-                                    onClick={() => handleRowClick(order)}
-                                    >
+                                <tr
+                                    key={index}
+                                    className={`eachRow ${
+                                        order.orderStatus ===
+                                        'İşlenmeyi Bekliyor'
+                                            ? 'disabled-row'
+                                            : ''
+                                    }`}
+                                    onClick={
+                                        order.orderStatus ===
+                                        'İşlenmeyi Bekliyor'
+                                            ? null
+                                            : () => handleRowClick(order)
+                                    }
+                                >
                                     <td>{order.customerName}</td>
                                     <td>{order.gasanNo}</td>
                                     <td>{order.orderNumber}</td>
