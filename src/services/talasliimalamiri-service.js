@@ -18,7 +18,6 @@ export const fetchOrders = async (
                 headers: await getAuthHeader()
             }
         );
-        console.log('RESPONSE STATUS:', response.status);
         return response;
 };
 
@@ -104,7 +103,6 @@ export const updateEzme = async (payload, operationId) => {
 };
 
 export const rollBackLastChange = async ( operationId) => {
-    console.log('operationId from rollBackLastChange:', operationId);
     const response = await fetch(
         `${API_URL}/talasli/removelastchange/${operationId}`,
         {

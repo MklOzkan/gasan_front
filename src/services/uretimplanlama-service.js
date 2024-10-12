@@ -44,7 +44,6 @@ export const updateOrder = async (payload) => {
 };
 
 export const deleteOrder = async (orderNumber) => {
-    console.log('orderNumber======================', orderNumber);
     const response = await fetch(
         `${API_URL}/orders/deleteOrder/${orderNumber}`,
         {

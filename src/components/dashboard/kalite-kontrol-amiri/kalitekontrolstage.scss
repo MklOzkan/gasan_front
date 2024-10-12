@@ -55,24 +55,24 @@
 }
 
 
-@media screen {
+@media screen and (max-width: 767px) {
     .polygon-button {
-        width: 400px; /* CHANGED: Limit max width */
+        width: 100%; /* CHANGED: Limit max width */
         height: 120px;
-        background-color: rgb(158, 156, 156); /* Default background color */
+        //background-color: rgb(158, 156, 156); /* Default background color */
         color: white;
         font-size: 18px;
         font-weight: bold;
         font-family: Arial, sans-serif;
-        border: none;
+        border: 1px solid rgb(189, 88, 88); /* Default border color */
         cursor: pointer;
-        position: relative;
+        position: absolute;
         text-align: center;
         line-height: 90px; /* Centers text vertically */
         transition: background-color 0.3s ease; /* Smooth transitions */
-        margin: 0; /* Remove margin */
-        padding: 0; /* Remove padding */
+        margin:0 auto; /* Remove margin */
         margin-bottom: -30px;
+        padding: 20px;
         &:hover {
             background-color: rgb(175, 142, 72); /* Darker background color on hover */
         }

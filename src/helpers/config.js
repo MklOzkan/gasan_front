@@ -43,7 +43,7 @@ export const config = {
             roles: ['KaliteKontrol']
         },
         {
-            urlRegex: /\/dashboard\/uretim-planlama$/,
+            urlRegex: /\/dashboard\/uretim$/,
             roles: ['UretimPlanlama']
         },
         {

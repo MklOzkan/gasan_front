@@ -18,6 +18,5 @@ export const fetchDataMontaj = async (
                 headers: await getAuthHeader()
             }
         );
-        console.log('RESPONSE STATUS:', response.status);
         return response;
 };

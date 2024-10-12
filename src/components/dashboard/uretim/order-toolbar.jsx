@@ -7,7 +7,6 @@ import { Button } from 'react-bootstrap';
 import { TfiPencil, TfiTrash } from 'react-icons/tfi';
 
 const OrderToolbar = ({ row }) => {
-    const [orderNumber, setOrderNumber] = useState(null);
 
     useEffect(() => {
 

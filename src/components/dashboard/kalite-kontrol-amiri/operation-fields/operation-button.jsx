@@ -17,10 +17,6 @@ import {
     afterMilTaslamaAction,
     afterMontajAction,
     afterPolisajAction,
-    rollBackEzmeAction,
-    rollBackMilTaslamaAction,
-    rollBackMontajAction,
-    rollBackPolisajAction
 
 } from '@/actions/kalite-kontrol-actions';
 import { swAlert, swConfirm } from '@/helpers/swal';
@@ -39,9 +35,9 @@ const OperationButton = ({order,  stage}) => {
     ];
 
 
-    // const togglePopup = (operationId) => {
-    //     setIsPopupOpen((prev) => (prev === operationId ? null : operationId)); // **Highlight: Toggle between null and the specific operationId**
-    // };
+   const togglePopup = () => {
+       setIsPopupOpen(!isPopupOpen); // Toggle the popup state
+   };
 
     const handleQuantityChange = (e) => {
         const value = e.target.value;
@@ -52,25 +48,38 @@ const OperationButton = ({order,  stage}) => {
         }
     };
 
-    const handleSubmit = async (operationId, operationType, producedAmount) => {
+    const handleSubmit = async (operationId, kaliteKontrolStage, producedAmount, buttonName) => {
+        console.log('operationId:', operationId);
+        console.log('operationType:', kaliteKontrolStage);
+        console.log('producedAmount:', producedAmount);
+        console.log('buttonName:', buttonName);
     
         try {
             // Construct the payload
             const formData = new FormData();
 
             // Append the fields to the FormData object
-
-            formData.append('operationType', operationType);
-            formData.append('completedQuantity', parseInt(producedAmount, 10));
+            formData.append('kaliteKontrolStage', kaliteKontrolStage);
+            formData.append('operationField', buttonName);
+            formData.append(`${buttonName}`, parseInt(producedAmount, 10));
 
             // Declare response variable
             let response;
+            if(kaliteKontrolStage === 'AFTER_POLISAJ') {
+                response = await afterPolisajAction(formData, operationId);
+            } else if(kaliteKontrolStage === 'AFTER_MONTAJ') {
+                response = await afterMontajAction(formData, operationId);
+            } else if(kaliteKontrolStage === 'AFTER_EZME') {
+                response = await afterEzmeAction(formData, operationId);
+            } else if(kaliteKontrolStage === 'AFTER_MIL_TASLAMA') {
+                response = await afterMilTaslamaAction(formData, operationId);
+            }
 
             if (response.success) {
                 swAlert(response.message);
                 setTimeout(() => {   
                     window.location.reload();
-                }, 2000);
+                }, 1000);
             }
         } catch (error) {
             swAlert(error.message, 'error');
@@ -84,7 +93,7 @@ const OperationButton = ({order,  stage}) => {
     return (
         <>
             <Container className="d-flex gap-5 justify-content-center operation_button ">
-                <Row className="d-inline-block gap-5">
+                <Row className="d-inline-block me-5">
                     
                             
                                 <Col className="d-flex gap-1">
@@ -105,7 +114,7 @@ const OperationButton = ({order,  stage}) => {
                                 </Col>
                             
                 </Row>
-                <Row className="d-flex flex-column m-0">
+                <Row className="d-flex flex-column ms-4">
                     <Col>
                         <OperationsInfo
                             stage={stage}

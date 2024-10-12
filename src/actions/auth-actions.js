@@ -10,7 +10,8 @@ import {
 import { AuthSchema } from '@/helpers/schemas/auth-schema';
 import { AuthError } from 'next-auth';
 
-export const loginAction = async (prevState, formData, onSuccess) => {
+
+export const loginAction = async (prevState, formData) => {
     const fields = convertFormDataToJSON(formData);
 
     try {
@@ -18,16 +19,8 @@ export const loginAction = async (prevState, formData, onSuccess) => {
         console.log("fields",fields);
 
         const result = await signIn('credentials', fields);
+        console.log("result",result);
 
-        if(result.ok){
-            console.log("result in login-action",result.ok);
-            if (onSuccess) {
-                onSuccess();
-            }
-            
-        }else{
-            return response(false, 'Girdiğiniz şifre eksik veya hatalı');
-        }
 
     } catch (err) {
         if (err instanceof YupValidationError) {
