@@ -28,8 +28,6 @@ export const getAllOrdersByPage = async (
 export const updatePassword = async ( payload) => {
      const username = payload.get('username');
      const newPassword = payload.get('newPassword');
-     console.log('username from updatePassword:', username);
-     console.log('newPassword from updatePassword:', newPassword);
 
     return fetch(`${API_URL}/users/updatePassword/${username}`, {
         method: 'PUT',

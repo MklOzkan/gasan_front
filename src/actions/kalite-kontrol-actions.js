@@ -16,12 +16,13 @@ import {
     updateAFterMontaj,
     rollbackAfterMontaj,
     rollbackAfterPolisaj,
-    rollbackAfterEzme
+    rollbackAfterEzme,
+    rollbackAfterMilTaslama
 } from '@/services/kalitekontrol-service';
 
 export const afterEzmeAction = async (formData, operationId) => {
     try {
-        console.log('formData from milKoparmaAction:', formData, operationId);
+        console.log('formData from afterEzme:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateAFterEzme(fields, operationId);
@@ -45,7 +46,11 @@ export const afterEzmeAction = async (formData, operationId) => {
 
 export const afterMilTaslamaAction = async (formData, operationId) => {
     try {
-        console.log('formData from milKoparmaAction:', formData, operationId);
+        console.log(
+            'formData from afterMilTaslamaAction:',
+            formData,
+            operationId
+        );
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateAFterMilTaslama(fields, operationId);
@@ -69,7 +74,7 @@ export const afterMilTaslamaAction = async (formData, operationId) => {
 
 export const afterMontajAction = async (formData, operationId) => {
     try {
-        console.log('formData from milKoparmaAction:', formData, operationId);
+        console.log('formData from afterMontajAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateAFterMontaj(fields, operationId);
@@ -93,7 +98,7 @@ export const afterMontajAction = async (formData, operationId) => {
 
 export const afterPolisajAction = async (formData, operationId) => {
     try {
-        console.log('formData from milKoparmaAction:', formData, operationId);
+        console.log('formData from afterPolisajAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateAFterPolisaj(fields, operationId);
@@ -115,7 +120,7 @@ export const afterPolisajAction = async (formData, operationId) => {
     }
 };
 
-export const rollPolisajAction = async (formData, operationId) => {
+export const rollBackPolisajAction = async (formData, operationId) => {
     try {
         console.log('formData from milKoparmaAction:', formData, operationId);
 
@@ -139,7 +144,7 @@ export const rollPolisajAction = async (formData, operationId) => {
     }
 };
 
-export const rollbackMontajAction = async (formData, operationId) => {
+export const rollBackMontajAction = async (formData, operationId) => {
     try {
         console.log('formData from milKoparmaAction:', formData, operationId);
 
@@ -165,11 +170,39 @@ export const rollbackMontajAction = async (formData, operationId) => {
 
 export const rollBackEzmeAction = async (formData, operationId) => {
     try {
-        console.log('formData from milKoparmaAction:', formData, operationId);
+        console.log('formData from rolBackEzmeAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
+        console.log('operationField:', fields.operationField);
         const res = await rollbackAfterEzme(fields, operationId);
         const data = await res.json();
+        console.log('RES in action',res)
+
+        if (!res.ok) {
+            throw new Error(`${data.message}`);
+        }
+
+        return {
+            success: true,
+            message: data.message || 'Başarıyla güncellendi'
+        };
+    } catch (err) {
+        if (err instanceof YupValidationError) {
+            return transformYupErrors(err.inner);
+        }
+        throw err;
+    }
+};
+
+export const rollBackMilTaslamaAction = async (formData, operationId) => {
+    try {
+        console.log('formData from rolBackMilTaslamaAction:', formData, operationId);
+
+        const fields = convertFormDataToJSON(formData);
+        console.log('operationField:', fields.operationField);
+        const res = await rollbackAfterMilTaslama(fields, operationId);
+        const data = await res.json();
+        console.log('RES in action', res);
 
         if (!res.ok) {
             throw new Error(`${data.message}`);

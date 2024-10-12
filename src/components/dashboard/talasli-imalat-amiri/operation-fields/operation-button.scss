@@ -105,6 +105,20 @@
     }
 }
 
+    @media screen  and (max-width: 767px) {
+    .operation_button {
+        display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    z-index: 1001; /* Ensure button is on top */
+    }
+}
+    
+
+
+
 
 
 

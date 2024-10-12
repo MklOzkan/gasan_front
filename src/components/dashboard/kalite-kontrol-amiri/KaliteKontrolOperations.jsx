@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import OrderForOperation from '@/components/common/form-fields/order-for-operation';
 import Spacer from '@/components/common/spacer';
 import { useRouter } from 'next/navigation';
+import './kalite-kontrol-operations.scss';
 
 const kaliteKontrolStages = {
   AFTER_POLISAJ: "Polisaj Sonrası",
@@ -30,36 +31,42 @@ const KaliteKontrolOperations = ({ responses }) => {
           <Spacer height={5} />
           <OrderForOperation order={returnBody} />
 
-          <Table>
-              <thead className="table table-bordered border-3 border-dark">
-                  <tr>
-                      <th className="border-3">Kontrol Aşaması</th>
-                      <th className="border-3">Onay Bekleyen Adedi</th>
-                  </tr>
-              </thead>
-              {returnBody3.map((stage, index) => (
-                  <tbody
-                      key={index}
-                      className="stage-button table table-bordered border-3 border-dark"
-                      onClick={() => handleRowClick(stage)}
-                  >
-                      {kaliteKontrolStages[stage.kaliteKontrolStage] && (
-                          <tr>
+          <Container className="table-container">
+              <div className="table-wrapper">
+                  <Table className="container-head text-center ">
+                      <thead className="table-head">
+                          <tr className="mb-3">
+                              <th className="border-3">Kontrol Aşaması</th>
                               <th className="border-3">
-                                  {
-                                      kaliteKontrolStages[
-                                          stage.kaliteKontrolStage
-                                      ]
-                                  }
-                              </th>
-                              <th className="border-3 border-dark">
-                                  {stage.milCount}
+                                  Onay Bekleyen Adet
                               </th>
                           </tr>
-                      )}
-                  </tbody>
-              ))}
-          </Table>
+                      </thead>
+                      {returnBody3.map((stage, index) => (
+                          <tbody
+                              key={index}
+                              className="stage-button"
+                              onClick={() => handleRowClick(stage)}
+                          >
+                              {kaliteKontrolStages[
+                                  stage.kaliteKontrolStage
+                              ] && (
+                                  <tr className="table-body">                                    
+                                      <td>
+                                          {
+                                              kaliteKontrolStages[
+                                                  stage.kaliteKontrolStage
+                                              ]
+                                          }
+                                      </td>
+                                      <td>{stage.milCount}</td>
+                                  </tr>
+                              )}
+                          </tbody>
+                      ))}
+                  </Table>
+              </div>
+          </Container>
       </Container>
   );
 };

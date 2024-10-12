@@ -4,16 +4,14 @@ import { login } from '@/services/auth-services';
 import { getIsTokenValid, getIsUserAuthorized } from './helpers/auth-helpers';
 import { NextResponse } from 'next/server';
 
+
 const config = {
     providers: [
         Credentials({
             async authorize(credentials) {
-                
-                console.log("credentials from Credentials in auth.js",credentials);
 
                 const res = await login(credentials);
-                console.log('API Response status:', res.status);
-
+                
                 if (!res.ok) {
                     console.log("login failed", await res.text());
                     return null;
@@ -24,8 +22,6 @@ const config = {
                     user: { ...data },
                     accessToken: data.token
                 };
-                console.log("payload in authorize in auth.js",payload);
-
                 return payload;
             }
         })
@@ -35,11 +31,8 @@ const config = {
         authorized({ auth, request }) {
             const { pathname, searchParams } = request.nextUrl;
             const userRole = auth?.user?.username;
-            console.log("userRole in authorized in auth.js",userRole);
-            console.log("pathname in authorized in auth.js",pathname);
 
             const redirectLink =  searchParams.get('link');
-            console.log("redirectLink in authorized in auth.js",redirectLink);
 
             const isLoggedIn = !!userRole;
             const isInLoginPage = pathname.startsWith('/login');
@@ -48,15 +41,11 @@ const config = {
 
 
             if (isLoggedIn && isTokenValid) {
-                console.log("isLoggedIn and isTokenValid",isLoggedIn,isTokenValid);
-                console.log("pathname in authorized in auth.js",pathname);
                 if (isInDashboardPages) {
-                    console.log("isInDashboardPages",isInDashboardPages);
                     const isUserAuthorized = getIsUserAuthorized(
                         userRole,
                         pathname
                     );
-                    console.log("isUserAuthorized",isUserAuthorized);
                     if (isUserAuthorized) return true;
 
                     return Response.redirect(

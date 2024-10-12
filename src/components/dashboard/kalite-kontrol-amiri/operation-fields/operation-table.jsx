@@ -3,111 +3,191 @@ import './operation-table.scss';
 import EditPopup from './edit-biten-popup.jsx'; // Import the popup component
 import { Button } from 'react-bootstrap';
 import { swAlert, swConfirm } from '@/helpers/swal';
-import { rollBackLastChangeAction } from '@/actions/talasli-actions';
+import {
+    rollBackEzmeAction,
+    rollBackMilTaslamaAction,
+    rollBackMontajAction,
+    rollBackPolisajAction
+} from '@/actions/kalite-kontrol-actions';
+
+const rollBackOperations =[
+    {
+        stage: 'AFTER_POLISAJ',
+        approveCount:'approveCount',
+        scrapCount:'scrapCount',
+        returnedToMilTaslama:'returnedToMilTaslama',
+        returnedToIsilIslem:'returnedToIsilIslem',
+
+    },
+    {
+        stage: 'AFTER_MONTAJ',
+        approveCount:'approveCount',
+        scrapCount:'scrapCount',
+        returnedToMilTaslama:'returnedToMilTaslama',
+        returnedToIsilIslem:'returnedToIsilIslem',
+    },
+    {
+        stage: 'AFTER_EZME',
+        approveCount:'approveCount',
+        scrapCount:'scrapCount',
+        returnedToMilTaslama:'returnedToMilTaslama',
+        returnedToIsilIslem:'returnedToIsilIslem',
+    },
+    {
+        stage: 'AFTER_MIL_TASLAMA',
+        approveCount:'approveCount',
+        scrapCount:'scrapCount',
+        returnedToMilTaslama:'returnedToMilTaslama',
+        returnedToIsilIslem:'returnedToIsilIslem',
+    }
+]
 
 const OperationsInfo = ({stage}) => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [selectedOperation, setSelectedOperation] = useState(null);
-    const [newValue, setNewValue] = useState('');
-    const [operationId, setOperationId] = useState(null);
 
 
 
-    const rollBack = async (stage) => {
-        setOperationId(stage);
-        console.log('Selected Operation:', stage);
+    const rollBack = async (name) => {
+        let message = '';
+        if (name === 'Approve') {
+            message = `En son girilen ${stage.lastApproveCount} adetlik üretimi geri almak istediğinize emin misiniz??`;
+        } else if (name === 'Scrap') {
+            message = `En son girilen ${stage.lastScrapCount} adetlik hurda üretimi geri almak istediğinize emin misiniz??`;
+        } else if (name === 'Mil_Taslama') {
+            message = `En son girilen ${stage.lastReturnedToMilTaslama} adeti geri almak istediğinize emin misiniz??`;
+        } else if (name === 'Isil_Islem') {
+            message = `En son girilen ${stage.lastReturnedToIsilIslem} adetlik üretimi geri almak istediğinize emin misiniz??`;
+        }
+            
         const answer = await swConfirm(
-            `En son girilen ${stage.lastApprove} adetlik üretimi geri almak istediğinize emin misiniz??`
+            message
         );
         if (!answer.isConfirmed) return;
+        const formData = new FormData();
+        formData.append('operationField', name);
+        let response;
 
-        const res = await rollBackLastChangeAction(operation.id);
+        switch (stage.kaliteKontrolStage) {
+            case 'AFTER_POLISAJ':
+                response = await rollBackPolisajAction(formData, stage.id);
+                break;
+            case 'AFTER_MONTAJ':
+                response = await rollBackMontajAction(formData, stage.id);
+                break;
+            case 'AFTER_EZME':
+                response = await rollBackEzmeAction(formData, stage.id);
+                break;
+            case 'AFTER_MIL_TASLAMA':
+                response = await rollBackMilTaslamaAction(formData, stage.id);
+                break;
+            default:
+                break;
+        }
 
-        if (res.success) {
-            setTimeout(()=>{
-                swAlert(res.message, 'success');}, 1000);
-            window.location.reload();
+        if (response.success) {
+            
+                swAlert(response.message, 'success');
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
             
         } else {
-            swAlert(res.message, 'error');
+            swAlert(response.message, 'error');
         }
     };
 
     return (
-        <div className="operations-info">
+        <div className="operations-info d-flex">
             <table className="operations-table">
                 <thead>
                     <tr>
                         <th>İşlem</th>
                         <th>Biten</th>
-                        <th>Kalan</th>
                     </tr>
                 </thead>
                 <tbody>
                     <React.Fragment>
                         <tr>
-                            <td>Onay Aşaması</td>
+                            <td>Onaylandı</td>
                             <td>
                                 <Button
                                     className="edit-button"
-                                    disabled={
-                                        stage.approveCount === 0 ||
-                                        stage.lastApproveCount === 0
-                                    }
-                                    onClick={() => rollBack(stage)}
+                                    disabled={stage.lastApproveCount === 0}
+                                    onClick={() => rollBack('Approve')}
+                                    name="approveCount"
                                 >
                                     {stage.approveCount}
                                 </Button>
                             </td>
-                            <td>{stage.milCount <= 0 ? 0 : stage.milCount}</td>
                         </tr>
                         <tr>
                             <td>Hurda</td>
                             <td>
                                 <Button
                                     className="edit-button"
-                                    disabled={stage.lastApproveCount === 0}
-                                    onClick={() => rollBack(stage)}
+                                    disabled={stage.lastScrapCount === 0}
+                                    onClick={() => rollBack('Scrap')}
+                                    name="scrapCount"
                                 >
                                     {stage.scrapCount}
                                 </Button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Mil Taşlama</td>
-                            <td>
-                                <Button
-                                    className="edit-button"
-                                    disabled={stage.lastReturnedToMilTaslama === 0}
-                                    onClick={() => rollBack(stage)}
-                                >
-                                    {stage.returnedToMilTaslama}
-                                </Button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Isıl İşlem</td>
-                            <td>
-                                <Button
-                                    className="edit-button"
-                                    disabled={stage.lastApproveCount === 0}
-                                    onClick={() => rollBack(stage)}
-                                >
-                                    {stage.scrapCount}
-                                </Button>
-                            </td>
-                        </tr>
+                        {stage.kaliteKontrolStage === 'AFTER_POLISAJ' ||
+                        stage.kaliteKontrolStage === 'AFTER_MIL_TASLAMA' ||
+                        stage.kaliteKontrolStage === 'AFTER_EZME' ? (
+                            <tr>
+                                <td>Mil Taşlama</td>
+                                <td>
+                                    <Button
+                                        className="edit-button"
+                                        disabled={
+                                            stage.lastReturnedToMilTaslama === 0
+                                        }
+                                        onClick={() => rollBack('Mil_Taslama')}
+                                        name="returnedToMilTaslama"
+                                    >
+                                        {stage.returnedToMilTaslama}
+                                    </Button>
+                                </td>
+                            </tr>
+                        ) : null}
+                        {stage.kaliteKontrolStage === 'AFTER_POLISAJ' ? (
+                            <tr>
+                                <td>Isıl İşlem</td>
+                                <td>
+                                    <Button
+                                        className="edit-button"
+                                        disabled={
+                                            stage.lastReturnedToIsilIslem === 0
+                                        }
+                                        onClick={() => rollBack('Isil_Islem')}
+                                        name="returnedToIsilIslem"
+                                    >
+                                        {stage.scrapCount}
+                                    </Button>
+                                </td>
+                            </tr>
+                        ) : null}
                     </React.Fragment>
                 </tbody>
             </table>
-            {isPopupOpen && (
-                <EditPopup
-                    value={newValue}
-                    onClose={handleClosePopup}
-                    onSave={handleSave}
-                    onInputChange={handleInputChange}
-                />
-            )}
+            <table className="operations-table text-center">
+                <thead>
+                    <tr>
+                        <th className="text-center">Kalan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {
+                            <td className="mil">
+                                {stage.milCount <= 0 ? 0 : stage.milCount}
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
         </div>
     );
 };

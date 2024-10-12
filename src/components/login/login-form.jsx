@@ -26,7 +26,6 @@ const LoginForm = () => {
     const [redirectLink, setRedirectLink] = useState('');//Yönlendirelecek linki tutar
     const [user, setUser] = useState('');
 
-    //Kullanıcı adını ve yönlendirilecek linki alır
     useEffect(() => {
         // Get the username from the query parameters
         const usernameFromQuery = searchParams.get('username');
@@ -40,13 +39,7 @@ const LoginForm = () => {
             router.push('/'); //Anasayfaya yönlendirir
         }
     }, [router, searchParams]);
-
-    const handleLoginSuccess = () => {
-        router.push(redirectLink); // Redirect to the appropriate page
-    };
-
-    
-
+  
     return (
         <Container className="login-form">
             <Row className="justify-content-center">
@@ -86,7 +79,7 @@ const LoginForm = () => {
                                         error={state?.errors?.password}
                                     />
                                 </Form.Group>
-                                <SubmitButton onSubmit={handleLoginSuccess}>
+                                <SubmitButton >
                                     Login
                                 </SubmitButton>
                             </Form>

@@ -27,10 +27,7 @@ export const updateQuantity = async (producedQuantity,orderId, processId) => {
         const data = await res.json(); // Gelecek olan response'ı json formatına çeviriyoruz
 
         if (!res.ok) {
-            return {
-                success: false,
-                message: data.message || 'Bir hata oluştu'
-            };
+            throw new Error(data.message|| 'Bir hata oluştu');
         }
 
         revalidatePath('/dashboard/talasli-imalat-amiri');

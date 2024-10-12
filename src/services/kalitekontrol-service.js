@@ -22,9 +22,9 @@ export const fetchDataKaliteKontrol = async (
         return response;
 };
 
-export const getMultipleResponses = async (orderId) => {
+export const getMultipleResponses = async (operationId) => {
     const response = await fetch(
-        `${API_URL}/kalitekontrol/getAllForOrder/${orderId}`,
+        `${API_URL}/kalitekontrol/getAllForOrder/${operationId}`,
         {
             method: 'GET',
             headers: await getAuthHeader()
@@ -33,9 +33,9 @@ export const getMultipleResponses = async (orderId) => {
     return response;
 };
 
-export const getOrderAndStage = async (orderId) => {
+export const getOrderAndStage = async (operationId) => {
     const response = await fetch(
-        `${API_URL}/kalitekontrol/getOrderAndStage/${orderId}`,
+        `${API_URL}/kalitekontrol/getOrderAndStage/${operationId}`,
         {
             method: 'GET',
             headers: await getAuthHeader()
@@ -44,9 +44,9 @@ export const getOrderAndStage = async (orderId) => {
     return response;
 };
 
-export const updateAFterMontaj = async (payload, orderId) => {
+export const updateAFterMontaj = async (payload, operationId) => {
     const response = await fetch(
-        `${API_URL}/kalitekontrol/aftermontaj/${orderId}`,
+        `${API_URL}/kalitekontrol/aftermontaj/${operationId}`,
         {
             method: 'PUT',
             headers: await getAuthHeader(),
@@ -56,9 +56,9 @@ export const updateAFterMontaj = async (payload, orderId) => {
     return response;
 };
 
-export const updateAFterMilTaslama = async (payload, orderId) => {
+export const updateAFterMilTaslama = async (payload, operationId) => {
     const response = await fetch(
-        `${API_URL}/kalitekontrol/aftermiltaslama/${orderId}`,
+        `${API_URL}/kalitekontrol/aftermiltaslama/${operationId}`,
         {
             method: 'PUT',
             headers: await getAuthHeader(),
@@ -68,9 +68,9 @@ export const updateAFterMilTaslama = async (payload, orderId) => {
     return response;
 };
 
-export const updateAFterPolisaj = async (payload, orderId) => {
+export const updateAFterPolisaj = async (payload, operationId) => {
     const response = await fetch(
-        `${API_URL}/kalitekontrol/afterpolisaj/${orderId}`,
+        `${API_URL}/kalitekontrol/afterpolisaj/${operationId}`,
         {
             method: 'PUT',
             headers: await getAuthHeader(),
@@ -80,9 +80,22 @@ export const updateAFterPolisaj = async (payload, orderId) => {
     return response;
 };
 
-export const updateAFterEzme = async (payload, orderId) => {
+export const updateAFterEzme = async (payload, operationId) => {
     const response = await fetch(
-        `${API_URL}/kalitekontrol/afterezme/${orderId}`,
+        `${API_URL}/kalitekontrol/afterezme/${operationId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    console.log('RESPONSE:', response);
+    return response;
+};
+
+export const rollbackAfterMontaj = async (payload, operationId) => {
+    const response = await fetch(
+        `${API_URL}/kalitekontrol/rollbackAfterMontaj/${operationId}`,
         {
             method: 'PUT',
             headers: await getAuthHeader(),
@@ -92,9 +105,9 @@ export const updateAFterEzme = async (payload, orderId) => {
     return response;
 };
 
-export const rollbackAfterMontaj = async (payload, orderId) => {
+export const rollbackAfterPolisaj = async (payload, operationId) => {
     const response = await fetch(
-        `${API_URL}/kalitekontrol/rollbackAfterMontaj/${orderId}`,
+        `${API_URL}/kalitekontrol/rollbackAfterPolisaj/${operationId}`,
         {
             method: 'PUT',
             headers: await getAuthHeader(),
@@ -104,21 +117,24 @@ export const rollbackAfterMontaj = async (payload, orderId) => {
     return response;
 };
 
-export const rollbackAfterPolisaj = async (payload, orderId) => {
+export const rollbackAfterEzme = async (payload, operationId) => {
+    console.log('payload in rollbackAfterEzme:', payload)
     const response = await fetch(
-        `${API_URL}/kalitekontrol/rollbackAfterPolisaj/${orderId}`,
+        `${API_URL}/kalitekontrol/rollbackAfterEzme/${operationId}`,
         {
             method: 'PUT',
             headers: await getAuthHeader(),
             body: JSON.stringify(payload)
         }
     );
+    console.log('operationField in Json:', payload.operationField);
     return response;
 };
 
-export const rollbackAfterEzme = async (payload, orderId) => {
+export const rollbackAfterMilTaslama = async (payload, operationId) => {
+    console.log('payload in rollbackAfterMiltaslama:', payload);
     const response = await fetch(
-        `${API_URL}/kalitekontrol/rollbackAfterEzme/${orderId}`,
+        `${API_URL}/kalitekontrol/rollbackAfterMilTaslama/${operationId}`,
         {
             method: 'PUT',
             headers: await getAuthHeader(),
