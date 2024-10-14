@@ -1,12 +1,12 @@
 export const config = {
     api: {
-        baseUrl: 'http://localhost:8080'
+        baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
     },
     project: {
-        name: 'Start School',
+        name: 'Gasan App',
         slogan: 'Right Time Right Now',
         description:
-            'At Start Schools, we empower individuals with the skills and knowledge they need to thrive in the dynamic world of cloud technologies. Our comprehensive bootcamps equip you with the expertise to master essential cloud platforms like AWS, Azure, and Google Cloud Platform, enabling you to confidently navigate the ever-evolving landscape of cloud computing.',
+            'Gasan App is a web application that is developed for Gasan Group employees to manage their daily operations.',
         version: '1.0.0'
     },
     userRightsOnRoutes: [
