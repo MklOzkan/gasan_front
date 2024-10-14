@@ -9,11 +9,10 @@ const config = {
     providers: [
         Credentials({
             async authorize(credentials) {
-
                 const res = await login(credentials);
-                
+
                 if (!res.ok) {
-                    console.log("login failed", await res.text());
+                    console.log('login failed', await res.text());
                     return null;
                 }
                 const data = await res.json();
@@ -32,13 +31,12 @@ const config = {
             const { pathname, searchParams } = request.nextUrl;
             const userRole = auth?.user?.username;
 
-            const redirectLink =  searchParams.get('link');
+            const redirectLink = searchParams.get('link');
 
             const isLoggedIn = !!userRole;
             const isInLoginPage = pathname.startsWith('/login');
             const isInDashboardPages = pathname.startsWith('/dashboard');
             const isTokenValid = getIsTokenValid(auth?.accessToken);
-
 
             if (isLoggedIn && isTokenValid) {
                 if (isInDashboardPages) {
@@ -83,13 +81,13 @@ const config = {
             // You can clear cookies, make a request to invalidate the token on the server-side, etc.
             return true;
         }
-    
     },
 
     pages: {
         signIn: '/login',
-        signOut: '/login',
-    }
+        signOut: '/login'
+    },
+    trustHost: process.env.NODE_ENV === 'development' || ['localhost']
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
