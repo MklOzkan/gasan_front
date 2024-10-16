@@ -11,10 +11,16 @@ import {
     Button
 } from 'react-bootstrap';
 import PageHeader from '@/components/common/page-header';
-import './liftMontaj.scss';
+import styles from './lift-montaj.module.scss';
+import { useRouter } from 'next/navigation';
 
 const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
-    const { content, totalPages } = data;
+     const router = useRouter();
+     const { content, totalPages } = data;
+
+     const handleRowClick = (order) => {
+         router.push(`/dashboard/lift-montaj-amiri/${order.id}`);
+     };
 
     const handleSortChange = (e) => {
         const { name, value } = e.target;
@@ -46,10 +52,10 @@ const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
     return (
         <>
             <PageHeader>Lift Montaj Amiri </PageHeader>
-            <Container>
-                <Row className="my-3">
-                    <div className="d-flex gap-3">
-                        <Col md={2}>
+            <main className={styles.main_container}>
+                
+                    <div className={styles.row_container}>
+                        <Col className={styles.colum_inner}>
                             <Form.Group controlId="sortBy">
                                 <Form.Label>Sırala</Form.Label>
                                 <Form.Control
@@ -70,11 +76,10 @@ const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
                                     <option value="customerName">
                                         Müşteri Adı
                                     </option>
-                                
                                 </Form.Control>
                             </Form.Group>
                         </Col>
-                        <Col md={2}>
+                        <Col className={styles.colum_inner}>
                             <Form.Group controlId="sortOrder">
                                 <Form.Label>Siparişi Sırala</Form.Label>
                                 <Form.Control
@@ -88,9 +93,11 @@ const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
                                 </Form.Control>
                             </Form.Group>
                         </Col>
-                        <Col md={2}>
+                        <Col
+                            className={`${styles.colum_inner} ${styles.outer_reset}`}
+                        >
                             <Button
-                                className="p-1"
+                                className={styles.inner_reset}
                                 variant="secondary"
                                 onClick={handleReset}
                             >
@@ -98,8 +105,7 @@ const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
                             </Button>
                         </Col>
                     </div>
-                </Row>
-                <div className="table-responsive">
+                <div className={styles.table_responsive}>
                     <Table striped bordered hover>
                         <thead>
                             <tr>
@@ -116,7 +122,16 @@ const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
                         </thead>
                         <tbody>
                             {content.map((order, index) => (
-                                <tr key={index} className="eachRow">
+                                <tr
+                                    key={index}
+                                    className={`${styles.eachRow}`}
+                                    onClick={
+                                        order.orderStatus ===
+                                        'İşlenmeyi Bekliyor'
+                                            ? null
+                                            : () => handleRowClick(order)
+                                    }
+                                >
                                     <td>{order.customerName}</td>
                                     <td>{order.gasanNo}</td>
                                     <td>{order.orderNumber}</td>
@@ -142,7 +157,7 @@ const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
                         </Pagination.Item>
                     ))}
                 </Pagination>
-            </Container>
+            </main>
         </>
     );
 };
