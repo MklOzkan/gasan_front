@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import './operation-table.scss';
-import EditPopup from './edit-biten-popup.jsx'; // Import the popup component
+import styles from './operations-info-and-rollback.module.scss';
 import { Button } from 'react-bootstrap';
 import { swAlert, swConfirm } from '@/helpers/swal';
 import { rollBackLastChangeAction } from '@/actions/talasli-actions';
 
-const OperationsInfo = ({ operations, productionProcess }) => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [selectedOperation, setSelectedOperation] = useState(null);
-    const [newValue, setNewValue] = useState('');
-    const [operationId, setOperationId] = useState(null);
+const OperationsInfo = ({ operations, order }) => {
+    const [completedQty, setCompletedQty] = useState(0);
+    const [remainingQty, setRemainingQty] = useState(0);
+
+    useEffect(() => {
+        const operation = operations.find(
+            (operation) =>
+                operation.operationType === 'ISIL_ISLEM' ||
+                operation.operationType === 'EZME'
+        );
+
+        if (operation) {
+            setCompletedQty(operation.completedQuantity);
+        }
+        setRemainingQty(order.orderQuantity-order.readyMilCount);
+    }, [operations, order]);
 
 
 
     const rollBack = async (operation) => {
-        setOperationId(operation);
         console.log('Selected Operation:', operation);
         const answer = await swConfirm(
             `En son girilen ${operation.lastCompletedQty} adetlik üretimi geri almak istediğinize emin misiniz??`
@@ -34,8 +43,8 @@ const OperationsInfo = ({ operations, productionProcess }) => {
     };
 
     return (
-        <div className="operations-info">
-            <table className="operations-table">
+        <div className={styles.operations_info}>
+            <table className={styles.operations_table}>
                 <thead>
                     <tr>
                         <th>İşlem</th>
@@ -48,44 +57,37 @@ const OperationsInfo = ({ operations, productionProcess }) => {
                         <React.Fragment key={index}>
                             {/* Insert total produced MIL row before BORU_KESME_HAVSA */}
                             {operation.operationType === 'BORU_KESME_HAVSA' && (
-                                <tr className="total-row">
+                                <tr className={styles.total_row}>
                                     <td>Toplam Üretilen Mil</td>
-                                    
-                                    <td>
-                                        {productionProcess.completedQuantity}
-                                    
-                                    </td>
-                                    <td>{productionProcess.remainingQuantity}</td>
+
+                                    <td>{completedQty}</td>
+                                    <td>{remainingQty}</td>
                                 </tr>
                             )}
                             <tr>
                                 <td>{operation.operationType}</td>
                                 <td>
-                                {}
                                     <Button
-                                        className="edit-button"
-                                        disabled={operation.completedQuantity === 0 ||operation.lastCompletedQty === 0}
-                                        onClick={() =>
-                                            rollBack(operation)
+                                        className={styles.edit_button}
+                                        disabled={
+                                            operation.completedQuantity === 0 ||
+                                            operation.lastCompletedQty === 0
                                         }
+                                        onClick={() => rollBack(operation)}
                                     >
                                         {operation.completedQuantity}
                                     </Button>
                                 </td>
-                                <td>{operation.remainingQuantity<=0 ?(0) :(operation.remainingQuantity)}</td>
+                                <td>
+                                    {operation.remainingQuantity <= 0
+                                        ? 0
+                                        : operation.remainingQuantity}
+                                </td>
                             </tr>
                         </React.Fragment>
                     ))}
                 </tbody>
             </table>
-            {isPopupOpen && (
-                <EditPopup
-                    value={newValue}
-                    onClose={handleClosePopup}
-                    onSave={handleSave}
-                    onInputChange={handleInputChange}
-                />
-            )}
         </div>
     );
 };

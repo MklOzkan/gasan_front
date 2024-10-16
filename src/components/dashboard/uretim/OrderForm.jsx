@@ -8,6 +8,7 @@ import { initialResponse } from '@/helpers/form-validation';
 import { SubmitButton, TextInput } from '@/components/common/form-fields';
 import { useRouter } from 'next/navigation';
 import PageHeader from '@/components/common/page-header';
+import styles from './order-form.module.scss';
 
 const orderTypes = ['Lift', 'Damper', 'Blok Lift', 'Paslanmaz'];
 
@@ -99,9 +100,8 @@ const OrderForm = () => {
     return (
         <>
             <PageHeader> Yenİ Sİparİş </PageHeader>
-            <Container
-                fluid
-                className="d-flex justify-content-center align-items-center "
+            <main 
+                className={styles.main_container}
                 style={{ minHeight: '100vh' }}
             >
                 <Card style={{ maxWidth: '600px', width: '100%' }}>
@@ -195,11 +195,11 @@ const OrderForm = () => {
                                 value={'İşlenmeyi Bekliyor'}
                                 readOnly
                             />
-                            <SubmitButton disabled={!isFormValid} />
+                            <SubmitButton title='Kaydet' disabled={!isFormValid} />
                         </Form>
                     </Card.Body>
                 </Card>
-            </Container>
+            </main>
         </>
     );
 };

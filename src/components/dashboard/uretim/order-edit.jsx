@@ -15,6 +15,7 @@ import {
 } from '@/components/common/form-fields';
 import { useRouter } from 'next/navigation';
 import PageHeader from '@/components/common/page-header';
+import styles from './order-form.module.scss';
 
 const orderTypes = ['Lift', 'Damper', 'Blok Lift', 'Paslanmaz'];
 
@@ -46,11 +47,7 @@ const OrderEdit = ({ order}) => {
     return (
         <>
             <PageHeader>SİPARİŞİ GÜNCELLE</PageHeader>
-            <Container
-                fluid
-                className="d-flex justify-content-center align-items-center"
-                style={{ minHeight: '100vh' }}
-            >
+            <main className={styles.main_container}>
                 <Card style={{ maxWidth: '600px', width: '100%' }}>
                     <Card.Body>
                         <Form noValidate onSubmit={handleSubmit}>
@@ -129,7 +126,11 @@ const OrderEdit = ({ order}) => {
                                 className="mb-3"
                                 label="Hazir Mil Miktarı"
                                 error={state?.errors?.readyMilCount}
-                                defaultValue={orderType !== 'Lift'? 0:returnBody.readyMilCount}
+                                defaultValue={
+                                    orderType !== 'Lift'
+                                        ? 0
+                                        : returnBody.readyMilCount
+                                }
                                 required
                                 disabled={orderType !== 'Lift'} // **Disable the field based on the selected order type**
                             />
@@ -142,11 +143,11 @@ const OrderEdit = ({ order}) => {
                                 defaultValue={returnBody.orderStatus}
                                 required
                             />
-                            <SubmitButton />
+                            <SubmitButton title='Güncelle' />
                         </Form>
                     </Card.Body>
                 </Card>
-            </Container>
+            </main>
         </>
     );
 };

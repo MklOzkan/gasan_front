@@ -2,13 +2,13 @@
 import DataTable, { Column } from '@/components/common/form-fields/data-table';
 import Link from 'next/link';
 import React, { useEffect} from 'react';
-import { Container } from 'react-bootstrap';
-import OrderToolbar from './order-toolbar';
+import OrderToolbar from './OrderToolbar';
 import PageHeader from '@/components/common/page-header';
 import Spacer from '@/components/common/spacer';
 import {
     FaPlus
 } from 'react-icons/fa';
+import styles from './uretim-list.module.scss';
 
 const OrderList = ({ data }) => {
     const { content, totalPages, number, size } = data;
@@ -25,10 +25,12 @@ const OrderList = ({ data }) => {
         <>
             <PageHeader>Üretim Planlama</PageHeader>
             <Spacer height={50} />
-            <Container>
+            <main className={styles.main_container}>
                 <Link
                     href="/dashboard/uretim/new"
-                    className="btn btn-primary mb-3"
+                    className={styles.btn}
+                    type='button'
+                    title='Sipariş Oluştur'
                 >
                     <FaPlus /> Sipariş Oluştur
                 </Link>
@@ -55,7 +57,7 @@ const OrderList = ({ data }) => {
 
                     <Column template={handleToolbar}></Column>
                 </DataTable>
-            </Container>
+            </main>
         </>
     );
 };

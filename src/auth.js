@@ -2,7 +2,6 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { login } from '@/services/auth-services';
 import { getIsTokenValid, getIsUserAuthorized } from './helpers/auth-helpers';
-import { NextResponse } from 'next/server';
 
 
 const config = {

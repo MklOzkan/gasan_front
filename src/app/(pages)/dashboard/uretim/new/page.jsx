@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import React from 'react';
 
 const OrderCrateForm = dynamic(
-    () => import('@/components/dashboard/uretim/order-form.jsx'),
+    () => import('@/components/dashboard/uretim/OrderForm.jsx'),
     {
         ssr: false // This disables server-side rendering for this component
     }

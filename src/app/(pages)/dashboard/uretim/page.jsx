@@ -1,4 +1,4 @@
-import OrderList from "@/components/dashboard/uretim/uretim-list";
+import OrderList from "@/components/dashboard/uretim/UretimList";
 import { getOrders } from "@/services/uretimplanlama-service";
 import React from "react";
 

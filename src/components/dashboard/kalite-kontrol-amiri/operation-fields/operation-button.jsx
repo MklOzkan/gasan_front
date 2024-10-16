@@ -63,6 +63,8 @@ const OperationButton = ({order,  stage}) => {
             formData.append('operationField', buttonName);
             formData.append(`${buttonName}`, parseInt(producedAmount, 10));
 
+            console.log('FORMDATA IN OP_BUTTON', kaliteKontrolStage, buttonName, producedAmount);
+
             // Declare response variable
             let response;
             if(kaliteKontrolStage === 'AFTER_POLISAJ') {
@@ -79,7 +81,7 @@ const OperationButton = ({order,  stage}) => {
                 swAlert(response.message);
                 setTimeout(() => {   
                     window.location.reload();
-                }, 1000);
+                }, 2000);
             }
         } catch (error) {
             swAlert(error.message, 'error');

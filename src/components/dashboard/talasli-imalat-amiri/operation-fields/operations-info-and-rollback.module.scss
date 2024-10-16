@@ -1,5 +1,5 @@
 /* Base styling for the operations info container */
-.operations-info {
+.operations_info {
     width: 100%;
     max-width: 800px; /* Set a max-width to avoid overflow */
     margin: 0 auto; /* Center the table */
@@ -11,7 +11,7 @@
 }
 
 /* Styling for the operations table */
-.operations-table {
+.operations_table {
     width: 100%;
     border-collapse: collapse; /* Collapse borders for a clean look */
     font-size: 1rem; /* Set base font size */
@@ -36,13 +36,13 @@
 }
 
 /* Highlight the total row */
-.total-row {
+.total_row {
     font-weight: bold; /* Bold text */
     background-color: #f9f9f9; /* Slightly different background */
 }
 
 /* Edit button inside table cells */
-.edit-button {
+.edit_button {
     background-color: #007bff; /* Primary blue color */
     color: #ffffff; /* White text color */
     border: none; /* No border */
@@ -53,7 +53,7 @@
 }
 
 /* Hover effect for edit button */
-.edit-button:hover {
+.edit_button:hover {
     background-color: #0056b3; /* Darker blue on hover */
 }
 

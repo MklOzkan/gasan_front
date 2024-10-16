@@ -26,14 +26,14 @@ const KaliteKontrolOperations = ({ responses }) => {
   };
 
   return (
-      <Container fluid>
+      <main fluid>
           <PageHeader>Kalite Kontrol Amiri</PageHeader>
           <Spacer height={5} />
           <OrderForOperation order={returnBody} />
 
-          <Container className="table-container">
+          <main className="table-container">
               <div className="table-wrapper">
-                  <Table className="container-head text-center ">
+                  <table className="container-head text-center ">
                       <thead className="table-head">
                           <tr className="mb-3">
                               <th className="border-3">Kontrol Aşaması</th>
@@ -64,10 +64,10 @@ const KaliteKontrolOperations = ({ responses }) => {
                               )}
                           </tbody>
                       ))}
-                  </Table>
+                  </table>
               </div>
-          </Container>
-      </Container>
+          </main>
+      </main>
   );
 };
 
