@@ -1,5 +1,5 @@
 
-import LiftMontaj from '@/components/dashboard/lift-montaj-amiri/lift-montaj';
+import LiftMontaj from '@/components/dashboard/lift-montaj-amiri/LiftMontaj';
 import { fetchDataLiftMontaj } from '@/services/liftmontajamri-service';
 import { fetchDataPolisaj } from '@/services/polisajamiri-service';
 
