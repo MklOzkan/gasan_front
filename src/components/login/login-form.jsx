@@ -23,7 +23,6 @@ const LoginForm = () => {
     const router = useRouter();//Sayfalar arası geçiş yapmayı sağlar
     const searchParams = useSearchParams();//URL'deki parametreleri alır
     const [username, setUsername] = useState('');//Kullanıcı adını tutar
-    const [redirectLink, setRedirectLink] = useState('');//Yönlendirelecek linki tutar
     const [user, setUser] = useState('');
 
     useEffect(() => {
@@ -33,7 +32,6 @@ const LoginForm = () => {
         const userFromQuery = searchParams.get('user');
         if (usernameFromQuery && linkFromQuery) {
             setUsername(usernameFromQuery);
-            setRedirectLink(linkFromQuery);
             setUser(userFromQuery);
         } else {
             router.push('/'); //Anasayfaya yönlendirir
@@ -41,7 +39,7 @@ const LoginForm = () => {
     }, [router, searchParams]);
   
     return (
-        <Container className="login-form">
+        <main className="login-form">
             <Row className="justify-content-center">
                 <Col md={8} lg={6}>
                     <Card className="card">
@@ -87,7 +85,7 @@ const LoginForm = () => {
                     </Card>
                 </Col>
             </Row>
-        </Container>
+        </main>
     );
 };
 

@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 import './operation-button.scss';
 import ButtonColumn from './button-column';
-import OperationsInfo from './operation-table';
+import OperationsInfo from './OperationsInfoAndRollBack';
 import {
     milKoparmaAction,
     milTornalamaAction,

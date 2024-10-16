@@ -2,13 +2,6 @@ import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-const buttonlist = [
-    {
-        title: 'Onayla',
-        name: 'approveCount',
-    }
-]
-
 const OperationCol = ({
     stage,
     order,

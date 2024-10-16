@@ -16,6 +16,7 @@ import {
     transformYupErrors
 } from '@/helpers/form-validation';
 import { OrderSchema } from '@/helpers/schemas/order-schema';
+import { wait } from '@/utils/wait';
 
 export const createOrderAction = async (formData) => {
     try {
@@ -96,16 +97,16 @@ export const updateOrderStatus = async (orderId) => {
     try {
         const res = await updateStatus(orderId); // Renamed from response to res
 
+        await wait(1000);
+
         // Determine content type to parse correctly
         const data = await res.json(); // Gelecek olan response'ı json formatına çeviriyoruz
 
-        if (res.ok) {
-            revalidatePath('/dashboard/talasli-imalat-amiri');
-            return { success: true, data };
-            
-        } else {
-            return { success: false, message: data.message || 'Bir hata oluştu' };
+        if(!res.ok){
+            throw new Error(data?.message || 'Bir hata oluştu');
         }
+            revalidatePath('/dashboard/talasli-imalat-amiri');
+            return { success: true, message: data?.message || 'Sipariş durumu başarıyla güncellendi' };
 
     
     } catch (err) {

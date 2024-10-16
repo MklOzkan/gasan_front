@@ -20,9 +20,9 @@ const KaliteKontrolStage = ({ responses }) => {
 
     return (
         <>
-            <Container fluid>
+            <main fluid>
                 <PageHeader>Kalite Kontrol amİrİ</PageHeader>
-                <h1 className="kalite-container kalite border">
+                <h1 className="kalite-main kalite border">
                     {stages?.[returnBody3?.kaliteKontrolStage] ||
                         'Unknown Stage'}
                 </h1>
@@ -30,7 +30,7 @@ const KaliteKontrolStage = ({ responses }) => {
                 <OrderForOperation order={returnBody} />
                 <Spacer height={0} />
                 <OperationButton order={returnBody} stage={returnBody3} />
-            </Container>
+            </main>
         </>
     );
 };

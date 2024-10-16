@@ -13,7 +13,9 @@ import {
 import PageHeader from '@/components/common/page-header';
 import { useRouter } from 'next/navigation'; // Use Next.js router for redirection
 import { updateOrderStatus } from '@/actions/order-actions'; // External function for API call
-import './talasli.scss';
+import styles from './talasli.module.scss';
+import { swAlert } from '@/helpers/swal';
+import { wait } from '@/utils/wait';
 
 const Order = ({ data, currentPage, sortBy, sortOrder }) => {
     const { content, totalPages } = data;
@@ -23,29 +25,31 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
 
     // Check if any order has the status 'İşlenmekte'
     useEffect(() => {
-        const processingOrder = orders.find(
+        const isProcessingOrder = orders.some(
             (order) => order.orderStatus === 'İşlenmekte'
         );
-        setIsProcessing(!!processingOrder); // Set to true if any order is being processed
+        setIsProcessing(isProcessingOrder);
+
+        return () => {
+            console.log('cleanup');
+        };
     }, [orders]);
 
     // Handle order status change (start or stop processing an order)
     const handleStatusChange = async (order, newStatus) => {
+        console.log('orderId: ', order.id);
+        await wait(2000); // Wait for 1 second
         
         try {
-            
-            const response = await updateOrderStatus(order.id, newStatus); // Call external function
-
-            console.log('response', response);
-            
-            
-            if (response.success) {
-                
-                // Reload the page to reflect the new status after 2 seconds
-                
-                    window.location.reload();
+            const response = await updateOrderStatus(order.id, newStatus); // Call external functio
+            console.log('API Response:', response); // Log the response for debugging
+            if (response && response.success) {
+                console.log('message', response.message);
+                swAlert(response.message, 'success');
+                await wait(2000); // Wait for 1 second
+                window.location.reload(); // Basarili ise sayfayi yenile
             } else {
-                console.error('Failed to update order status');
+                console.error('Sipariş durumu güncellenemedi');
             }
         } catch (error) {
             console.error('Error updating order status:', error);
@@ -54,11 +58,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
 
     // Redirect the user based on orderType when the row is clicked
     const handleRowClick = (order) => {
-        
-        
-        
             router.push(`/dashboard/talasli-imalat-amiri/lift/${order.id}`); // Use Next.js router for redirection
-        
     };
 
     // Handle sorting change (set sortBy and sortOrder in the URL)
@@ -87,60 +87,59 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
     return (
         <>
             <PageHeader>Talasli Imalat Amiri</PageHeader>
-            <Container fluid className=''>
-                <Row className="my-3 ">
-                    <div className="d-flex gap-3">
-                        {/* Sorting controls */}
-                        <Col md={2}>
-                            <Form.Group controlId="sortBy">
-                                <Form.Label>Sırala</Form.Label>
-                                <Form.Control
-                                    as="select"
-                                    name="sortBy"
-                                    value={sortBy}
-                                    onChange={(e) => handleSortChange(e)}
-                                >
-                                    <option value="orderDate">
-                                        Sipariş Tarihi
-                                    </option>
-                                    <option value="deliveryDate">
-                                        Teslim Tarihi
-                                    </option>
-                                    <option value="orderNumber">
-                                        Sipariş No
-                                    </option>
-                                    <option value="customerName">
-                                        Müşteri Adı
-                                    </option>
-                                </Form.Control>
-                            </Form.Group>
-                        </Col>
-                        <Col md={2}>
-                            <Form.Group controlId="sortOrder">
-                                <Form.Label>Siparişi Sırala</Form.Label>
-                                <Form.Control
-                                    as="select"
-                                    name="sortOrder"
-                                    value={sortOrder}
-                                    onChange={(e) => handleSortChange(e)}
-                                >
-                                    <option value="asc">Artan</option>
-                                    <option value="desc">Azalan</option>
-                                </Form.Control>
-                            </Form.Group>
-                        </Col>
-                        <Col md={2}>
-                            <Button
-                                className="p-1"
-                                variant="secondary"
-                                onClick={handleReset} // Reset sorting and pagination
+            <main className={styles.main_container}>
+                <div className={styles.row_container}>
+                    {/* Sorting controls */}
+                    <Col className={styles.colum_inner}>
+                        <Form.Group controlId="sortBy">
+                            <Form.Label>Sırala</Form.Label>
+                            <Form.Control
+                                as="select"
+                                name="sortBy"
+                                value={sortBy}
+                                onChange={(e) => handleSortChange(e)}
+                                className={styles.select}
                             >
-                                Reset
-                            </Button>
-                        </Col>
-                    </div>
-                </Row>
-                <div className="table-responsive">
+                                <option value="orderDate">
+                                    Sipariş Tarihi
+                                </option>
+                                <option value="deliveryDate">
+                                    Teslim Tarihi
+                                </option>
+                                <option value="orderNumber">Sipariş No</option>
+                                <option value="customerName">
+                                    Müşteri Adı
+                                </option>
+                            </Form.Control>
+                        </Form.Group>
+                    </Col>
+                    <Col className={styles.colum_inner}>
+                        <Form.Group controlId="sortOrder">
+                            <Form.Label>Siparişi Sırala</Form.Label>
+                            <Form.Control
+                                as="select"
+                                name="sortOrder"
+                                value={sortOrder}
+                                onChange={(e) => handleSortChange(e)}
+                                className={styles.select}
+                            >
+                                <option value="asc">Artan</option>
+                                <option value="desc">Azalan</option>
+                            </Form.Control>
+                        </Form.Group>
+                    </Col>
+                    <Col
+                        className={`${styles.colum_inner} ${styles.outer_reset}`}
+                    >
+                        <Button
+                            className={styles.inner_reset}
+                            onClick={handleReset} // Reset sorting and pagination
+                        >
+                            Reset
+                        </Button>
+                    </Col>
+                </div>
+                <div className={styles.table_responsive}>
                     <Table striped bordered hover>
                         <thead>
                             <tr>
@@ -161,7 +160,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                             {orders.map((order, index) => (
                                 <tr
                                     key={index}
-                                    className="eachRow"
+                                    className={styles.eachRow}
                                     onClick={() =>
                                         order.orderStatus === 'İşlenmekte'
                                             ? handleRowClick(order)
@@ -188,6 +187,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                         {order.orderStatus ===
                                         'İşlenmeyi Bekliyor' ? (
                                             <Button
+                                                className="btn_container"
                                                 variant="primary"
                                                 //disabled={isProcessing} // Disable if another order is in progress
                                                 onClick={(e) => {
@@ -203,6 +203,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                         ) : order.orderStatus ===
                                           'İşlenmekte' ? (
                                             <Button
+                                                className="btn_container"
                                                 variant="danger"
                                                 onClick={(e) => {
                                                     e.stopPropagation(); // Prevent row click event
@@ -217,6 +218,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                         ) : order.orderStatus ===
                                           'Beklemede' ? (
                                             <Button
+                                                className="btn_container"
                                                 variant="success"
                                                 onClick={(e) => {
                                                     e.stopPropagation(); // Prevent row click event
@@ -246,7 +248,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                         </Pagination.Item>
                     ))}
                 </Pagination>
-            </Container>
+            </main>
         </>
     );
 };

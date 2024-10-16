@@ -2,14 +2,16 @@
 import { deleteOrderAction } from '@/actions/order-actions';
 import { swAlert, swConfirm } from '@/helpers/swal';
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import React, {  useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { TfiPencil, TfiTrash } from 'react-icons/tfi';
+import styles from './order-toolbar.module.scss';
 
 const OrderToolbar = ({ row }) => {
+    const router = useRouter();
 
     useEffect(() => {
-
         return () => {
             console.log('cleanup');
         }
@@ -24,7 +26,7 @@ const OrderToolbar = ({ row }) => {
         const res = await deleteOrderAction(row.orderNumber);
         
         if (res.success) {
-            window.location.reload();
+            router.refresh();
             swAlert(res.message, 'success');
         } else {
             swAlert(res.message, 'error');
@@ -32,7 +34,7 @@ const OrderToolbar = ({ row }) => {
     };
 
     return (
-        <>
+        <main className={styles.main_container}>
             <Button
                 as={Link}
                 
@@ -46,7 +48,7 @@ const OrderToolbar = ({ row }) => {
             <Button className="btn-link" variant="danger" onClick={handleDelete}>
                 <TfiTrash />
             </Button>
-        </>
+        </main>
     );
 };
 

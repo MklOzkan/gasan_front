@@ -1,7 +1,7 @@
 "use client";
 
-import { Col, Container, Row} from "react-bootstrap";
-import "./menu.scss";
+import { Col, Row} from "react-bootstrap";
+import styles from "./menu.module.scss";
 import { useRouter } from "next/navigation";
 import PageHeader from "../page-header";
 import Spacer from "../spacer";
@@ -27,21 +27,21 @@ const Menu = () => {
         <>
             <PageHeader>ANA SAYFA</PageHeader>
             <Spacer height={25} />
-            <Container className="text-center m-auto">
-                <Row className="menuRow">
+            <main className="text-center m-auto">
+                <Row className= {styles.menuRow}>
                     {menuItems.map((item) => (
                         <Col key={item.id}>
                             <div
                                 style={{ backgroundColor: item.color }}
                                 onClick={() => handleClick(item.username, item.link, item.text)}
-                                className={`menuDiv`}
+                                className={styles.menuDiv}
                             >
                                 {item.text}
                             </div>
                         </Col>
                     ))}
                 </Row>
-            </Container>
+            </main>
         </>
     );
 };
