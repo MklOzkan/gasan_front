@@ -1,6 +1,7 @@
-import TalasliPage from '@/components/dashboard/talasli-imalat-amiri/talasli';
+import TalasliPage from '@/components/dashboard/talasli-imalat-amiri/Talasli';
 import { fetchOrders } from '@/services/talasliimalamiri-service';
 import React from 'react';
+import styles from '@/styles/pages/main-page.module.scss';
 
 const Talasli = async ({ searchParams }) => {
     const currentPage = parseInt(searchParams.currentPage, 10) || 0;
@@ -23,6 +24,7 @@ const Talasli = async ({ searchParams }) => {
                 currentPage={currentPage}
                 sortBy={sortBy}
                 sortOrder={sortOrder}
+                className= {styles.main_page}
             />
         </>
     );

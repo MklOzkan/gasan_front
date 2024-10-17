@@ -12,7 +12,7 @@ export const fetchDataLiftMontaj = async (
 ) => {
     const qs = `page=${page}&size=${size}&sort=${sort}&type=${type}`;
         const response = await fetch(
-            `${API_URL}/orders/getAllOrdersForSupervisor?${qs}`,
+            `${API_URL}/orders/getOrdersForLiftMontajAmiri?${qs}`,
             {
                 method: 'GET',
                 headers: await getAuthHeader()

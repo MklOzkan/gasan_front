@@ -1,5 +1,5 @@
 import React from 'react';
-import './page-header.scss';
+import styles from './page-header.module.scss';
 import LogoutButton from './form-fields/logout-button';
 import dynamic from 'next/dynamic';
 
@@ -13,11 +13,11 @@ const BackButton = dynamic(
 
 const PageHeader = ({ children }) => {
     return (
-        <div className="page-header-container">
+        <div className={styles.page_header_container}>
             <div>
                 <BackButton />
             </div>
-            <h1 className="page-header">{children}</h1>
+            <h1 className={styles.page_header}>{children}</h1>
             <div>
                 <LogoutButton />
             </div>

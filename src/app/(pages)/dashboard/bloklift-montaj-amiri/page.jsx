@@ -1,14 +1,13 @@
 import BlockLift from '@/components/dashboard/bloklift-montaj-amiri/bloklift';
-import BlokLiftPage from '@/components/dashboard/bloklift-montaj-amiri/bloklift';
-import { fetchDataLiftMontaj } from '@/services/liftmontajamri-service';
-import React from 'react';
+import { fetchDataBlokLiftMontaj } from '@/services/blmontajamiri-service';
+import styles from '@/styles/pages/main-page.module.scss';
 
 const BLokLiftAmiri =async ({ searchParams }) => {
     const currentPage = parseInt(searchParams.currentPage, 10) || 0;
     const sortBy = searchParams.sortBy || 'orderDate';
     const sortOrder = searchParams.sortOrder || 'desc';
 
-    const res = await fetchDataLiftMontaj(currentPage, 10, sortBy, sortOrder);
+    const res = await fetchDataBlokLiftMontaj(currentPage, 10, sortBy, sortOrder);
 
     const data = await res.json();
 
@@ -24,6 +23,7 @@ const BLokLiftAmiri =async ({ searchParams }) => {
              currentPage={currentPage}
              sortBy={sortBy}
              sortOrder={sortOrder}
+             className= {styles.main_page}
             />
         </>
     );

@@ -1,6 +1,6 @@
 import BoyaPaketPage from '@/components/dashboard/boyama-ve-paketleme-amiri/boya-paket';
 import { fetchDataBoyama } from '@/services/boyapaketlemeamiri-service';
-import React from 'react';
+import styles from '@/styles/pages/main-page.module.scss';
 
 const BoyaPaketAmiri = async({ searchParams }) => {
 
@@ -23,6 +23,7 @@ const BoyaPaketAmiri = async({ searchParams }) => {
               currentPage={currentPage}
               sortBy={sortBy}
               sortOrder={sortOrder}
+              className= {styles.main_page}
             />
         </>
     );

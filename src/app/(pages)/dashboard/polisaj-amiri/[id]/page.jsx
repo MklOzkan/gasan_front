@@ -1,6 +1,6 @@
 import React from 'react';
 import { getMultipleResponseByOrderId } from '@/services/polisajamiri-service';
-import PolisajProduction from '@/components/dashboard/polisaj-amiri/PolisajProduction.jsx';
+import PolisajProduction from '@/components/dashboard/polisaj-amiri/PolisajOperations.jsx';
 
 const PolisajPage = async ({ params }) => {
     if (!params.id) throw new Error('id is required', params.id);

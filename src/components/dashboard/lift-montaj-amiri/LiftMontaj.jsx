@@ -2,10 +2,7 @@
 
 import React from 'react';
 import {
-    Container,
-    Row,
     Col,
-    Table,
     Pagination,
     Form,
     Button
@@ -53,61 +50,58 @@ const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
         <>
             <PageHeader>Lift Montaj Amiri </PageHeader>
             <main className={styles.main_container}>
-                
-                    <div className={styles.row_container}>
-                        <Col className={styles.colum_inner}>
-                            <Form.Group controlId="sortBy">
-                                <Form.Label>Sırala</Form.Label>
-                                <Form.Control
-                                    as="select"
-                                    name="sortBy"
-                                    value={sortBy}
-                                    onChange={handleSortChange}
-                                >
-                                    <option value="orderDate">
-                                        Sipariş Tarihi
-                                    </option>
-                                    <option value="deliveryDate">
-                                        Teslim Tarihi
-                                    </option>
-                                    <option value="orderNumber">
-                                        Sipaş No
-                                    </option>
-                                    <option value="customerName">
-                                        Müşteri Adı
-                                    </option>
-                                </Form.Control>
-                            </Form.Group>
-                        </Col>
-                        <Col className={styles.colum_inner}>
-                            <Form.Group controlId="sortOrder">
-                                <Form.Label>Siparişi Sırala</Form.Label>
-                                <Form.Control
-                                    as="select"
-                                    name="sortOrder"
-                                    value={sortOrder}
-                                    onChange={handleSortChange}
-                                >
-                                    <option value="asc">Artan</option>
-                                    <option value="desc">Azalan</option>
-                                </Form.Control>
-                            </Form.Group>
-                        </Col>
-                        <Col
-                            className={`${styles.colum_inner} ${styles.outer_reset}`}
-                        >
-                            <Button
-                                className={styles.inner_reset}
-                                variant="secondary"
-                                onClick={handleReset}
+                <div className={styles.row_container}>
+                    <Col className={styles.colum_inner}>
+                        <Form.Group controlId="sortBy">
+                            <Form.Label>Sırala</Form.Label>
+                            <Form.Control
+                                as="select"
+                                name="sortBy"
+                                value={sortBy}
+                                onChange={handleSortChange}
                             >
-                                Reset
-                            </Button>
-                        </Col>
-                    </div>
+                                <option value="orderDate">
+                                    Sipariş Tarihi
+                                </option>
+                                <option value="deliveryDate">
+                                    Teslim Tarihi
+                                </option>
+                                <option value="orderNumber">Sipaş No</option>
+                                <option value="customerName">
+                                    Müşteri Adı
+                                </option>
+                            </Form.Control>
+                        </Form.Group>
+                    </Col>
+                    <Col className={styles.colum_inner}>
+                        <Form.Group controlId="sortOrder">
+                            <Form.Label>Siparişi Sırala</Form.Label>
+                            <Form.Control
+                                as="select"
+                                name="sortOrder"
+                                value={sortOrder}
+                                onChange={handleSortChange}
+                            >
+                                <option value="asc">Artan</option>
+                                <option value="desc">Azalan</option>
+                            </Form.Control>
+                        </Form.Group>
+                    </Col>
+                    <Col
+                        className={`${styles.colum_inner} ${styles.outer_reset}`}
+                    >
+                        <Button
+                            className={styles.inner_reset}
+                            variant="secondary"
+                            onClick={handleReset}
+                        >
+                            Reset
+                        </Button>
+                    </Col>
+                </div>
                 <div className={styles.table_responsive}>
-                    <Table striped bordered hover>
-                        <thead>
+                    <table>
+                        <thead className={styles.table_head}>
                             <tr>
                                 <th>Müşter Adı</th>
                                 <th>Gasan No</th>
@@ -115,7 +109,7 @@ const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
                                 <th>Sipariş Tarihi</th>
                                 <th>Teslim Tarihi</th>
                                 <th>Sipariş Türü</th>
-                                <th>Sipariş Adedi</th>
+                                <th>Sipariş Adedi</th> 
                                 <th>Sipariş Durumu</th>
                                 <th>Hazır Mil Adedi</th>
                             </tr>
@@ -124,7 +118,7 @@ const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
                             {content.map((order, index) => (
                                 <tr
                                     key={index}
-                                    className={`${styles.eachRow}`}
+                                    className={`${styles.table_body}`}
                                     onClick={
                                         order.orderStatus ===
                                         'İşlenmeyi Bekliyor'
@@ -144,7 +138,7 @@ const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
                                 </tr>
                             ))}
                         </tbody>
-                    </Table>
+                    </table>
                 </div>
                 <Pagination>
                     {[...Array(totalPages).keys()].map((page) => (

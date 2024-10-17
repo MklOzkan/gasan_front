@@ -1,6 +1,7 @@
 import Polisaj from '@/components/dashboard/polisaj-amiri/polisaj';
 import { fetchDataPolisaj } from '@/services/polisajamiri-service';
 import React from 'react';
+import styles from '@/styles/pages/main-page.module.scss';
 
 const PolisajAmiri = async ({ searchParams }) => {
     const currentPage = parseInt(searchParams.currentPage, 10) || 0;
@@ -22,6 +23,7 @@ const PolisajAmiri = async ({ searchParams }) => {
                 currentPage={currentPage}
                 sortBy={sortBy}
                 sortOrder={sortOrder}
+                className= {styles.main_page}
             />
         </>
     );

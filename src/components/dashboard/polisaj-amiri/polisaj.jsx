@@ -11,7 +11,7 @@ import {
     Button
 } from 'react-bootstrap';
 import PageHeader from '@/components/common/page-header';
-import './polisaj.scss';
+import styles from './polisaj.module.scss';
 import { useRouter } from 'next/navigation';
 
 
@@ -105,8 +105,8 @@ const Polisaj = ({ data, currentPage, sortBy, sortOrder }) => {
                     </Col>
                 </div>
                 <div className={styles.table_responsive}>
-                    <Table striped bordered hover>
-                        <thead>
+                    <table>
+                        <thead className={styles.table_head}>
                             <tr>
                                 <th>Müşter Adı</th>
                                 <th>Gasan No</th>
@@ -122,7 +122,7 @@ const Polisaj = ({ data, currentPage, sortBy, sortOrder }) => {
                             {content.map((order, index) => (
                                 <tr
                                     key={index}
-                                    className={styles.eachRow}
+                                    className={`${styles.table_body}`}
                                     onClick={
                                         order.orderStatus ===
                                         'İşlenmeyi Bekliyor'
@@ -141,7 +141,7 @@ const Polisaj = ({ data, currentPage, sortBy, sortOrder }) => {
                                 </tr>
                             ))}
                         </tbody>
-                    </Table>
+                    </table>
                 </div>
                 <Pagination>
                     {[...Array(totalPages).keys()].map((page) => (
