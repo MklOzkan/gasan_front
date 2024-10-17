@@ -20,3 +20,14 @@ export const fetchDataLiftMontaj = async (
         );
         return response;
 };
+
+export const fetchOrderById = async (orderId) => {
+    const response = await fetch(
+        `${API_URL}/orders/getMultipleResponseById/${orderId}`,
+        {
+            method: 'GET',
+            headers: await getAuthHeader()
+        }
+    );
+    return response;
+};
