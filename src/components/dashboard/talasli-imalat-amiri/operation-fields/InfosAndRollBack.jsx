@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './operations-info-and-rollback.module.scss';
+import styles from './infos-and-rollback.module.scss';
 import { Button } from 'react-bootstrap';
 import { swAlert, swConfirm } from '@/helpers/swal';
 import { rollBackLastChangeAction } from '@/actions/talasli-actions';
@@ -46,7 +46,7 @@ const OperationsInfo = ({ operations, order }) => {
         <div className={styles.operations_info}>
             <table className={styles.operations_table}>
                 <thead>
-                    <tr>
+                    <tr className={styles.table_head}>
                         <th>İşlem</th>
                         <th>Biten</th>
                         <th>Kalan</th>
@@ -58,13 +58,13 @@ const OperationsInfo = ({ operations, order }) => {
                             {/* Insert total produced MIL row before BORU_KESME_HAVSA */}
                             {operation.operationType === 'BORU_KESME_HAVSA' && (
                                 <tr className={styles.total_row}>
-                                    <td>Toplam Üretilen Mil</td>
+                                    <th>Toplam Üretilen Mil</th>
 
-                                    <td>{completedQty}</td>
-                                    <td>{remainingQty}</td>
+                                    <th>{completedQty}</th>
+                                    <th></th>
                                 </tr>
                             )}
-                            <tr>
+                            <tr className={styles.table_body}>
                                 <td>{operation.operationType}</td>
                                 <td>
                                     <Button

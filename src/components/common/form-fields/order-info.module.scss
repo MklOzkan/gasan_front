@@ -1,0 +1,95 @@
+
+
+.table_responsive {
+    white-space: wrap; /* Prevent table cells from wrapping text */
+    border-spacing: 0 10px; /* Optional: Adds spacing between table rows */
+    border-collapse: separate; /* Ensures spacing is respected */
+    padding: 10px;
+    margin-bottom: 20px;
+    margin: 0 auto;
+    
+}
+
+.table_responsive table {
+    width: 100%; /* Ensure the table stretches across its container */
+    border-spacing: 0;
+}
+
+.table_responsive tbody::before {
+    content: "";
+    display: table-row;
+    height: 10px; /* Space between thead and tbody */
+    
+}
+
+.table_responsive th, 
+.table_responsive td {
+    padding: 10px;
+    border: 1px solid black;
+    text-align: center;
+    white-space: nowrap; /* Prevent text from wrapping in cells */
+    padding-left: 15px; /* Add space at the beginning */
+    padding-right: 15px; /* Add space at the end */
+}
+
+
+@media screen and (max-width: 768px) {
+    .table_responsive {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .table_responsive th, 
+    .table_responsive td {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        padding: 30px;
+        justify-content: center;
+        font-size: 1rem;
+    }
+
+    .table_responsive table{
+        display: flex;
+        padding: 22px;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+
+    }
+
+    .table_head, .table_body{
+        margin-top: 20px;
+        
+    }
+
+    .table_responsive tbody::before {
+        content: "";
+        display: table-column;
+        width: 10px; /* Space between thead and tbody */
+    }
+    
+}
+
+.table_head{
+    background-color: rgba(0, 255, 255, 0.185);
+}
+
+.table_body:hover{
+    background-color: aqua;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+

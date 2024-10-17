@@ -89,7 +89,6 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
             <PageHeader>Talasli Imalat Amiri</PageHeader>
             <main className={styles.main_container}>
                 <div className={styles.row_container}>
-                    {/* Sorting controls */}
                     <Col className={styles.colum_inner}>
                         <Form.Group controlId="sortBy">
                             <Form.Label>Sırala</Form.Label>
@@ -140,8 +139,8 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                     </Col>
                 </div>
                 <div className={styles.table_responsive}>
-                    <Table striped bordered hover>
-                        <thead>
+                    <table>
+                        <thead className={styles.table_head}>
                             <tr>
                                 <th>Siparis No</th>
                                 <th>Müşter Adı</th>
@@ -160,7 +159,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                             {orders.map((order, index) => (
                                 <tr
                                     key={index}
-                                    className={styles.eachRow}
+                                    className={`${styles.table_body}`}
                                     onClick={() =>
                                         order.orderStatus === 'İşlenmekte'
                                             ? handleRowClick(order)
@@ -187,7 +186,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                         {order.orderStatus ===
                                         'İşlenmeyi Bekliyor' ? (
                                             <Button
-                                                className="btn_container"
+                                                className={styles.btn_container}
                                                 variant="primary"
                                                 //disabled={isProcessing} // Disable if another order is in progress
                                                 onClick={(e) => {
@@ -203,7 +202,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                         ) : order.orderStatus ===
                                           'İşlenmekte' ? (
                                             <Button
-                                                className="btn_container"
+                                                className={styles.btn_container}
                                                 variant="danger"
                                                 onClick={(e) => {
                                                     e.stopPropagation(); // Prevent row click event
@@ -218,7 +217,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                         ) : order.orderStatus ===
                                           'Beklemede' ? (
                                             <Button
-                                                className="btn_container"
+                                                className={styles.btn_container}
                                                 variant="success"
                                                 onClick={(e) => {
                                                     e.stopPropagation(); // Prevent row click event
@@ -235,7 +234,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                 </tr>
                             ))}
                         </tbody>
-                    </Table>
+                    </table>
                 </div>
                 <Pagination>
                     {[...Array(totalPages).keys()].map((page) => (

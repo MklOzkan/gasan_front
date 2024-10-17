@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
-    Container,
-    Row,
     Col,
-    Table,
-    Pagination,
-    Form,
-    Button,
-    BookMark
 } from 'react-bootstrap';
-import './operation-button.scss';
-import ButtonColumn from './button-column';
-import OperationsInfo from './OperationsInfoAndRollBack';
+import styles from './operations-screen.module.scss';
+import ButtonColumn from './ButtonsForEachOperation';
+import OperationsInfo from './InfosAndRollBack';
 import {
     milKoparmaAction,
     milTornalamaAction,
@@ -21,7 +14,6 @@ import {
     ezmeAction
 } from '@/actions/talasli-actions';
 import { swAlert, swConfirm } from '@/helpers/swal';
-import { response } from '@/helpers/form-validation';
 
 const OperationButton = ({order, operations, productionProcess}) => {
     const [isPopupOpen, setIsPopupOpen] = useState(null); // **Highlight: Initialize state as null**
@@ -120,8 +112,8 @@ const OperationButton = ({order, operations, productionProcess}) => {
     
     return (
         <>
-            <Container className="d-flex gap-5 justify-content-center operation_button ">
-                <Row className="d-inline-block gap-5">
+            <main className={styles.main_container}>
+                <div className={styles.buttons}>
                     {Array.isArray(sortedOperations) &&
                     sortedOperations.length > 0 ? (
                         sortedOperations
@@ -131,8 +123,10 @@ const OperationButton = ({order, operations, productionProcess}) => {
                                     'BORU_KESME_HAVSA'
                             )
                             .map((operation, index) => (
-                                <Col key={index} className="d-flex gap-1">
-                                    <div>
+                                <div
+                                    key={index}
+                                    className={styles.other_buttons}
+                                >
                                         <ButtonColumn
                                             order={order}
                                             operation={operation}
@@ -148,15 +142,15 @@ const OperationButton = ({order, operations, productionProcess}) => {
                                                 productionQuantity
                                             }
                                         />
-                                    </div>
-                                </Col>
+                                </div>
                             ))
                     ) : (
                         <p>No operations available</p>
                     )}
-                </Row>
-                <Row className="d-flex flex-column m-0">
-                    <Col>
+                </div>
+                    
+                <div className={styles.info_boru_container}>
+                    <div className={styles.borukesme_button}>
                         {sortedOperations
                             .filter(
                                 (operation) =>
@@ -177,16 +171,16 @@ const OperationButton = ({order, operations, productionProcess}) => {
                                     list={sortedOperations}
                                 />
                             ))}
-                    </Col>
-                    <Col>
+                    </div>
+                    <div className={styles.operation_info}>
                         <OperationsInfo
                             operations={sortedOperations}
                             productionProcess={productionProcess}
                             order={order}
                         />
-                    </Col>
-                </Row>
-            </Container>
+                    </div>
+                </div>
+            </main>
         </>
     );
 };

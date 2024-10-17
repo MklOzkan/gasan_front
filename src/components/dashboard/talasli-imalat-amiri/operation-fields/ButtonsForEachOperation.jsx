@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import styles from './buttons-for-each-operation.module.scss';
 const operationsThatDisable = [
     'MIL_TORNALAMA',
     'MIL_TASLAMA',
@@ -68,21 +69,26 @@ const OperationCol = ({
         <div>
             <Button
                 onClick={() => togglePopup(operation.id)} // **Highlight: Pass the specific operation ID to togglePopup**
-                className={`polygon-button index-${index}`}
+                className={`${styles.polygon_button} ${
+                    styles[`index-${index}`]
+                }`}
                 style={{ backgroundColor: bgColor, color: txColor }}
-                 disabled={operation.remainingQuantity === 0 && operationsThatDisable.includes(operation.operationType)}
+                disabled={
+                    operation.remainingQuantity === 0 &&
+                    operationsThatDisable.includes(operation.operationType)
+                }
                 data-operation-type={operation.operationType}
                 //disabled={handleNextOperationButton()}
             >
                 <span>{operation.operationType}</span>
             </Button>
             {isPopupOpen === operation.id && ( // **Highlight: Ensure the popup is open only for the specific operation**
-                <div className="popup">
+                <div className={styles.popup}>
                     <div
-                        className="popup-backdrop"
+                        className={styles.popup_backdrop}
                         onClick={() => togglePopup(null)}
                     ></div>
-                    <div className="popup-inner">
+                    <div className={styles.popup_inner}>
                         <h2>Üretilen Adedi Giriniz</h2>
                         <input
                             type="number"
@@ -90,7 +96,7 @@ const OperationCol = ({
                             value={productionQuantity}
                             onChange={handleQuantityChange}
                         />
-                        <div className="popup-button">
+                        <div className={styles.popup_button}>
                             <button
                                 onClick={() =>
                                     // Log entire operation object
@@ -100,14 +106,16 @@ const OperationCol = ({
                                         productionQuantity
                                     )
                                 }
-                                className="inner-button bg-success"
+                                className={styles.onay_button}
                                 disabled={productionQuantity === ''}
+                                type='number'
+                                min={0}
                             >
                                 Onayla
                             </button>
                             <button
                                 onClick={togglePopup}
-                                className="inner-button"
+                                className={styles.iptal_button}
                             >
                                 İptal
                             </button>

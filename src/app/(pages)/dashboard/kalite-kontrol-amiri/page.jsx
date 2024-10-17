@@ -1,6 +1,7 @@
 
-import KaliteKontrol from '@/components/dashboard/kalite-kontrol-amiri/kalite-kontrol';
+import KaliteKontrol from '@/components/dashboard/kalite-kontrol-amiri/KaliteKontrolMainPage';
 import { fetchDataKaliteKontrol } from '@/services/kalitekontrol-service';
+import styles from '@/styles/pages/main-page.module.scss';
 
 
 const KaliteKontrolAmiri = async ({ searchParams }) => {
@@ -23,6 +24,7 @@ const KaliteKontrolAmiri = async ({ searchParams }) => {
                 currentPage={currentPage}
                 sortBy={sortBy}
                 sortOrder={sortOrder}
+                className= {styles.main_page}
             />
         </>
     );

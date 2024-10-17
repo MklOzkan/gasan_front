@@ -25,9 +25,27 @@ export const config = {
             urlRegex: /\/dashboard\/lift-montaj-amiri$/,
             roles: ['LiftMontajAmiri']
         },
+
+        {
+            urlRegex: /\/dashboard\/lift-montaj-amiri\/[0-9]+$/,
+            roles: ['LiftMontajAmiri']
+        },
         {
             urlRegex: /\/dashboard\/bloklift-montaj-amiri$/,
             roles: ['BlMontajAmiri']
+        },
+        {
+            urlRegex: /\/dashboard\/bloklift-montaj-amiri\/[0-9]+$/,
+            roles: ['BlMontajAmiri']
+        },
+        {
+            urlRegex: /\/dashboard\/boyama-ve-paketleme-amiri$/,
+            roles: ['BoyamaPaketlemeAmiri']
+        },
+
+        {
+            urlRegex: /\/dashboard\/boyama-ve-paketleme-amiri\/[0-9]+$/,
+            roles: ['BoyamaPaketlemeAmiri']
         },
         {
             urlRegex: /\/dashboard\/boyama-ve-paketleme-amiri$/,

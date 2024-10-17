@@ -15,6 +15,7 @@ const config = {
                     return null;
                 }
                 const data = await res.json();
+                console.log('login success', data);
 
                 const payload = {
                     user: { ...data },

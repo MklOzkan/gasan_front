@@ -1,7 +1,7 @@
 @use "../../styles/variables" as v;
 
 
-.page-header-container {
+.page_header_container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -12,7 +12,7 @@
     margin-right: 10px;
 }
 
-.page-header {
+.page_header {
     font-weight: 600;
     color: v.$color3;
     text-transform: uppercase;
@@ -37,5 +37,21 @@
     &:hover {
         background-color: darken(v.$color3, 10%);
     }
+}
+
+@media screen and (max-width: 768px) {
+    .page_header_container {
+        padding: 10px;
+    }
+
+    .page_header {
+        font-size: 1rem;
+    }
+
+    .signout-button {
+        padding: 5px 10px;
+        font-size: 1;
+    }
+    
 }
 

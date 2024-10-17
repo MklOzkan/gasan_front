@@ -11,7 +11,7 @@
     z-index: 999; /* High z-index to ensure it's above other elements */
 }
 
-.popup-backdrop {
+.popup_backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -21,11 +21,11 @@
     z-index: 998; /* Slightly lower z-index than the popup */
 }
 
-.popup-inner {
+.popup_inner {
     display: flex;
     flex-direction: column;
     background: white;
-    padding: 20px;
+    padding: 40px;
     border-radius: 10px;
     text-align: center;
     z-index: 1000; /* Higher z-index than the backdrop */
@@ -33,7 +33,7 @@
     position: relative; /* Positioned relative to the backdrop */
 }
 
-.ppopup-button{
+.popup_button{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,21 +41,26 @@
     gap: 10px;
 }
 
-.inner-button{
+.onay_button, .iptal_button {
     padding: 10px 20px;
     width: 100px;
     height: auto;
-    background: #f08181;
     cursor: pointer;
-    border-radius: 50px;
+    border-radius: 10px;
     z-index: 1001; /* Ensure button is on top */
+}
+.onay_button {
+    background: #50db7a9f;
+}
+.iptal_button {
+    background: #f08181;
 }
 
 
 
 
 /* Base styles for all buttons */
-.polygon-button {
+.polygon_button {
     width: 400px; /* CHANGED: Limit max width */
     height: 120px;
     font-size: 18px;
@@ -76,7 +81,7 @@
 }
 
 /* Shape for the first button (Index 0) */
-.polygon-button.index-0 {
+.polygon_button.index-0 {
     clip-path: polygon(
         0% 0%,   /* Top left corner */
         100% 0%, /* Top right corner */
@@ -87,10 +92,10 @@
 }
 
 /* Chevron shape for subsequent buttons (Index 1, 2, 3...) */
-.polygon-button.index-1,
-.polygon-button.index-2,
-.polygon-button.index-3,
-.polygon-button.index-4 {
+.polygon_button.index-1,
+.polygon_button.index-2,
+.polygon_button.index-3,
+.polygon_button.index-4 {
     clip-path: polygon(
         0% 0%,    /* Top left */
     50% 30%,    /* Top middle inward point */
@@ -115,17 +120,3 @@
     z-index: 1001; /* Ensure button is on top */
     }
 }
-    
-
-
-
-
-
-
-
-
-
-
-
-
-

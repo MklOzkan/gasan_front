@@ -68,30 +68,26 @@ const OperationButton = ({order, operation, productionProcess}) => {
     
     return (
         <>
-            <Container className="d-flex gap-5 justify-content-center operation_button ">
-                
-                <Row className="d-flex flex-column m-0">
-                    <Col>
-                        
-                                <ButtonColumn
-                                    operation={operation}
-                                    order={order}
-                                    togglePopup={togglePopup}
-                                    isPopupOpen={isPopupOpen}
-                                    handleQuantityChange={handleQuantityChange}
-                                    handleSubmit={handleSubmit}
-                                    productionQuantity={productionQuantity}
-                                />
-                    </Col>
-                    <Col>
-                        <OperationsInfo
-                            operation={operation}
-                            productionProcess={productionProcess}
-                            order={order}
-                        />
-                    </Col>
-                </Row>
-            </Container>
+            <div className="operation_button ">
+                <Col>        
+                    <ButtonColumn
+                        operation={operation}
+                        order={order}
+                        togglePopup    ={togglePopup}
+                        isPopupOpen={isPopupOpen}
+                        handleQuantityChange={handleQuantityChange}
+                        handleSubmit={handleSubmit}
+                        productionQuantity={productionQuantity}
+                    />
+                </Col>
+                <Col>
+                    <OperationsInfo
+                    operation={operation}
+                    productionProcess={productionProcess}
+                    order={order}
+                    />
+                </Col>
+            </div>
         </>
     );
 };
