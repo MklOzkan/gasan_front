@@ -1,4 +1,4 @@
-import TalasliPage from '@/components/dashboard/talasli-imalat-amiri/Talasli';
+import TalasliPage from '@/components/dashboard/talasli-imalat-amiri/talasli';
 import { fetchOrders } from '@/services/talasliimalamiri-service';
 import React from 'react';
 import styles from '@/styles/pages/main-page.module.scss';
@@ -13,10 +13,7 @@ const Talasli = async ({ searchParams }) => {
     // Ensure that res is a proper Response object and use res.json() only if it is
 
     const data = await res.json(); 
-    if (!res.ok) {
-    
-        return <div>Error: {res.statusText}</div>;
-    }
+    if (!res.ok) throw new Error(data.message);
     return (
         <>
             <TalasliPage

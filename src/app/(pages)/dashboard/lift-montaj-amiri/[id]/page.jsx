@@ -1,5 +1,5 @@
 
-import { fetchOrderById } from '@/services/talasliimalamiri-service';
+import { fetchOrderById } from '@/services/liftmontajamri-service';
 import LiftOperations from '@/components/dashboard/lift-montaj-amiri/LiftOperations';
 
 const LiftPage = async ({ params }) => {

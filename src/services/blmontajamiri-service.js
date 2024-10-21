@@ -20,3 +20,82 @@ export const fetchDataBlokLiftMontaj = async (
     );
     return response;
 };
+
+export const fetchOrderById = async (orderId) => {
+    const response = await fetch(
+        `${API_URL}/orders/getResponsesForBlokLift/${orderId}`,
+        {
+            method: 'GET',
+            headers: await getAuthHeader()
+        }
+    );
+    return response;
+};
+
+export const updateBoruKaynak = async (payload, orderId) => {
+    const response = await fetch(
+        `${API_URL}/montaj/boruKaynakForBL/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const updateBLMontaj = async (payload, orderId) => {
+    const response = await fetch(
+        `${API_URL}/montaj/montajOperationForBL/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const updateBoruKapama = async (payload, orderId) => {
+    const response = await fetch(
+        `${API_URL}/montaj/boruKapamaForBL/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const updateGazDolum = async (payload, orderId) => {
+    const response = await fetch(
+        `${API_URL}/montaj/gazDolumOperationForBL/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const updateTest = async (payload, orderId) => {
+    const response = await fetch(`${API_URL}/montaj/testOperation/${orderId}`, {
+        method: 'PUT',
+        headers: await getAuthHeader(),
+        body: JSON.stringify(payload)
+    });
+    return response;
+};
+
+export const rollBackLastChange = async (operationId) => {
+    const response = await fetch(
+        `${API_URL}/montaj/removelastchangeForBL/${operationId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader()
+        }
+    );
+    return response;
+};

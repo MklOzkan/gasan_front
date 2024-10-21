@@ -1,0 +1,124 @@
+/* Base styling for the operations info container */
+.operations_info {
+    width: 100%;
+    max-width: 800px; /* Set a max-width to avoid overflow */
+    margin: 0 auto; /* Center the table */
+    margin-top: 20px; /* Add space above the table */ 
+    padding: 10px; /* Add padding around the table */
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    table-layout: fixed; /* Fixed table layout */
+    justify-content: center;
+    align-items: center;
+    @media screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0 auto;
+        margin-top: 20px;
+        width: 100%;
+        
+    }
+}
+
+.table_head th{
+    border: 1px solid black;
+}
+
+/* Styling for table headers */
+.table_head th {
+    
+    padding: 5px 15px; /* Padding inside header cells */
+    border-bottom: 3px solid #851c1c; /* Bottom border for header cells */
+    font-weight: bold; /* Bold text */
+}
+
+/* Styling for table rows */
+.table_body td {
+    padding: 10px 15px; /* Padding inside table cells */
+    border-bottom: 1px solid #f18e8e; /* Light border between rows */
+}
+
+/* Highlight the total row */
+.total_row th {
+    margin-top: 10px;
+    font-weight: bold; /* Bold text */
+    padding-top: 10px;
+    border-bottom: 1px solid #218838;
+    
+}
+
+/* Edit button inside table cells */
+.edit_button {
+    background-color: #007bff; /* Primary blue color */
+    color: #ffffff; /* White text color */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px 10px; /* Padding inside the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+/* Hover effect for edit button */
+.edit_button:hover {
+    background-color: #bcdd9d; /* Darker blue on hover */
+}
+
+/* Popup styling */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-inner {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Popup input field styling */
+.popup-inner input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Popup buttons container */
+.popup-button {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+/* Individual button styling inside popup */
+.inner-button {
+    background-color: #28a745; /* Success green color */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for popup buttons */
+.inner-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+

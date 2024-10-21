@@ -5,7 +5,7 @@ import Icon from "../icon";
 import { useRouter } from "next/navigation";
 
 const BackButton = ({
-    title = 'Geri Dön',
+    title = 'Geri',
     icon = 'MdOutlineArrowBack',
     iconfamily = 'md',
     ...rest
@@ -28,7 +28,8 @@ const BackButton = ({
     return (
         window.location.pathname === "/" ?(null):
         <Button type="button" variant="primary" {...rest} onClick={handleClick}>
-            <Icon family={iconfamily} icon={icon} /> {title}
+            {/* <Icon family={iconfamily} icon={icon} />  */}
+            {title}
         </Button>
     );
 };

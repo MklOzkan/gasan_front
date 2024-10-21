@@ -20,3 +20,14 @@ export const fetchDataBoyama= async (
         );
         return response;
 };
+
+export const fetchOrderById = async (orderId) => {
+    const response = await fetch(
+        `${API_URL}/orders/getResponsesForBlokLift/${orderId}`,
+        {
+            method: 'GET',
+            headers: await getAuthHeader()
+        }
+    );
+    return response;
+};

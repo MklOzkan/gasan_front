@@ -23,7 +23,7 @@ export const fetchOrders = async (
 
 export const fetchOrderById = async (orderId) => {
     const response = await fetch(
-        `${API_URL}/orders/getResponsesForLift/${orderId}`,
+        `${API_URL}/orders/getMultipleResponseById/${orderId}`,
         {
             method: 'GET',
             headers: await getAuthHeader()

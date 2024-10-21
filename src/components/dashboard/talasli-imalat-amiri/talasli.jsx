@@ -2,10 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-    Container,
-    Row,
     Col,
-    Table,
     Pagination,
     Form,
     Button
@@ -18,22 +15,14 @@ import { swAlert } from '@/helpers/swal';
 import { wait } from '@/utils/wait';
 
 const Order = ({ data, currentPage, sortBy, sortOrder }) => {
-    const { content, totalPages } = data;
-    const [orders, setOrders] = useState(content); // State to hold orders
+    const { content, page } = data;
+    const { totalPages, number, totalElements, size } = page;
     const router = useRouter();
-    const [isProcessing, setIsProcessing] = useState(false); // To track if an order is "İşlenmekte"
 
     // Check if any order has the status 'İşlenmekte'
     useEffect(() => {
-        const isProcessingOrder = orders.some(
-            (order) => order.orderStatus === 'İşlenmekte'
-        );
-        setIsProcessing(isProcessingOrder);
-
-        return () => {
-            console.log('cleanup');
-        };
-    }, [orders]);
+        
+    }, [data]);
 
     // Handle order status change (start or stop processing an order)
     const handleStatusChange = async (order, newStatus) => {
@@ -72,6 +61,21 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
             url.searchParams.set('sortOrder', value);
         }
 
+        router.push(); // Use router.push for navigation
+    };
+
+    const handleSorting = (sortByField) => {
+        const url = new URL(window.location);
+
+        // If the sortBy is already set to the same field, toggle the sortOrder
+        let currentSortOrder = url.searchParams.get('sortOrder') || 'asc';
+        let newSortOrder = currentSortOrder === 'asc' ? 'desc' : 'asc';
+
+        // Update the URL with the new sort parameters
+        url.searchParams.set('sortBy', sortByField);
+        url.searchParams.set('sortOrder', newSortOrder);
+
+        // Navigate to the updated URL
         window.location.href = url.toString();
     };
 
@@ -84,58 +88,26 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
         window.location.href = url.toString(); // Reload with cleared params
     };
 
+    const handlePageChange = (pageIn) => {
+        const url = new URL(window.location);
+        url.searchParams.set('currentPage', pageIn); // Set the new page number
+        router.push(url.toString()); // Use router.push for navigation
+    };
+
     return (
         <>
             <PageHeader>Talasli Imalat Amiri</PageHeader>
             <main className={styles.main_container}>
                 <div className={styles.row_container}>
-                    <Col className={styles.colum_inner}>
-                        <Form.Group controlId="sortBy">
-                            <Form.Label>Sırala</Form.Label>
-                            <Form.Control
-                                as="select"
-                                name="sortBy"
-                                value={sortBy}
-                                onChange={(e) => handleSortChange(e)}
-                                className={styles.select}
-                            >
-                                <option value="orderDate">
-                                    Sipariş Tarihi
-                                </option>
-                                <option value="deliveryDate">
-                                    Teslim Tarihi
-                                </option>
-                                <option value="orderNumber">Sipariş No</option>
-                                <option value="customerName">
-                                    Müşteri Adı
-                                </option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
-                    <Col className={styles.colum_inner}>
-                        <Form.Group controlId="sortOrder">
-                            <Form.Label>Siparişi Sırala</Form.Label>
-                            <Form.Control
-                                as="select"
-                                name="sortOrder"
-                                value={sortOrder}
-                                onChange={(e) => handleSortChange(e)}
-                                className={styles.select}
-                            >
-                                <option value="asc">Artan</option>
-                                <option value="desc">Azalan</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
                     <Col
                         className={`${styles.colum_inner} ${styles.outer_reset}`}
                     >
-                        <Button
+                        <button
                             className={styles.inner_reset}
                             onClick={handleReset} // Reset sorting and pagination
                         >
-                            Reset
-                        </Button>
+                            Sıralamayı Sıfırla
+                        </button>
                     </Col>
                 </div>
                 <div className={styles.table_responsive}>
@@ -143,20 +115,59 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                         <thead className={styles.table_head}>
                             <tr>
                                 <th>Siparis No</th>
-                                <th>Müşter Adı</th>
+                                <th
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() =>
+                                        handleSorting('customerName')
+                                    }
+                                >
+                                    Müşter Adı
+                                    {sortBy === 'customerName' &&
+                                        (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
+                                </th>
                                 <th>Gasan No</th>
                                 <th>Sipariş No</th>
-                                <th>Sipariş Tarihi</th>
-                                <th>Teslim Tarihi</th>
-                                <th>Sipariş Türü</th>
+                                <th
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => handleSorting('orderDate')}
+                                >
+                                    Sipariş Tarihi
+                                    {sortBy === 'orderDate' &&
+                                        (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
+                                </th>
+                                <th
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() =>
+                                        handleSorting('deliveryDate')
+                                    }
+                                >
+                                    Teslim Tarihi
+                                    {sortBy === 'deliveryDate' &&
+                                        (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
+                                </th>
+                                <th
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => handleSorting('orderType')}
+                                >
+                                    Sipariş Türü
+                                    {sortBy === 'orderType' &&
+                                        (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
+                                </th>
                                 <th>Sipariş Adedi</th>
-                                <th>Sipariş Durumu</th>
+                                <th
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => handleSorting('orderStatus')}
+                                >
+                                    Sipariş Durumu
+                                    {sortBy === 'orderStatus' &&
+                                        (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
+                                </th>
                                 <th>Hazır Mil Adedi</th>
                                 <th>Başla/Durdur</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.map((order, index) => (
+                            {content.map((order, index) => (
                                 <tr
                                     key={index}
                                     className={`${styles.table_body}`}
@@ -197,7 +208,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                                     );
                                                 }}
                                             >
-                                                Basla
+                                                Başla
                                             </Button>
                                         ) : order.orderStatus ===
                                           'İşlenmekte' ? (
@@ -227,7 +238,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                                     );
                                                 }}
                                             >
-                                                Tekrar Baslat
+                                                Tekrar Başlat
                                             </Button>
                                         ) : null}
                                     </td>
@@ -237,13 +248,13 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                     </table>
                 </div>
                 <Pagination>
-                    {[...Array(totalPages).keys()].map((page) => (
+                    {[...Array(totalPages).keys()].map((pageIn) => (
                         <Pagination.Item
-                            key={page}
-                            active={page === currentPage}
-                            onClick={() => handlePageChange(page)}
+                            key={pageIn}
+                            active={pageIn === number - 1}
+                            onClick={() => handlePageChange(pageIn)}
                         >
-                            {page + 1}
+                            {pageIn + 1}
                         </Pagination.Item>
                     ))}
                 </Pagination>

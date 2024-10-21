@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
+//import "./data-table.scss";
 
 export const Column = ({ children }) => {
 	return <th scope="col">{children}</th>;
@@ -199,9 +200,9 @@ const DataTable = (props) => {
 					name={name}
 					value={JSON.stringify(selectedItems)}
 				/>
-				<div className="card-body">
+				<div className="card-body card-body-sm">
 					<h3 className="card-title">{title}</h3>
-					<div className="table-responsive">
+					<div className="table-responsive table-responsive-sm">
 						<table className="table table-striped table-hover">
 							<thead>
 								<tr>{columns}</tr>
