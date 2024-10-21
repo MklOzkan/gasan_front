@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchOrderById } from '@/services/talasliimalamiri-service';
+import { fetchOrderById } from '@/services/blmontajamiri-service';
 import BlokliftOperations from '@/components/dashboard/bloklift-montaj-amiri/BlokLiftOperations';
 
 const BlokLiftPage = async ({ params }) => {

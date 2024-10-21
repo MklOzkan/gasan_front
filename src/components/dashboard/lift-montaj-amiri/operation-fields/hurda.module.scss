@@ -15,7 +15,7 @@
 }
 
 .inner_container{
-    margin-right: 100px;
+    margin-right: 50px;
     @media screen  and (max-width: 767px) {
         margin-right: 0;
         
@@ -85,7 +85,7 @@
 
 /* Base styles for all buttons */
 .polygon_button {
-    width: 350px; /* CHANGED: Limit max width */
+    width: 80px; /* CHANGED: Limit max width */
     height: 120px;
     font-size: 18px;
     font-weight: bold;
@@ -98,7 +98,7 @@
     transition: background-color 0.3s ease; /* Smooth transitions */
     margin: 0; /* Remove margin */
     padding: 0; /* Remove padding */
-    margin-bottom: -30px;
+    margin-bottom: -35px;
     
     &:hover {
         background-color: rgba(236, 209, 157, 0.685); /* Change color on hover */
@@ -156,7 +156,7 @@
 }
 
 .kalite_kontrol_button{
-    width: 350px; /* CHANGED: Limit max width */
+    width: 80px; /* CHANGED: Limit max width */
     height: 80px;
     font-size: 18px;
     font-weight: bold;

@@ -14,6 +14,7 @@
     }
 }
 
+
 .inner_container{
     margin-right: 100px;
     @media screen  and (max-width: 767px) {
@@ -99,11 +100,10 @@
     margin: 0; /* Remove margin */
     padding: 0; /* Remove padding */
     margin-bottom: -30px;
-    
     &:hover {
-        background-color: rgba(236, 209, 157, 0.685); /* Change color on hover */
+        background-color: rgba(236, 209, 157, 0.685);
     }
-    
+   
 }
 
 .green {
@@ -178,17 +178,6 @@
         50% 100%,  /* Bottom middle inward point */
         0% 55%     /* Bottom left */
     );
-}
-
-    @media screen  and (max-width: 767px) {
-    .operation_button {
-        display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50px;
-    z-index: 1001; /* Ensure button is on top */
-    }
 }
 
 .table_container{

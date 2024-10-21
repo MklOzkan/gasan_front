@@ -3,6 +3,7 @@ import styles from './lift-operations.module.scss';
 import PageHeader from '@/components/common/page-header';
 import Spacer from '@/components/common/spacer';
 import UpdateButtons from './operation-fields/UpdateButtons';
+import InfoAndRollBack from './operation-fields/InfosAndRollBack';
 
 
 const LiftOperations = ({order}) => {
@@ -14,11 +15,9 @@ const LiftOperations = ({order}) => {
               <Spacer height={5} />
               <OrderForOperation order={returnBody} />
               <Spacer height={5} />
-              <div>
-                    <UpdateButtons 
-                        order={returnBody}
-                        operations={returnBody2}
-                     />
+              <div >
+                  <UpdateButtons order={returnBody} operations={returnBody2} />
+                  
               </div>
           </main>
       </>
