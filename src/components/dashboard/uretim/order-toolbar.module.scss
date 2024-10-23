@@ -3,5 +3,67 @@
     flex-direction: row;
     border: 1px solid #000;
     border-radius: 5px;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.outer_check{
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    justify-content: center;
+    text-align: center;
+    :hover{
+        color: #f0f0f0;
+        font-weight: 800px;
+        background-color: green;
+    }
+    :disabled{
+        cursor: not-allowed;
+    }
+}
+
+.inner_check{
+    border: 2px solid #66bd6a;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    color: #66bd6a;
+    width: 100%;
+    z-index: -1001;
+   
+}
+
+.outer_pencil{
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    justify-content: center;
+    text-align: center;
+    :hover{
+        color: #f70505;
+        font-weight: 800px;
+        background-color: rgb(236, 238, 111);
+        border: 2px solid rgb(236, 238, 111);
+        
+    }
+}
+
+    .inner_pencil{
+    border: 2px solid rgb(38, 172, 212);
+    border-radius: 5px;
+    font-weight: 800px;
+    padding: 5px;
+    cursor: pointer;
+    color: rgb(38, 172, 212);
+    width: 100%;
+    z-index: -1001;
+    :hover{
+        border: none;
+    }
+   
 }

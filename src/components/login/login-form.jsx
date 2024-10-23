@@ -33,8 +33,6 @@ const LoginForm = () => {
         if (usernameFromQuery && linkFromQuery) {
             setUsername(usernameFromQuery);
             setUser(userFromQuery);
-        } else {
-            router.push('/'); //Anasayfaya yönlendirir
         }
     }, [router, searchParams]);
   

@@ -3,7 +3,6 @@ import styles from './lift-operations.module.scss';
 import PageHeader from '@/components/common/page-header';
 import Spacer from '@/components/common/spacer';
 import UpdateButtons from './operation-fields/UpdateButtons';
-import InfoAndRollBack from './operation-fields/InfosAndRollBack';
 
 
 const LiftOperations = ({order}) => {

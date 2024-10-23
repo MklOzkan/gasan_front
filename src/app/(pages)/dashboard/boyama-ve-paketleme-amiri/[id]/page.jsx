@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchOrderById } from '@/services/talasliimalamiri-service';
+import { fetchOrderById } from '@/services/boyapaketlemeamiri-service';
 import BoyaPaketOperations from '@/components/dashboard/boyama-ve-paketleme-amiri/BoyaPaketOperations';
 
 const BoyaPaketPage = async ({ params }) => {

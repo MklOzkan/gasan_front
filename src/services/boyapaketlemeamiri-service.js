@@ -23,9 +23,44 @@ export const fetchDataBoyama= async (
 
 export const fetchOrderById = async (orderId) => {
     const response = await fetch(
-        `${API_URL}/orders/getResponsesForBlokLift/${orderId}`,
+        `${API_URL}/orders/getResponsesForBoyaPaket/${orderId}`,
         {
             method: 'GET',
+            headers: await getAuthHeader()
+        }
+    );
+    return response;
+};
+
+export const updateBoya = async (payload, orderId) => {
+    const response = await fetch(
+        `${API_URL}/boyavepaket/boyaOperation/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const updatePaketleme = async (payload, orderId) => {
+    const response = await fetch(
+        `${API_URL}/boyavepaket/paketOperation/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};
+
+export const rollBackLastChange = async (operationId) => {
+    const response = await fetch(
+        `${API_URL}/boyavepaket/rollback/${operationId}`,
+        {
+            method: 'PUT',
             headers: await getAuthHeader()
         }
     );
