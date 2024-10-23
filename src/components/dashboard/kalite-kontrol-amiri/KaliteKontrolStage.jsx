@@ -16,11 +16,9 @@ const KaliteKontrolStage = ({ responses }) => {
         AFTER_MIL_TASLAMA: 'Mil Taşlama Sonrası Kalite Kontrol'
     };
 
-    console.log('returnBody3 from KaliteKontrolStage', returnBody3);
-
     return (
         <>
-            <main fluid>
+            <main>
                 <PageHeader>Kalite Kontrol amİrİ</PageHeader>
                 <h1 className="kalite-main kalite border">
                     {stages?.[returnBody3?.kaliteKontrolStage] ||
@@ -28,7 +26,7 @@ const KaliteKontrolStage = ({ responses }) => {
                 </h1>
                 <Spacer height={5} />
                 <OrderForOperation order={returnBody} />
-                <Spacer height={0} />
+                <Spacer height={30} />
                 <OperationButton order={returnBody} stage={returnBody3} />
             </main>
         </>

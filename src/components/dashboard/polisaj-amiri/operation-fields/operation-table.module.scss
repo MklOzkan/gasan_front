@@ -1,60 +1,69 @@
 /* Base styling for the operations info container */
-.operations-info {
-    width: 100%;
-    max-width: 800px; /* Set a max-width to avoid overflow */
+.operations_info {
+    margin-left: 20px;
     margin: 0 auto; /* Center the table */
     margin-top: 20px; /* Add space above the table */ 
-    padding: 20px; /* Add padding around the table */
+    padding: 10px; /* Add padding around the table */
     background-color: #f9f9f9; /* Light background color */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    table-layout: fixed; /* Fixed table layout */
+    justify-content: center;
+    align-items: center;
+    @media screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0 auto;
+        margin-top: 20px;
+        
+    }
 }
 
-/* Styling for the operations table */
-.operations-table {
-    width: 100%;
-    border-collapse: collapse; /* Collapse borders for a clean look */
-    font-size: 1rem; /* Set base font size */
-    background-color: #ffffff; /* White background for table */
-    border: 1px solid #ddd; /* Light border around the table */
+.table_head th{
+    border: 1px solid black;
+    padding: 20px;
 }
 
 /* Styling for table headers */
-.operations-table th {
-    padding: 10px 15px; /* Padding inside header cells */
-    background-color: #f0f0f0; /* Light background for headers */
-    border-bottom: 2px solid #ddd; /* Bottom border for header cells */
+.table_head th {
+    
+    padding: 5px 35px; /* Padding inside header cells */
+    border-bottom: 3px solid #851c1c; /* Bottom border for header cells */
     font-weight: bold; /* Bold text */
-    text-align: left; /* Align text to the left */
 }
 
 /* Styling for table rows */
-.operations-table td {
+.table_body td {
     padding: 10px 15px; /* Padding inside table cells */
-    border-bottom: 1px solid #ddd; /* Light border between rows */
-    vertical-align: middle; /* Align cell content to the middle */
+    border-bottom: 1px solid #f18e8e; /* Light border between rows */
 }
 
 /* Highlight the total row */
-.total-row {
+.total_row th {
+    margin-top: 10px;
     font-weight: bold; /* Bold text */
-    background-color: #f9f9f9; /* Slightly different background */
+    padding-top: 10px;
+    border-bottom: 1px solid #218838;
+    
 }
 
 /* Edit button inside table cells */
-.edit-button {
+.edit_button {
     background-color: #007bff; /* Primary blue color */
     color: #ffffff; /* White text color */
-    border: none; /* No border */
     border-radius: 5px; /* Rounded corners */
-    padding: 5px 10px; /* Padding inside the button */
+    padding: 10px 15px; /* Padding inside the button */
+    margin-left: 20px;
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s ease; /* Smooth background transition */
 }
 
 /* Hover effect for edit button */
-.edit-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+.edit_button:hover {
+    background-color: #bcdd9d; /* Darker blue on hover */
 }
 
 /* Popup styling */
@@ -70,7 +79,7 @@
     align-items: center;
 }
 
-.popup-inner {
+.popup_inner {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
@@ -81,7 +90,7 @@
 }
 
 /* Popup input field styling */
-.popup-inner input {
+.popup_inner input {
     width: 80%;
     padding: 10px;
     margin: 10px 0;
@@ -90,14 +99,14 @@
 }
 
 /* Popup buttons container */
-.popup-button {
+.popup_button {
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
 }
 
 /* Individual button styling inside popup */
-.inner-button {
+.inner_button {
     background-color: #28a745; /* Success green color */
     color: #ffffff;
     border: none;
@@ -108,7 +117,7 @@
 }
 
 /* Hover effect for popup buttons */
-.inner-button:hover {
+.inner_button:hover {
     background-color: #218838; /* Darker green on hover */
 }
 

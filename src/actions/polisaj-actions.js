@@ -11,7 +11,7 @@ import {
 
 import { updatePolisaj, rollBackLastChange } from '@/services/polisajamiri-service';
 
-export const polisajAction = async (formData, operationId) => {
+export const polisajAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from milTornalamaAction:', formData, operationId);
 
@@ -22,7 +22,7 @@ export const polisajAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/polisaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -36,7 +36,7 @@ export const polisajAction = async (formData, operationId) => {
     }
 };
 
-export const rollBackLastChangeAction = async (operationId) => {
+export const rollBackLastChangeAction = async (operationId, orderId) => {
     try {
         console.log('formData from boruKesmeActıon:', operationId);
         const res = await rollBackLastChange(operationId);
@@ -45,7 +45,7 @@ export const rollBackLastChangeAction = async (operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/polisaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'

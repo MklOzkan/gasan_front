@@ -20,7 +20,7 @@ import {
     rollbackAfterMilTaslama
 } from '@/services/kalitekontrol-service';
 
-export const afterEzmeAction = async (formData, operationId) => {
+export const afterEzmeAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from afterEzme:', formData, operationId);
 
@@ -31,7 +31,7 @@ export const afterEzmeAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
             success: true,
             message: data.message || 'Başarıyla güncellendi'
@@ -44,7 +44,7 @@ export const afterEzmeAction = async (formData, operationId) => {
     }
 };
 
-export const afterMilTaslamaAction = async (formData, operationId) => {
+export const afterMilTaslamaAction = async (formData, operationId, orderId) => {
     try {
         console.log(
             'formData from afterMilTaslamaAction:',
@@ -59,7 +59,7 @@ export const afterMilTaslamaAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
             success: true,
             message: data.message || 'Başarıyla güncellendi'
@@ -72,7 +72,7 @@ export const afterMilTaslamaAction = async (formData, operationId) => {
     }
 };
 
-export const afterMontajAction = async (formData, operationId) => {
+export const afterMontajAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from afterMontajAction:', formData, operationId);
 
@@ -83,7 +83,7 @@ export const afterMontajAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
             success: true,
             message: data.message || 'Başarıyla güncellendi'
@@ -96,7 +96,7 @@ export const afterMontajAction = async (formData, operationId) => {
     }
 };
 
-export const afterPolisajAction = async (formData, operationId) => {
+export const afterPolisajAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from afterPolisajAction:', formData, operationId);
 
@@ -107,7 +107,7 @@ export const afterPolisajAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
             success: true,
             message: data.message || 'Başarıyla güncellendi'
@@ -120,7 +120,7 @@ export const afterPolisajAction = async (formData, operationId) => {
     }
 };
 
-export const rollBackPolisajAction = async (formData, operationId) => {
+export const rollBackPolisajAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from milKoparmaAction:', formData, operationId);
 
@@ -131,7 +131,7 @@ export const rollBackPolisajAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
             success: true,
             message: data.message || 'Başarıyla güncellendi'
@@ -144,7 +144,7 @@ export const rollBackPolisajAction = async (formData, operationId) => {
     }
 };
 
-export const rollBackMontajAction = async (formData, operationId) => {
+export const rollBackMontajAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from milKoparmaAction:', formData, operationId);
 
@@ -155,7 +155,7 @@ export const rollBackMontajAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
             success: true,
             message: data.message || 'Başarıyla güncellendi'
@@ -168,7 +168,7 @@ export const rollBackMontajAction = async (formData, operationId) => {
     }
 };
 
-export const rollBackEzmeAction = async (formData, operationId) => {
+export const rollBackEzmeAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from rolBackEzmeAction:', formData, operationId);
 
@@ -176,12 +176,12 @@ export const rollBackEzmeAction = async (formData, operationId) => {
         console.log('operationField:', fields.operationField);
         const res = await rollbackAfterEzme(fields, operationId);
         const data = await res.json();
-        console.log('RES in action',res)
+        console.log('RES in action', res);
 
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
             success: true,
             message: data.message || 'Başarıyla güncellendi'
@@ -194,9 +194,13 @@ export const rollBackEzmeAction = async (formData, operationId) => {
     }
 };
 
-export const rollBackMilTaslamaAction = async (formData, operationId) => {
+export const rollBackMilTaslamaAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from rolBackMilTaslamaAction:', formData, operationId);
+        console.log(
+            'formData from rolBackMilTaslamaAction:',
+            formData,
+            operationId
+        );
 
         const fields = convertFormDataToJSON(formData);
         console.log('operationField:', fields.operationField);
@@ -207,7 +211,7 @@ export const rollBackMilTaslamaAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
             success: true,
             message: data.message || 'Başarıyla güncellendi'

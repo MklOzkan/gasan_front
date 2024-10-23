@@ -22,21 +22,7 @@ const Uretim = ({ data, sortBy, sortOrder }) => {
         setCurrentUrl(new URL(window.location.href).pathname);
     }, [data]);
 
-    const handleToolbar = (row) => {
-        return <OrderToolbar row={row} />;
-    };
-    const handleSortChange = (e) => {
-        const { name, value } = e.target;
-        const url = new URL(window.location);
-
-        if (name === 'sortBy') {
-            url.searchParams.set('sortBy', value);
-        } else if (name === 'sortOrder') {
-            url.searchParams.set('sortOrder', value);
-        }
-
-        window.location.href = url.toString();
-    };
+   
 
     const handleSorting = (sortByField) => {
         const url = new URL(window.location);
@@ -72,7 +58,7 @@ const Uretim = ({ data, sortBy, sortOrder }) => {
     return (
         <>
             <PageHeader>Üretİm Planlama</PageHeader>
-            <Spacer height={20} />
+            <Spacer height={10} />
             <main className={styles.main_container}>
                 <div className={styles.button_container}>
                     <Link
@@ -106,8 +92,6 @@ const Uretim = ({ data, sortBy, sortOrder }) => {
                     sortBy={sortBy}
                     sortOrder={sortOrder}
                     handleReset={handleReset}
-                    handleSortChange={handleSortChange}
-                    handleToolbar={handleToolbar}
                     handlePageChange={handlePageChange}
                     handleSorting={handleSorting}
                 />

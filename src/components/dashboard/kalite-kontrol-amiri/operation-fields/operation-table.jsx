@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import './operation-table.scss';
-import EditPopup from './edit-biten-popup.jsx'; // Import the popup component
+import React from 'react';
+import styles from './operation-table.module.scss';
 import { Button } from 'react-bootstrap';
 import { swAlert, swConfirm } from '@/helpers/swal';
 import {
@@ -10,58 +9,60 @@ import {
     rollBackPolisajAction
 } from '@/actions/kalite-kontrol-actions';
 
-const rollBackOperations =[
+// Array with stages, button labels, and conditions
+const rollBackOperations = [
     {
-        stage: 'AFTER_POLISAJ',
-        approveCount:'approveCount',
-        scrapCount:'scrapCount',
-        returnedToMilTaslama:'returnedToMilTaslama',
-        returnedToIsilIslem:'returnedToIsilIslem',
-
+        name: 'approveCount',
+        label: 'Onaylandı',
+        condition: (stage) => true, // Always display
+        lastCountKey: 'lastApproveCount',
+        countKey: 'approveCount',
+        rollbackKey: 'Approve'
     },
     {
-        stage: 'AFTER_MONTAJ',
-        approveCount:'approveCount',
-        scrapCount:'scrapCount',
-        returnedToMilTaslama:'returnedToMilTaslama',
-        returnedToIsilIslem:'returnedToIsilIslem',
+        name: 'scrapCount',
+        label: 'Hurda',
+        condition: (stage) => true, // Always display
+        lastCountKey: 'lastScrapCount',
+        countKey: 'scrapCount',
+        rollbackKey: 'Scrap'
     },
     {
-        stage: 'AFTER_EZME',
-        approveCount:'approveCount',
-        scrapCount:'scrapCount',
-        returnedToMilTaslama:'returnedToMilTaslama',
-        returnedToIsilIslem:'returnedToIsilIslem',
+        name: 'returnedToMilTaslama',
+        label: 'Mil Taşlama',
+        condition: (stage) =>
+            stage.kaliteKontrolStage === 'AFTER_POLISAJ' ||
+            stage.kaliteKontrolStage === 'AFTER_MIL_TASLAMA' ||
+            stage.kaliteKontrolStage === 'AFTER_EZME',
+        lastCountKey: 'lastReturnedToMilTaslama',
+        countKey: 'returnedToMilTaslama',
+        rollbackKey: 'Mil_Taslama'
     },
     {
-        stage: 'AFTER_MIL_TASLAMA',
-        approveCount:'approveCount',
-        scrapCount:'scrapCount',
-        returnedToMilTaslama:'returnedToMilTaslama',
-        returnedToIsilIslem:'returnedToIsilIslem',
+        name: 'returnedToIsilIslem',
+        label: 'Isıl İşlem',
+        condition: (stage) => stage.kaliteKontrolStage === 'AFTER_POLISAJ',
+        lastCountKey: 'lastReturnedToIsilIslem',
+        countKey: 'returnedToIsilIslem',
+        rollbackKey: 'Isil_Islem'
     }
-]
+];
 
-const OperationsInfo = ({stage}) => {
-
-
-
+const OperationsInfo = ({ stage }) => {
     const rollBack = async (name) => {
-        let message = '';
-        if (name === 'Approve') {
-            message = `En son girilen ${stage.lastApproveCount} adetlik üretimi geri almak istediğinize emin misiniz??`;
-        } else if (name === 'Scrap') {
-            message = `En son girilen ${stage.lastScrapCount} adetlik hurda üretimi geri almak istediğinize emin misiniz??`;
-        } else if (name === 'Mil_Taslama') {
-            message = `En son girilen ${stage.lastReturnedToMilTaslama} adeti geri almak istediğinize emin misiniz??`;
-        } else if (name === 'Isil_Islem') {
-            message = `En son girilen ${stage.lastReturnedToIsilIslem} adetlik üretimi geri almak istediğinize emin misiniz??`;
-        }
-            
-        const answer = await swConfirm(
-            message
-        );
+         let message = '';
+         for (const operation of rollBackOperations) {
+             if (operation.rollbackKey === name) {
+                 message = `En son girilen ${
+                     stage[operation.lastCountKey]
+                 } adetlik üretimi geri almak istediğinize emin misiniz??`;
+                 break;
+             }
+         }
+
+        const answer = await swConfirm(message);
         if (!answer.isConfirmed) return;
+
         const formData = new FormData();
         formData.append('operationField', name);
         let response;
@@ -84,21 +85,18 @@ const OperationsInfo = ({stage}) => {
         }
 
         if (response.success) {
-            
-                swAlert(response.message, 'success');
-
+            swAlert(response.message, 'success');
             setTimeout(() => {
                 window.location.reload();
             }, 1000);
-            
         } else {
             swAlert(response.message, 'error');
         }
     };
 
     return (
-        <div className="operations-info d-flex">
-            <table className="operations-table">
+        <div className={styles.operations_info}>
+            <table className={styles.operations_table}>
                 <thead>
                     <tr>
                         <th>İşlem</th>
@@ -107,72 +105,39 @@ const OperationsInfo = ({stage}) => {
                 </thead>
                 <tbody>
                     <React.Fragment>
-                        <tr>
-                            <td>Onaylandı</td>
-                            <td>
-                                <Button
-                                    className="edit-button"
-                                    disabled={stage.lastApproveCount === 0}
-                                    onClick={() => rollBack('Approve')}
-                                    name="approveCount"
-                                >
-                                    {stage.approveCount}
-                                </Button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Hurda</td>
-                            <td>
-                                <Button
-                                    className="edit-button"
-                                    disabled={stage.lastScrapCount === 0}
-                                    onClick={() => rollBack('Scrap')}
-                                    name="scrapCount"
-                                >
-                                    {stage.scrapCount}
-                                </Button>
-                            </td>
-                        </tr>
-                        {stage.kaliteKontrolStage === 'AFTER_POLISAJ' ||
-                        stage.kaliteKontrolStage === 'AFTER_MIL_TASLAMA' ||
-                        stage.kaliteKontrolStage === 'AFTER_EZME' ? (
-                            <tr>
-                                <td>Mil Taşlama</td>
-                                <td>
-                                    <Button
-                                        className="edit-button"
-                                        disabled={
-                                            stage.lastReturnedToMilTaslama === 0
-                                        }
-                                        onClick={() => rollBack('Mil_Taslama')}
-                                        name="returnedToMilTaslama"
-                                    >
-                                        {stage.returnedToMilTaslama}
-                                    </Button>
-                                </td>
-                            </tr>
-                        ) : null}
-                        {stage.kaliteKontrolStage === 'AFTER_POLISAJ' ? (
-                            <tr>
-                                <td>Isıl İşlem</td>
-                                <td>
-                                    <Button
-                                        className="edit-button"
-                                        disabled={
-                                            stage.lastReturnedToIsilIslem === 0
-                                        }
-                                        onClick={() => rollBack('Isil_Islem')}
-                                        name="returnedToIsilIslem"
-                                    >
-                                        {stage.scrapCount}
-                                    </Button>
-                                </td>
-                            </tr>
-                        ) : null}
+                        {rollBackOperations.map(
+                            ({
+                                name,
+                                label,
+                                condition,
+                                lastCountKey,
+                                countKey,
+                                rollbackKey
+                            }) =>
+                                condition(stage) && (
+                                    <tr key={name}>
+                                        <td>{label}</td>
+                                        <td>
+                                            <Button
+                                                className={styles.edit_button}
+                                                disabled={
+                                                    stage[lastCountKey] === 0
+                                                }
+                                                onClick={() =>
+                                                    rollBack(rollbackKey)
+                                                }
+                                                name={name}
+                                            >
+                                                {stage[countKey]}
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                )
+                        )}
                     </React.Fragment>
                 </tbody>
             </table>
-            <table className="operations-table text-center">
+            <table className={styles.second_table}>
                 <thead>
                     <tr>
                         <th className="text-center">Kalan</th>
@@ -180,11 +145,9 @@ const OperationsInfo = ({stage}) => {
                 </thead>
                 <tbody>
                     <tr>
-                        {
-                            <td className="mil">
-                                {stage.milCount <= 0 ? 0 : stage.milCount}
-                            </td>
-                        }
+                        <td className="mil">
+                            {stage.milCount <= 0 ? 0 : stage.milCount}
+                        </td>
                     </tr>
                 </tbody>
             </table>

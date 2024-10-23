@@ -1,66 +1,62 @@
 import React, { useEffect, useState } from 'react';
-import './operation-table.scss';
+import styles from './operation-table.module.scss';
 import { Button } from 'react-bootstrap';
 import { swAlert, swConfirm } from '@/helpers/swal';
 import { rollBackLastChangeAction } from '@/actions/polisaj-actions';
 
-const OperationsInfo = ({ operation, productionProcess }) => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [selectedOperation, setSelectedOperation] = useState(null);
-    const [newValue, setNewValue] = useState('');
-    const [operationId, setOperationId] = useState(null);
+const OperationsInfo = ({ operation, productionProcess, order }) => {
 
-
+    useEffect(() => {
+    }, [operation, order]);
 
     const rollBack = async (operation) => {
-        setOperationId(operation);
-        console.log('Selected Operation:', operation);
         const answer = await swConfirm(
             `En son girilen ${operation.lastCompletedQty} adetlik üretimi geri almak istediğinize emin misiniz??`
         );
         if (!answer.isConfirmed) return;
 
-        const res = await rollBackLastChangeAction(operation.id);
+        const res = await rollBackLastChangeAction(operation.id, order.id);
 
         if (res.success) {
-            setTimeout(()=>{
-                swAlert(res.message, 'success');}, 1000);
-            window.location.reload();
-            
+                swAlert(res.message, 'success', '', 2000)
         } else {
             swAlert(res.message, 'error');
         }
     };
 
     return (
-        <div className="operations-info">
-            <table className="operations-table">
+        <div className={styles.operations_info}>
+            <table className={styles.operations_table}>
                 <thead>
-                    <tr>
+                    <tr className={styles.table_head}>
                         <th>İşlem</th>
                         <th>Biten</th>
                         <th>Kalan</th>
                     </tr>
                 </thead>
                 <tbody>
-                    
-                        <React.Fragment>
-                            <tr>
-                                <td>{operation.operationType}</td>
-                                <td>
-                                    <Button
-                                        className="edit-button"
-                                        disabled={operation.completedQuantity === 0 ||operation.lastCompletedQty === 0}
-                                        onClick={() =>
-                                            rollBack(operation)
-                                        }
-                                    >
-                                        {operation.completedQuantity}
-                                    </Button>
-                                </td>
-                                <td>{operation.remainingQuantity<=0 ?(0) :(operation.remainingQuantity)}</td>
-                            </tr>
-                        </React.Fragment>
+                    <React.Fragment>
+                        <tr className={styles.table_body}>
+                            <td>{operation.operationType}</td>
+                            <td>
+                                <Button
+                                    className={styles.edit_button}
+                                    disabled={
+                                        operation.completedQuantity === 0 ||
+                                        operation.lastCompletedQty === 0
+                                    }
+                                    onClick={() => rollBack(operation)}
+                                >
+                                    {operation.completedQuantity}
+                                </Button>
+                            </td>
+                            <td className={styles.lastchild}>
+                                {operation.remainingQuantity <= 0
+                                    ? 0
+                                    : operation.remainingQuantity}
+                            </td>
+                        </tr>
+                    </React.Fragment>
                 </tbody>
             </table>
         </div>

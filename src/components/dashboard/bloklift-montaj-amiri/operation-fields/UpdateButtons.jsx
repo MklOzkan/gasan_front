@@ -112,7 +112,11 @@ const UpdateButtons = ({order, operations}) => {
                     response = await blMontajAction(formData, operationId);
                     break;
                 case 'BORU_KAPAMA':
-                    response = await boruKapamaAction(formData, operationId);
+                    response = await boruKapamaAction(
+                        formData,
+                        operationId,
+                        order.orderType
+                    );
                     break;
                 case 'GAZ_DOLUM':
                     response = await gazDolumAction(formData, operationId);

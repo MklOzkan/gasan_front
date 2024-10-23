@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container';
 import OrderForOperation from '@/components/common/form-fields/OrderInfo';
 import Spacer from '@/components/common/spacer';
 import { useRouter } from 'next/navigation';
-import './kalite-kontrol-operations.scss';
+import styles from './kalite-kontrol-operations.module.scss';
 
 const kaliteKontrolStages = {
     AFTER_POLISAJ: 'Polisaj Sonrası',
@@ -26,45 +26,42 @@ const KaliteKontrolOperations = ({ responses }) => {
     };
 
     return (
-        <main fluid>
+        <main >
             <PageHeader>Kalite Kontrol Amiri</PageHeader>
             <Spacer height={5} />
             <OrderForOperation order={returnBody} />
-
-            <main className="table-container">
-                <div className="table-wrapper">
-                    <table className="container-head text-center ">
-                        <thead className="table-head">
-                            <tr className="mb-3">
-                                <th className="border-3">Kontrol Aşaması</th>
-                                <th className="border-3">Onay Bekleyen Adet</th>
+                <div className={styles.table_container}>
+                    <table>
+                        <thead>
+                            <tr className={styles.table_head}>
+                                <th>Kontrol Aşaması</th>
+                                <th>Onay Bekleyen Adet</th>
                             </tr>
-                        </thead>
-                        {returnBody3.map((stage, index) => (
-                            <tbody
-                                key={index}
-                                className="stage-button"
-                                onClick={() => handleRowClick(stage)}
-                            >
-                                {kaliteKontrolStages[
-                                    stage.kaliteKontrolStage
-                                ] && (
-                                    <tr className="table-body">
-                                        <td>
-                                            {
-                                                kaliteKontrolStages[
-                                                    stage.kaliteKontrolStage
-                                                ]
-                                            }
-                                        </td>
-                                        <td>{stage.milCount}</td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        ))}
-                    </table>
-                </div>
-            </main>
+                                </thead>
+                                {returnBody3.map((stage, index) => (
+                                <tbody
+                                    key={index}
+                                    onClick={() => handleRowClick(stage)}
+                                        >
+                                        {kaliteKontrolStages[
+                                                stage.kaliteKontrolStage
+                                            ] && (
+                                                <tr className={styles.table_body}>
+                                                    <td>
+                                                        {
+                                                            kaliteKontrolStages[
+                                                                stage.kaliteKontrolStage
+                                                            ]
+                                                        }
+                                                    </td>
+                                                    <td>{stage.milCount}</td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    ))}
+                                </table>
+                    </div>
+            
         </main>
     );
 };

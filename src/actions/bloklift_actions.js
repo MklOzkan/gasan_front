@@ -67,12 +67,17 @@ export const blMontajAction = async (formData, operationId) => {
     }
 };
 
-export const boruKapamaAction = async (formData, operationId) => {
+export const boruKapamaAction = async (formData, operationId, orderType) => {
     try {
         console.log('formData from boruKapamaAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
-        const res = await updateBoruKapama(fields, operationId);
+        let res;
+        if(orderType === 'DAMPER') {
+            res = await updateBoruKapama(fields, operationId);
+        }else{
+            res = await updateBoruKapama(fields, operationId);
+        }
         const data = await res.json();
 
         if (!res.ok) {

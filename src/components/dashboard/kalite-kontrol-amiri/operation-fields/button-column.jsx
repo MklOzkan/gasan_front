@@ -1,87 +1,90 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import styles from './operation-button.module.scss';
 
 const OperationCol = ({
     stage,
     order,
     togglePopup,
+    isPopupOpen,
     handleQuantityChange,
     handleSubmit,
     productionQuantity
 }) => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false); // State to control popup visibility
     const [clickedButtonName, setClickedButtonName] = useState('');
-    let txColor = ''; // Default text color
-    const bgColor = 'grey';
+    const buttons = [
+        {
+            name: 'approveCount',
+            label: 'Onayla',
+            condition: true // Always show this button
+        },
+        {
+            name: 'scrapCount',
+            label: 'Hurda',
+            condition: true // Always show this button
+        },
+        {
+            name: 'returnedToMilTaslama',
+            label: 'Mil Taşlamaya Geri Gidecek',
+            condition:
+                stage.kaliteKontrolStage === 'AFTER_POLISAJ' ||
+                stage.kaliteKontrolStage === 'AFTER_MIL_TASLAMA' ||
+                stage.kaliteKontrolStage === 'AFTER_EZME' // Show based on kaliteKontrolStage
+        },
+        {
+            name: 'returnedToIsilIslem',
+            label: 'Isıl İşleme Geri Gidecek',
+            condition: stage.kaliteKontrolStage === 'AFTER_POLISAJ' // Only for AFTER_POLISAJ
+        }
+    ];
 
     const handlePopupClick = (name) => {
-        setIsPopupOpen(true); // Open the popup when "Onayla" button is clicked
         setClickedButtonName(name);
     };
 
-    const handlePopupClose = () => {
-        setIsPopupOpen(false); // Close the popup
-    };
 
     return (
-        <div className="d-flex flex-column">
-            <Button
-                onClick={() => handlePopupClick('approveCount')} // Show the popup when this button is clicked
-                className="polygon-button first-button"
-                name="approveCount"
-                disabled={stage.milCount === 0}
-            >
-                <span>Onayla</span>
-            </Button>
-            <Button
-                className="polygon-button next-button"
-                name="scrapCount"
-                onClick={() => handlePopupClick('scrapCount')}
-                disabled={stage.milCount === 0}
-            >
-                <span>Hurda</span>
-            </Button>
-            {stage.kaliteKontrolStage === 'AFTER_POLISAJ' ||
-            stage.kaliteKontrolStage === 'AFTER_MIL_TASLAMA' ||
-            stage.kaliteKontrolStage === 'AFTER_EZME' ? (
-                <Button
-                    className="polygon-button next-button"
-                    name="returnedToMilTaslama"
-                    onClick={() => handlePopupClick('returnedToMilTaslama')}
-                    disabled={stage.milCount === 0}
-                >
-                    <span>Mil Taşlamaya Geri Gidecek</span>
-                </Button>
-            ) : null}
-            {stage.kaliteKontrolStage === 'AFTER_POLISAJ' ? (
-                <Button
-                    className="polygon-button next-button"
-                    name="returnedToIsilIsleme"
-                    onClick={() => handlePopupClick('returnedToIsilIsleme')}
-                    disabled={stage.milCount === 0}
-                >
-                    <span>Mil Isıl İşleme Geri Gidecek</span>
-                </Button>
-            ) : null}
+        <div className={styles.outer_container}>
+            {buttons.map((item, index) =>
+                item.condition ? (
+                    <Button
+                        key={index}
+                        className={`${styles.polygon_button} ${
+                            styles[`index_${index}`]
+                        }`}
+                        name={item.name}
+                        onClick={() => {
+                            handlePopupClick(item.name);
+                            togglePopup(stage.id);
+                        }}
+                        disabled={stage.milCount === 0}
+                    >
+                        <span>{item.label}</span>
+                    </Button>
+                ) : null
+            )}
 
             {/* Show the popup only if isPopupOpen is true */}
-            {isPopupOpen && (
-                <div className="popup">
+            {isPopupOpen === stage.id && (
+                <div className={styles.popup}>
                     <div
-                        className="popup-backdrop"
-                        onClick={handlePopupClose} // Close the popup when clicking outside
+                        className={styles.popup_backdrop}
+                        onClick={() => togglePopup(null)}
                     ></div>
-                    <div className="popup-inner">
-                        <h2>Sayisi giriniz!</h2>
+                    <div className={styles.popup_inner}>
+                        <h2 className={styles.input_label}>
+                            Lütfen Adedi Girin
+                        </h2>
                         <input
                             type="number"
                             min={0}
                             value={productionQuantity}
                             onChange={handleQuantityChange}
+                            className={styles.input}
                         />
                         {
-                            <div className="popup-button">
+                            <div className={styles.popup_button}>
                                 <button
                                     onClick={() =>
                                         handleSubmit(
@@ -91,14 +94,14 @@ const OperationCol = ({
                                             clickedButtonName
                                         )
                                     }
-                                    className="inner-button bg-success"
+                                    className={`${styles.onay_button}`}
                                     disabled={productionQuantity === ''}
                                 >
                                     Onayla
                                 </button>
                                 <button
-                                    onClick={handlePopupClose}
-                                    className="inner-button"
+                                    onClick={togglePopup}
+                                    className={styles.iptal_button}
                                 >
                                     İptal
                                 </button>
@@ -115,6 +118,8 @@ OperationCol.propTypes = {
     order: PropTypes.object.isRequired,
     stage: PropTypes.object.isRequired,
     togglePopup: PropTypes.func.isRequired,
+    isPopupOpen: PropTypes.oneOfType([PropTypes.bool, PropTypes.number])
+        .isRequired,
     handleQuantityChange: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     productionQuantity: PropTypes.string.isRequired

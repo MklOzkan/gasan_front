@@ -26,17 +26,11 @@
 
 .table_head th{
     border: 1px solid black;
+    padding: 5px 15px;
+    border-bottom: 3px solid #851c1c;
+    font-weight: bold;
 }
 
-/* Styling for table headers */
-.table_head th {
-    
-    padding: 5px 15px; /* Padding inside header cells */
-    border-bottom: 3px solid #851c1c; /* Bottom border for header cells */
-    font-weight: bold; /* Bold text */
-}
-
-/* Styling for table rows */
 .table_body td {
     padding: 10px 15px; /* Padding inside table cells */
     border-bottom: 1px solid #f18e8e; /* Light border between rows */

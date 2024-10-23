@@ -29,7 +29,7 @@ const OperationButton = ({order, operations, productionProcess}) => {
 
     useEffect(() => {
         console.log('Operations:', operations);
-    }, [operations]);
+    }, [operations, order]);
 
     const compareOperations = (a, b) => {
         return (
@@ -72,22 +72,22 @@ const OperationButton = ({order, operations, productionProcess}) => {
             // Determine which action to call based on operation type
             switch (operationType) {
                 case 'BORU_KESME_HAVSA':
-                    response = await boruKesmeAction(formData, operationId);
+                    response = await boruKesmeAction(formData, operationId, order.id);
                     break;
                 case 'MIL_KOPARMA':
-                    response = await milKoparmaAction(formData, operationId);
+                    response = await milKoparmaAction(formData, operationId, order.id);
                     break;
                 case 'MIL_TORNALAMA':
-                    response = await milTornalamaAction(formData, operationId);
+                    response = await milTornalamaAction(formData, operationId, order.id);
                     break;
                 case 'MIL_TASLAMA':
-                    response = await milTaslamaAction(formData, operationId);
+                    response = await milTaslamaAction(formData, operationId, order.id);
                     break;
                 case 'ISIL_ISLEM':
-                    response = await isilIslemAction(formData, operationId);
+                    response = await isilIslemAction(formData, operationId, order.id);
                     break;
                 case 'EZME':
-                    response = await ezmeAction(formData, operationId);
+                    response = await ezmeAction(formData, operationId, order.id);
                     break;
                 default:
                     throw new Error(`Unknown operation type: ${operationType}`);
@@ -96,10 +96,10 @@ const OperationButton = ({order, operations, productionProcess}) => {
             console.log('Response:', response);
 
             if (response.success) {
-                swAlert(response.message);
-                setTimeout(() => {   
-                    window.location.reload();
-                }, 2000);
+                swAlert(response.message, 'success');
+                // setTimeout(() => {   
+                //     window.location.reload();
+                // }, 2000);
             }
         } catch (error) {
             swAlert(error.message, 'error');

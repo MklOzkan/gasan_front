@@ -6,13 +6,14 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import OrderForOperation from '@/components/common/form-fields/OrderInfo';
 import OperationButton from '@/components/dashboard/polisaj-amiri/operation-fields/OperationButton';
+import styles from '@/styles/pages/main-page.module.scss'
 
 const PolisajProduction = ({ order }) => {
     const { returnBody, returnBody2, returnBody3 } = order;
     console.log('returnBody', returnBody2);
 
     return (
-        <Container fluid>
+        <main className={styles.main_container}>
             <PageHeader>Polisaj Amiri </PageHeader>
             <Spacer height={5} />
             <OrderForOperation order={returnBody} />
@@ -22,7 +23,7 @@ const PolisajProduction = ({ order }) => {
                 operation={returnBody2}
                 productionProcess={returnBody3}
             />
-        </Container>
+        </main>
     );
 };
 

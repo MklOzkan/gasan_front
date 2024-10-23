@@ -1,3 +1,23 @@
+.main_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    @media screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+}
+
+.info_button, .borukesme_button{
+    margin: 30px 20px;
+}
+
 .popup {
     position: fixed;
     top: 0;
@@ -33,7 +53,7 @@
     position: relative; /* Positioned relative to the backdrop */
 }
 
-.ppopup-button{
+.popup-button{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,8 +75,8 @@
 
 
 /* Base styles for all buttons */
-.polygon-button {
-    width: 400px; /* CHANGED: Limit max width */
+.polygon_button {
+    width: 350px; /* CHANGED: Limit max width */
     height: 120px;
     font-size: 18px;
     font-weight: bold;
@@ -69,7 +89,6 @@
     transition: background-color 0.3s ease; /* Smooth transitions */
     margin: 0; /* Remove margin */
     padding: 0; /* Remove padding */
-    margin-bottom: -30px;
     clip-path: polygon(
         0% 0%,   /* Top left corner */
         100% 0%, /* Top right corner */
