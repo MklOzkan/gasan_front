@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { login } from '@/services/auth-services';
 import { getIsTokenValid, getIsUserAuthorized } from './helpers/auth-helpers';
+import { NextResponse } from 'next/server';
 
 
 const config = {
@@ -46,11 +47,11 @@ const config = {
                     );
                     if (isUserAuthorized) return true;
 
-                    return Response.redirect(
+                    return NextResponse.redirect(
                         new URL('/unauthorized', request.nextUrl)
                     );
                 } else if (isInLoginPage) {
-                    return Response.redirect(
+                    return NextResponse.redirect(
                         new URL(redirectLink, request.nextUrl)
                     );
                 }

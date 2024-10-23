@@ -1,11 +1,15 @@
 import Swal from "sweetalert2";
 
-export const swAlert = (title, icon = "info", text = "") => {
-	Swal.fire({
-		title,
-		text,
-		icon,
-	});
+export const swAlert = (title, icon = 'info', text = '', timer = 1000) => {
+    Swal.fire({
+        title,
+        text,
+        icon,
+        backdrop: true, // This keeps the backdrop enabled
+        timer, // This will automatically close the popup after 'timer' milliseconds
+        timerProgressBar: true, // Optional: Shows a timer progress bar
+        showConfirmButton: false // Optional: Hides the confirm button to avoid confusion
+    });
 };
 
 export const swConfirm = (

@@ -3,6 +3,8 @@ const { config } = require('@/helpers/config');
 
 const API_URL = config.api.baseUrl;
 
+
+
 export const getOrders = async (
     page = 0,
     size = 10,
@@ -23,15 +25,9 @@ export const getOrders = async (
 export const createOrder = async (orderData) => {
     const response = await fetch(`${API_URL}/orders/createOrder`, {
         method: 'POST',
-        headers: {
-            ...(await getAuthHeader()),
-            'Content-Type': 'application/json'
-        },
+        headers: (await getAuthHeader()),
         body: JSON.stringify(orderData)
     });
-    // if (!response.ok) {
-    //     throw new Error(`Error creating order: ${response.statusText}`);
-    // }
     return response;
 };
 
@@ -82,15 +78,28 @@ export const getOrderById = async (id) => {
 };
 
 export const updateStatus = async (orderId) => {
-    console.log('orderId', orderId);
-    const response = await fetch(`${API_URL}/talasli/startStop/${orderId}`, {
+    const response = await fetch(`${API_URL}/orders/startStop/${orderId}`, {
         method: 'PUT',
-        headers: {
-            ...(await getAuthHeader()),
-            'Content-Type': 'application/json'
-        }
+        headers:  await getAuthHeader()
     });
+    
+    console.log('response', response);
     return response;
-}
+};
+
+export const finishOrder = async (orderId) => {
+    const response = await fetch(
+        `${API_URL}/orders/finishOrder/${orderId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader()
+        }
+    );
+    if (!response.ok) {
+        throw new Error(`Error deleting order: ${response.statusText}`);
+    }
+    return response;
+};
+
 
 

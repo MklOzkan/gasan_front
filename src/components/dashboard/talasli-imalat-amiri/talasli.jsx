@@ -26,8 +26,6 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
 
     // Handle order status change (start or stop processing an order)
     const handleStatusChange = async (order, newStatus) => {
-        console.log('orderId: ', order.id);
-        await wait(2000); // Wait for 1 second
         
         try {
             const response = await updateOrderStatus(order.id, newStatus); // Call external functio
@@ -35,8 +33,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
             if (response && response.success) {
                 console.log('message', response.message);
                 swAlert(response.message, 'success');
-                await wait(2000); // Wait for 1 second
-                window.location.reload(); // Basarili ise sayfayi yenile
+                await wait(2000);
             } else {
                 console.error('Sipariş durumu güncellenemedi');
             }
@@ -45,23 +42,8 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
         }
     };
 
-    // Redirect the user based on orderType when the row is clicked
     const handleRowClick = (order) => {
-            router.push(`/dashboard/talasli-imalat-amiri/lift/${order.id}`); // Use Next.js router for redirection
-    };
-
-    // Handle sorting change (set sortBy and sortOrder in the URL)
-    const handleSortChange = (e) => {
-        const { name, value } = e.target;
-        const url = new URL(window.location);
-
-        if (name === 'sortBy') {
-            url.searchParams.set('sortBy', value);
-        } else if (name === 'sortOrder') {
-            url.searchParams.set('sortOrder', value);
-        }
-
-        router.push(); // Use router.push for navigation
+            router.push(`/dashboard/talasli-imalat-amiri/lift/${order.id}`);
     };
 
     const handleSorting = (sortByField) => {
@@ -202,10 +184,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                                 //disabled={isProcessing} // Disable if another order is in progress
                                                 onClick={(e) => {
                                                     e.stopPropagation(); // Prevent row click event
-                                                    handleStatusChange(
-                                                        order,
-                                                        'İşlenmekte'
-                                                    );
+                                                    handleStatusChange(order);
                                                 }}
                                             >
                                                 Başla
@@ -217,10 +196,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                                 variant="danger"
                                                 onClick={(e) => {
                                                     e.stopPropagation(); // Prevent row click event
-                                                    handleStatusChange(
-                                                        order,
-                                                        'Beklemede'
-                                                    );
+                                                    handleStatusChange(order);
                                                 }}
                                             >
                                                 Durdur
@@ -232,10 +208,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                                 variant="success"
                                                 onClick={(e) => {
                                                     e.stopPropagation(); // Prevent row click event
-                                                    handleStatusChange(
-                                                        order,
-                                                        'İşlenmekte'
-                                                    );
+                                                    handleStatusChange(order);
                                                 }}
                                             >
                                                 Tekrar Başlat

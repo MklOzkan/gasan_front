@@ -62,6 +62,7 @@ const OrderList = ({
                                     (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                             </th>
                             <th>Sipariş Adedi</th>
+                            <th>Nihai Üretim</th>
                             <th
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => handleSorting('orderStatus')}
@@ -71,7 +72,7 @@ const OrderList = ({
                                     (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                             </th>
                             <th>Hazır Mil Adedi</th>
-                            <th>Düzenle/Sil</th>
+                            <th>Düzenle/Sil/Tamamla</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,6 +104,7 @@ const OrderList = ({
                                 <td>{order.deliveryDate}</td>
                                 <td>{order.orderType}</td>
                                 <td>{order.orderQuantity}</td>
+                                <td>{order.finalProductQuantity}</td>
                                 <td>{order.orderStatus}</td>
                                 <td>{order.readyMilCount}</td>
 
