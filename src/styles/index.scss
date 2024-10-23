@@ -1,11 +1,14 @@
 @import "./variables";
 @import "bootstrap/scss/bootstrap";
 
-html,body,#root > div{
-    height: 100%;
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html,body > div{
+    height: 100%;
 }
 
 a{

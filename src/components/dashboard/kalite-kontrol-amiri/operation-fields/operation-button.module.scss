@@ -1,3 +1,27 @@
+.main_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 20 auto;
+    margin-right: 50px;
+    @media screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        margin: 5px auto;
+        
+    }
+}
+
+.buttons{
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
 .popup {
     position: fixed;
     top: 0;
@@ -11,7 +35,7 @@
     z-index: 999; /* High z-index to ensure it's above other elements */
 }
 
-.popup-backdrop {
+.popup_backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -21,11 +45,18 @@
     z-index: 998; /* Slightly lower z-index than the popup */
 }
 
-.popup-inner {
+.input{
+    display: block;
+    border-radius: 10px;
+    padding: 5px;
+
+}
+
+.popup_inner {
     display: flex;
     flex-direction: column;
     background: white;
-    padding: 20px;
+    padding: 40px;
     border-radius: 10px;
     text-align: center;
     z-index: 1000; /* Higher z-index than the backdrop */
@@ -33,29 +64,48 @@
     position: relative; /* Positioned relative to the backdrop */
 }
 
-.ppopup-button{
+.popup_button{
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+    margin: 0 auto;
     gap: 10px;
 }
 
-.inner-button{
+.onay_button, .iptal_button {
+    margin-top: 10px;
     padding: 10px 20px;
     width: 100px;
     height: auto;
-    background: #f08181;
     cursor: pointer;
-    border-radius: 50px;
+    border-radius: 10px;
     z-index: 1001; /* Ensure button is on top */
+    color: white;
+    font-weight: bolder;
+    :disabled {
+        background-color: #d3d3d3;
+        cursor: not-allowed;
+    }
+}
+.onay_button {
+    background-color: #09f34ff3;
+}
+.iptal_button {
+    background-color: #f08181;
+}
+
+.outer_container{
+    display:  flex;
+    flex-direction: column;
 }
 
 
 
 
 /* Base styles for all buttons */
-.polygon-button {
+.polygon_button {
     width: 400px; /* CHANGED: Limit max width */
     height: 120px;
     font-size: 18px;
@@ -70,20 +120,18 @@
     margin: 0; /* Remove margin */
     padding: 0; /* Remove padding */
     margin-bottom: -30px;
-    clip-path: polygon(
-        0% 0%,   /* Top left corner */
-        100% 0%, /* Top right corner */
-        100% 70%,/* Right side of rectangle */
-        50% 100%,/* Bottom point of triangle */
-        0% 70%   /* Left side of rectangle */
-    );
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        
+    }
+    
 
     
     
 }
 
 /* Shape for the first button (Index 0) */
-.polygon-button {
+.polygon_button, .index-0 {
     clip-path: polygon(
         0% 0%,   /* Top left corner */
         100% 0%, /* Top right corner */
@@ -97,7 +145,10 @@
 }
 
 /* Chevron shape for subsequent buttons (Index 1, 2, 3...) */
-.polygon-button.index-1, .next-button  {
+.polygon-button, .index_1,
+.polygon-button, .index_2,
+.polygon-button, .index_3,
+.polygon-button, .index_4  {
     clip-path: polygon(
         0% 0%,    /* Top left */
     50% 30%,    /* Top middle inward point */
@@ -113,13 +164,9 @@
 }
 
     @media screen  and (max-width: 767px) {
-    .operation_button {
-        display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    z-index: 1001; /* Ensure button is on top */
+    .buttons {
+        width: 100%;
+
     }
 }
 

@@ -1,15 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-    Container,
     Row,
-    Col,
-    Table,
-    Pagination,
-    Form,
-    Button,
-    BookMark
+    Col
 } from 'react-bootstrap';
-import './operation-button.scss';
+import styles from './operation-button.module.scss';
 import ButtonColumn from './button-column';
 import OperationsInfo from './operation-table';
 import {
@@ -19,25 +13,20 @@ import {
     afterPolisajAction,
 
 } from '@/actions/kalite-kontrol-actions';
-import { swAlert, swConfirm } from '@/helpers/swal';
-import { response } from '@/helpers/form-validation';
+import { swAlert} from '@/helpers/swal';
 
 const OperationButton = ({order,  stage}) => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false); // **Highlight: Initialize state as null**
+    const [isPopupOpen, setIsPopupOpen] = useState(null); // **Highlight: Initialize state as null**
     const [productionQuantity, setProductionQuantity] = useState('');
-    const operationOrder = [
-        'MIL_KOPARMA',
-        'MIL_TORNALAMA',
-        'MIL_TASLAMA',
-        'ISIL_ISLEM',
-        'EZME',
-        'BORU_KESME_HAVSA'
-    ];
+
+    useEffect(() => {
+    }, [stage, order]);
 
 
-   const togglePopup = () => {
-       setIsPopupOpen(!isPopupOpen); // Toggle the popup state
+   const togglePopup = (stageId) => {
+       setIsPopupOpen((prev) => (prev === stageId ? null : stageId)); 
    };
+
 
     const handleQuantityChange = (e) => {
         const value = e.target.value;
@@ -68,20 +57,20 @@ const OperationButton = ({order,  stage}) => {
             // Declare response variable
             let response;
             if(kaliteKontrolStage === 'AFTER_POLISAJ') {
-                response = await afterPolisajAction(formData, operationId);
+                response = await afterPolisajAction(formData, operationId, order.id);
             } else if(kaliteKontrolStage === 'AFTER_MONTAJ') {
-                response = await afterMontajAction(formData, operationId);
+                response = await afterMontajAction(formData, operationId, order.id);
             } else if(kaliteKontrolStage === 'AFTER_EZME') {
-                response = await afterEzmeAction(formData, operationId);
+                response = await afterEzmeAction(formData, operationId, order.id);
             } else if(kaliteKontrolStage === 'AFTER_MIL_TASLAMA') {
-                response = await afterMilTaslamaAction(formData, operationId);
+                response = await afterMilTaslamaAction(formData, operationId, order.id);
             }
 
             if (response.success) {
-                swAlert(response.message);
-                setTimeout(() => {   
-                    window.location.reload();
-                }, 2000);
+                swAlert(response.message ,'success');
+                // setTimeout(() => {   
+                //     window.location.reload();
+                // }, 2000);
             }
         } catch (error) {
             swAlert(error.message, 'error');
@@ -93,38 +82,26 @@ const OperationButton = ({order,  stage}) => {
 
     
     return (
-        <>
-            <Container className="d-flex gap-5 justify-content-center operation_button ">
-                <Row className="d-inline-block me-5">
+        
+            <div className={styles.main_container}>
+                <div className={styles.buttons}>
+                            <ButtonColumn
+                                order={order}
+                                stage={stage}
+                                isPopupOpen={isPopupOpen}
+                                handleQuantityChange={handleQuantityChange}
+                                togglePopup={togglePopup}
+                                handleSubmit={handleSubmit}
+                                productionQuantity={productionQuantity}
+                            />
+                </div>
+                <div className={styles.info_table}>
                     
-                            
-                                <Col className="d-flex gap-1">
-                                    <div>
-                                        <ButtonColumn
-                                            order={order}
-                                            stage={stage}
-                                            isPopupOpen={isPopupOpen}
-                                            handleQuantityChange={
-                                                handleQuantityChange
-                                            }
-                                            handleSubmit={handleSubmit}
-                                            productionQuantity={
-                                                productionQuantity
-                                            }
-                                        />
-                                    </div>
-                                </Col>
-                            
-                </Row>
-                <Row className="d-flex flex-column ms-4">
-                    <Col>
-                        <OperationsInfo
-                            stage={stage}
-                        />
-                    </Col>
-                </Row>
-            </Container>
-        </>
+                        <OperationsInfo stage={stage} />
+                    
+                </div>
+            </div>
+        
     );
 };
 

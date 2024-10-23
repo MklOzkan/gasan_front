@@ -11,9 +11,6 @@ const OrderList = ({
     totalElements,
     sortBy,
     sortOrder,
-    handleReset,
-    handleSortChange,
-    handleToolbar,
     handlePageChange,
     handleSorting
 }) => {
@@ -84,12 +81,6 @@ const OrderList = ({
                                         ? `${styles.table_body} ${styles.index}`
                                         : styles.table_body
                                 }
-                                onClick={() =>
-                                    order.orderStatus === 'İşlenmekte' &&
-                                    currentUrl !== '/dashboard/uretim'
-                                        ? handleRowClick(order)
-                                        : null
-                                } // satırı tıklanabilir yapar sadece işlenmekte olan siparişler için ve üretim sayfasında değilse
                                 style={{
                                     cursor:
                                         order.orderStatus === 'İşlenmekte'

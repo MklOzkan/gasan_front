@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import './operation-button.scss';
+import styles from './operation-button.module.scss';
 import ButtonColumn from './button-column';
 import OperationsInfo from './operation-table';
 import {
@@ -47,15 +44,10 @@ const OperationButton = ({order, operation, productionProcess}) => {
             formData.append('completedQuantity', parseInt(producedAmount, 10));
 
             // Declare response variable
-            const response = await polisajAction(formData, operationId); 
-
-            console.log('Response:', response);
+            const response = await polisajAction(formData, operationId, order.id); 
 
             if (response.success) {
                 swAlert(response.message);
-                setTimeout(() => {   
-                    window.location.reload();
-                }, 2000);
             }
         } catch (error) {
             swAlert(error.message, 'error');
@@ -68,26 +60,26 @@ const OperationButton = ({order, operation, productionProcess}) => {
     
     return (
         <>
-            <div className="operation_button ">
-                <Col>        
+            <main className={styles.main_container}>
+                <div className={styles.borukesme_button}>
                     <ButtonColumn
                         operation={operation}
                         order={order}
-                        togglePopup    ={togglePopup}
+                        togglePopup={togglePopup}
                         isPopupOpen={isPopupOpen}
                         handleQuantityChange={handleQuantityChange}
                         handleSubmit={handleSubmit}
                         productionQuantity={productionQuantity}
                     />
-                </Col>
-                <Col>
+                </div>
+                <div className={styles.info_button}>
                     <OperationsInfo
-                    operation={operation}
-                    productionProcess={productionProcess}
-                    order={order}
+                        operation={operation}
+                        productionProcess={productionProcess}
+                        order={order}
                     />
-                </Col>
-            </div>
+                </div>
+            </main>
         </>
     );
 };

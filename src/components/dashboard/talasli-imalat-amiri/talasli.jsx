@@ -13,6 +13,7 @@ import { updateOrderStatus } from '@/actions/order-actions'; // External functio
 import styles from './talasli.module.scss';
 import { swAlert } from '@/helpers/swal';
 import { wait } from '@/utils/wait';
+import Spacer from '@/components/common/spacer';
 
 const Order = ({ data, currentPage, sortBy, sortOrder }) => {
     const { content, page } = data;
@@ -61,15 +62,6 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
         window.location.href = url.toString();
     };
 
-    // Handle sorting reset (Reset button functionality)
-    const handleReset = () => {
-        const url = new URL(window.location);
-        url.searchParams.delete('sortBy');
-        url.searchParams.delete('sortOrder');
-        url.searchParams.delete('currentPage'); // Reset to the first page
-        window.location.href = url.toString(); // Reload with cleared params
-    };
-
     const handlePageChange = (pageIn) => {
         const url = new URL(window.location);
         url.searchParams.set('currentPage', pageIn); // Set the new page number
@@ -79,19 +71,8 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
     return (
         <>
             <PageHeader>Talasli Imalat Amiri</PageHeader>
+            <Spacer height={30} />
             <main className={styles.main_container}>
-                <div className={styles.row_container}>
-                    <Col
-                        className={`${styles.colum_inner} ${styles.outer_reset}`}
-                    >
-                        <button
-                            className={styles.inner_reset}
-                            onClick={handleReset} // Reset sorting and pagination
-                        >
-                            Sıralamayı Sıfırla
-                        </button>
-                    </Col>
-                </div>
                 <div className={styles.table_responsive}>
                     <table>
                         <thead className={styles.table_head}>

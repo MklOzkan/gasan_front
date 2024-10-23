@@ -1,24 +1,4 @@
-/* Base styling for the operations info container */
-.container {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    padding: 1rem;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    margin: auto;
-    width: 100%;
-    border: 1px solid black;
-    border-radius: 1rem;
-    background-color: #f8f9fa;
-    justify-content: center;
-    @media screen and (max-width: 767px) {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-            
-    }
-}
+
 
 .operation_button {
 margin-top: 1rem;
@@ -33,17 +13,65 @@ margin-top: 1rem;
         margin: auto;
         border: 10px solid black;
         margin-top: 10px;
+
         
     }
 }
 
-.operations-info {
-    width: 100%;
-    padding: 10px; /* Add padding around the table */
+.operations_info {
+    display: flex;
+    width: 600px;
+    margin: 0 auto; 
     background-color: #f9f9f9; /* Light background color */
     border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-bottom: 50px;
 
+    @media screen and (max-width: 767px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 1rem;
+        margin-bottom: 30px;
+        
+    }
+}
+
+/* Styling for the operations table */
+.operations_table {
+    width: 100%;
+    border-collapse: collapse; /* Collapse borders for a clean look */
+    font-size: 1rem; /* Set base font size */
+    background-color: #ffffff; /* White background for table */
+    border: 1px solid #e48a8a; /* Light border around the table */
+    padding: 1rem;
+}
+
+/* Styling for table headers */
+.operations_table th {
+    padding: 10px 15px; /* Padding inside header cells */
+    background-color: #f0f0f0; /* Light background for headers */
+    border-bottom: 2px solid #ddd; /* Bottom border for header cells */
+    font-weight: bold; /* Bold text */
+    text-align: left; /* Align text to the left */
+}
+
+/* Styling for table rows */
+.operations_table td {
+    padding: 20px; /* Padding inside table cells */
+    border-bottom: 1px solid #ddd; /* Light border between rows */
+    vertical-align: middle; /* Align cell content to the middle */
+}
+
+.second_table {
+    width: 30%;
+    margin-left: 20px;
+    border-collapse: collapse; /* Collapse borders for a clean look */
+    font-size: 1rem; /* Set base font size */
+    background-color: #ffffff; /* White background for table */
+    border: 1px solid #e48a8a; /* Light border around the table */
+    padding: 1rem;
     @media screen and (max-width: 767px) {
         display: flex;
         flex-direction: column;
@@ -56,19 +84,9 @@ margin-top: 1rem;
     }
 }
 
-/* Styling for the operations table */
-.operations-table {
-    width: 100%;
-    border-collapse: collapse; /* Collapse borders for a clean look */
-    font-size: 1rem; /* Set base font size */
-    background-color: #ffffff; /* White background for table */
-    border: 1px solid #e48a8a; /* Light border around the table */
-    padding: 1rem;
-}
-
 /* Styling for table headers */
-.operations-table th {
-    padding: 10px 15px; /* Padding inside header cells */
+.second_table th {
+    padding: 5px 10px; /* Padding inside header cells */
     background-color: #f0f0f0; /* Light background for headers */
     border-bottom: 2px solid #ddd; /* Bottom border for header cells */
     font-weight: bold; /* Bold text */
@@ -76,7 +94,8 @@ margin-top: 1rem;
 }
 
 /* Styling for table rows */
-.operations-table td {
+.second_table td {
+    text-align: center;
     padding: 30px; /* Padding inside table cells */
     border-bottom: 1px solid #ddd; /* Light border between rows */
     vertical-align: middle; /* Align cell content to the middle */
@@ -89,7 +108,7 @@ margin-top: 1rem;
 }
 
 /* Edit button inside table cells */
-.edit-button {
+.edit_button {
     background-color: #007bff; /* Primary blue color */
     color: #ffffff; /* White text color */
     border: none; /* No border */

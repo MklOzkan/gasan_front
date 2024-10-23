@@ -41,25 +41,23 @@ export const updateQuantity = async (producedQuantity,orderId, processId) => {
     }
 };
 
-export const milKoparmaAction = async (formData, operationId ) => {
-    try{
+export const milKoparmaAction = async (formData, operationId, orderId) => {
+    try {
         console.log('formData from milKoparmaAction:', formData, operationId);
-        
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateMilKoparma(fields, operationId);
-        const data = await res.json();  
+        const data = await res.json();
 
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-        
+        revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
         };
-
-    }catch(err){
+    } catch (err) {
         if (err instanceof YupValidationError) {
             return transformYupErrors(err.inner);
         }
@@ -67,7 +65,7 @@ export const milKoparmaAction = async (formData, operationId ) => {
     }
 };
 
-export const milTornalamaAction = async (formData, operationId) => {
+export const milTornalamaAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from milTornalamaAction:', formData, operationId);
 
@@ -78,7 +76,7 @@ export const milTornalamaAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -92,7 +90,7 @@ export const milTornalamaAction = async (formData, operationId) => {
     }
 };
 
-export const milTaslamaAction = async (formData, operationId) => {
+export const milTaslamaAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from milTaslamaAction:', formData, operationId);
 
@@ -103,7 +101,7 @@ export const milTaslamaAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -116,7 +114,7 @@ export const milTaslamaAction = async (formData, operationId) => {
     }
 };
 
-export const isilIslemAction = async (formData, operationId) => {
+export const isilIslemAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from milTaslamaAction:', formData, operationId);
 
@@ -127,7 +125,7 @@ export const isilIslemAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -140,7 +138,7 @@ export const isilIslemAction = async (formData, operationId) => {
     }
 };
 
-export const boruKesmeAction = async (formData, operationId) => {
+export const boruKesmeAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from boruKesmeActıon:', formData, operationId);
 
@@ -151,7 +149,7 @@ export const boruKesmeAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -164,7 +162,7 @@ export const boruKesmeAction = async (formData, operationId) => {
     }
 };
 
-export const ezmeAction = async (formData, operationId) => {
+export const ezmeAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from ezmeAction:', formData, operationId);
 
@@ -175,7 +173,7 @@ export const ezmeAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -188,7 +186,7 @@ export const ezmeAction = async (formData, operationId) => {
     }
 };
 
-export const rollBackLastChangeAction = async ( operationId) => {
+export const rollBackLastChangeAction = async ( operationId, orderId) => {
     try {
         console.log('formData from boruKesmeActıon:', operationId);
         const res = await rollBackLastChange(operationId);
@@ -197,7 +195,7 @@ export const rollBackLastChangeAction = async ( operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
