@@ -95,10 +95,9 @@ const OrderToolbar = ({
     return (
         <main className={styles.main_container}>
             <button
-                as={Link}
                 variant="warning"
                 className={`${styles.outer_pencil}`}
-                href={`/dashboard/uretim/${order.id}`}
+                onClick={() => router.push(`/dashboard/uretim/${order.id}`)}	
             >
                 <div className={`${styles.inner_pencil}`}>
                     <TfiPencil />
