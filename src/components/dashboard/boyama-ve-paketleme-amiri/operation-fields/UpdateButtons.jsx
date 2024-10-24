@@ -75,10 +75,10 @@ const UpdateButtons = ({ order, operations }) => {
 
             switch (operationType) {
                 case 'BOYA':
-                    response = await boyaAction(formData, operationId);
+                    response = await boyaAction(formData, operationId, order.id);
                     break;
                 case 'PAKETLEME':
-                    response = await paketlemeAction(formData, operationId);
+                    response = await paketlemeAction(formData, operationId, order.id);
                     break;
                 default:
                     throw new Error(`Bilinmeyen islem türü: ${operationType}`);
@@ -88,9 +88,6 @@ const UpdateButtons = ({ order, operations }) => {
 
             if (response.success) {
                 swAlert(response.message);
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
             }
         } catch (error) {
             swAlert(error.message, 'error');

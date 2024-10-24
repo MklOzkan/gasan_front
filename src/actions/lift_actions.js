@@ -18,7 +18,7 @@ import {
     rollBackLastChange
 } from '@/services/liftmontajamri-service';
 
-export const boruKaynakAction = async (formData, operationId) => {
+export const boruKaynakAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from boruKaynakAction:', formData, operationId);
 
@@ -29,7 +29,7 @@ export const boruKaynakAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/lift-montaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -42,7 +42,7 @@ export const boruKaynakAction = async (formData, operationId) => {
     }
 };
 
-export const liftMontajAction = async (formData, operationId) => {
+export const liftMontajAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from updateLiftMontaj:', formData, operationId);
 
@@ -53,7 +53,7 @@ export const liftMontajAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/lift-montaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -66,7 +66,7 @@ export const liftMontajAction = async (formData, operationId) => {
     }
 };
 
-export const boruKapamaAction = async (formData, operationId) => {
+export const boruKapamaAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from boruKapamaAction:', formData, operationId);
 
@@ -77,7 +77,7 @@ export const boruKapamaAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/lift-montaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -89,7 +89,7 @@ export const boruKapamaAction = async (formData, operationId) => {
         throw err;
     }
 };
-export const gazDolumAction = async (formData, operationId) => {
+export const gazDolumAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from gazDolumAction:', formData, operationId);
 
@@ -100,7 +100,7 @@ export const gazDolumAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/lift-montaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -113,7 +113,7 @@ export const gazDolumAction = async (formData, operationId) => {
     }
 };
 
-export const baslikTakmaAction = async (formData, operationId) => {
+export const baslikTakmaAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from testAction:', formData, operationId);
 
@@ -124,7 +124,7 @@ export const baslikTakmaAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/lift-montaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -137,7 +137,7 @@ export const baslikTakmaAction = async (formData, operationId) => {
     }
 };
 
-export const rollBackLastChangeAction = async (operationId) => {
+export const rollBackLastChangeAction = async (operationId, orderId) => {
     try {
         console.log('formData from rollBackLastChangeAction:', operationId);
         const res = await rollBackLastChange(operationId);
@@ -146,7 +146,7 @@ export const rollBackLastChangeAction = async (operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/lift-montaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'

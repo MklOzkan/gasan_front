@@ -84,31 +84,26 @@ const UpdateButtons = ({ order, operations }) => {
 
             switch (operationType) {
                 case 'BORU_KAYNAK':
-                    response = await boruKaynakAction(formData, operationId);
+                    response = await boruKaynakAction(formData, operationId, order.id);
                     break;
                 case 'LIFT_MONTAJ':
-                    response = await liftMontajAction(formData, operationId);
+                    response = await liftMontajAction(formData, operationId, order.id);
                     break;
                 case 'BORU_KAPAMA':
-                    response = await boruKapamaAction(formData, operationId);
+                    response = await boruKapamaAction(formData, operationId, order.id);
                     break;
                 case 'GAZ_DOLUM':
-                    response = await gazDolumAction(formData, operationId);
+                    response = await gazDolumAction(formData, operationId, order.id);
                     break;
                 case 'BASLIK_TAKMA':
-                    response = await baslikTakmaAction(formData, operationId);
+                    response = await baslikTakmaAction(formData, operationId, order.id);
                     break;
                 default:
                     throw new Error(`Unknown operation type: ${operationType}`);
             }
 
-            console.log('Response:', response);
-
             if (response.success) {
                 swAlert(response.message);
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
             }
         } catch (error) {
             swAlert(error.message, 'error');
