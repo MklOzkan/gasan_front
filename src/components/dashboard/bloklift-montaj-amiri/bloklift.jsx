@@ -10,6 +10,7 @@ import {
 import PageHeader from '@/components/common/page-header';
 import styles from './block-lift.module.scss';
 import { useRouter } from 'next/navigation';
+import Spacer from '@/components/common/spacer';
 
 const BlockLift = ({ data, currentPage, sortBy, sortOrder }) => {
     const router = useRouter();
@@ -19,26 +20,22 @@ const BlockLift = ({ data, currentPage, sortBy, sortOrder }) => {
         router.push(`/dashboard/bloklift-montaj-amiri/${order.id}`);
     };
 
-    const handleSortChange = (e) => {
-        const { name, value } = e.target;
+    const handleSorting = (sortByField) => {
         const url = new URL(window.location);
-        if (name === 'sortBy') {
-            url.searchParams.set('sortBy', value);
-        } else if (name === 'sortOrder') {
-            url.searchParams.set('sortOrder', value);
-        }
-        window.location.href = url.toString();
+
+        // If the sortBy is already set to the same field, toggle the sortOrder
+        let currentSortOrder = url.searchParams.get('sortOrder') || 'asc';
+        let newSortOrder = currentSortOrder === 'asc' ? 'desc' : 'asc';
+
+        // Update the URL with the new sort parameters
+        url.searchParams.set('sortBy', sortByField);
+        url.searchParams.set('sortOrder', newSortOrder);
+
+        // Navigate to the updated URL
+        router.push(url.toString());
     };
 
-    // Handle reset
-    const handleReset = () => {
-        const url = new URL(window.location);
-        url.searchParams.set('sortBy', 'orderDate');
-        url.searchParams.set('sortOrder', 'desc');
-        url.searchParams.delete('currentPage'); 
-        window.location.href = url.toString();
-    };
-
+    
     // Handle page change
     const handlePageChange = (page) => {
         const url = new URL(window.location);
@@ -49,68 +46,59 @@ const BlockLift = ({ data, currentPage, sortBy, sortOrder }) => {
     return (
         <>
             <PageHeader>Blok Lift Amiri</PageHeader>
+            <Spacer height={20} />
             <main className={styles.main_container}>
-                <div className={styles.row_container}>
-                    <Col className={styles.colum_inner}>
-                        <Form.Group controlId="sortBy">
-                            <Form.Label>Sırala</Form.Label>
-                            <Form.Control
-                                as="select"
-                                name="sortBy"
-                                value={sortBy}
-                                onChange={handleSortChange}
-                            >
-                                <option value="orderDate">
-                                    Sipariş Tarihi
-                                </option>
-                                <option value="deliveryDate">
-                                    Teslim Tarihi
-                                </option>
-                                <option value="orderNumber">Sipaş No</option>
-                                <option value="customerName">
-                                    Müşteri Adı
-                                </option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
-                    <Col className={styles.colum_inner}>
-                        <Form.Group controlId="sortOrder">
-                            <Form.Label>Siparişi Sırala</Form.Label>
-                            <Form.Control
-                                as="select"
-                                name="sortOrder"
-                                value={sortOrder}
-                                onChange={handleSortChange}
-                            >
-                                <option value="asc">Artan</option>
-                                <option value="desc">Azalan</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
-                    <Col
-                        className={`${styles.colum_inner} ${styles.outer_reset}`}
-                    >
-                        <Button
-                            className={styles.inner_reset}
-                            variant="secondary"
-                            onClick={handleReset}
-                        >
-                            Reset
-                        </Button>
-                    </Col>
-                </div>
                 <div className={styles.table_responsive}>
                     <table>
                         <thead className={styles.table_head}>
                             <tr>
-                                <th>Müşter Adı</th>
+                                <th
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() =>
+                                        handleSorting('customerName')
+                                    }
+                                >
+                                    Müşter Adı
+                                    {sortBy === 'customerName' &&
+                                        (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
+                                </th>
                                 <th>Gasan No</th>
                                 <th>Sipariş No</th>
-                                <th>Sipariş Tarihi</th>
-                                <th>Teslim Tarihi</th>
-                                <th>Sipariş Türü</th>
+                                <th
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => handleSorting('orderDate')}
+                                >
+                                    Sipariş Tarihi
+                                    {sortBy === 'orderDate' &&
+                                        (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
+                                </th>
+                                <th
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() =>
+                                        handleSorting('deliveryDate')
+                                    }
+                                >
+                                    Teslim Tarihi
+                                    {sortBy === 'deliveryDate' &&
+                                        (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
+                                </th>
+                                <th
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => handleSorting('orderType')}
+                                >
+                                    Sipariş Türü
+                                    {sortBy === 'orderType' &&
+                                        (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
+                                </th>
                                 <th>Sipariş Adedi</th>
-                                <th>Sipariş Durumu</th>
+                                <th
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => handleSorting('orderStatus')}
+                                >
+                                    Durumu
+                                    {sortBy === 'orderStatus' &&
+                                        (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
+                                </th>
                             </tr>
                         </thead>
                         <tbody>

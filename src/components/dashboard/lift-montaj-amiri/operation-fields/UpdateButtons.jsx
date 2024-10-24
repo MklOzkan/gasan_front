@@ -11,6 +11,13 @@ import {
     boruKaynakAction
 } from '@/actions/lift_actions';
 import { swAlert } from '@/helpers/swal';
+const operationList = {
+    BORU_KAPAMA: 'BORU KAPAMA',
+    BORU_KAYNAK: 'BORU KAYNAK',
+    LIFT_MONTAJ: 'LİFT MONTAJ',
+    GAZ_DOLUM: 'GAZ DOLUM',
+    BASLIK_TAKMA: 'BAŞLIK TAKMA'
+};
 
 const operationOrder = [
     'BORU_KAPAMA',
@@ -128,10 +135,9 @@ const UpdateButtons = ({ order, operations }) => {
                                     }
                                       ${styles[operationColors[index]]}
                                       `}
-
-                                    disabled={operation.remainingQuantity <= 0}
+                                    disabled={operation.remainingQuantity === 0}
                                 >
-                                    {operation.operationType}
+                                    {operationList[operation.operationType]}
                                 </button>
                             </div>
                             {isPopupOpen === operation.id && (

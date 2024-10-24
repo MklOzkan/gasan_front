@@ -19,7 +19,7 @@ import {
     
 } from '@/services/blmontajamiri-service';
 
-export const boruKaynakAction = async (formData, operationId) => {
+export const boruKaynakAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from boruKaynakAction:', formData, operationId);
 
@@ -30,7 +30,7 @@ export const boruKaynakAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -45,7 +45,7 @@ export const boruKaynakAction = async (formData, operationId) => {
 
 export const blMontajAction = async (formData, operationId) => {
     try {
-        console.log('formData from blMontajAction:', formData, operationId);
+        console.log('formData from blMontajAction:', formData, operationId, orderId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateBLMontaj(fields, operationId);
@@ -54,7 +54,7 @@ export const blMontajAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -67,15 +67,15 @@ export const blMontajAction = async (formData, operationId) => {
     }
 };
 
-export const boruKapamaAction = async (formData, operationId, orderType) => {
+export const boruKapamaAction = async (formData, operationId, orderType, orderId) => {
     try {
         console.log('formData from boruKapamaAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         let res;
-        if(orderType === 'DAMPER') {
+        if (orderType === 'DAMPER') {
             res = await updateBoruKapama(fields, operationId);
-        }else{
+        } else {
             res = await updateBoruKapama(fields, operationId);
         }
         const data = await res.json();
@@ -83,7 +83,7 @@ export const boruKapamaAction = async (formData, operationId, orderType) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -95,7 +95,7 @@ export const boruKapamaAction = async (formData, operationId, orderType) => {
         throw err;
     }
 };
-export const gazDolumAction = async (formData, operationId) => {
+export const gazDolumAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from gazDolumAction:', formData, operationId);
 
@@ -106,7 +106,7 @@ export const gazDolumAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -119,7 +119,7 @@ export const gazDolumAction = async (formData, operationId) => {
     }
 };
 
-export const testAction = async (formData, operationId) => {
+export const testAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from testAction:', formData, operationId);
 
@@ -130,7 +130,7 @@ export const testAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -143,7 +143,7 @@ export const testAction = async (formData, operationId) => {
     }
 };
 
-export const rollBackLastChangeAction = async (operationId) => {
+export const rollBackLastChangeAction = async (operationId, orderId) => {
     try {
         console.log('formData from rollBackLastChangeAction:', operationId);
         const res = await rollBackLastChange(operationId);
@@ -152,7 +152,7 @@ export const rollBackLastChangeAction = async (operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'

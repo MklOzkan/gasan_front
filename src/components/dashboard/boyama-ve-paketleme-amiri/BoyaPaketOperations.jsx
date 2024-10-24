@@ -12,7 +12,7 @@ const BoyaPaketOperations = ({ order }) => {
             <main className={styles.main_page}>
                 <Spacer height={5} />
                 <OrderForOperation order={returnBody} />
-                <Spacer height={5} />
+                <Spacer height={20} />
                 <div>
                     <UpdateButtons
                         order={returnBody}

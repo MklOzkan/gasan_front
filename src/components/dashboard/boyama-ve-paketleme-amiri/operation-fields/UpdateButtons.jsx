@@ -112,7 +112,6 @@ const UpdateButtons = ({ order, operations }) => {
                                     }
                                       ${styles[operationColors[index]]}
                                       `}
-
                                     disabled={operation.remainingQuantity <= 0}
                                 >
                                     {operation.operationType}
@@ -177,57 +176,7 @@ const UpdateButtons = ({ order, operations }) => {
                 )}
             </div>
             <div className={styles.info_container}>
-                <div className={styles.table_container}>
-                    <table className={styles.mil_pipe}>
-                        <tbody>
-                            <tr className={styles.mil}>
-                                <td>Üretilen Toplam Mil</td>
-                                <td>=</td>
-                                {operations
-                                    .filter(
-                                        (operation) =>
-                                            operation.operationType ===
-                                            'LIFT_MONTAJ'
-                                    )
-                                    .map((operation, index) => (
-                                        <td key={index}>
-                                            {operation.milCount}
-                                        </td>
-                                    ))}
-                            </tr>
-                            <tr className={styles.mil}>
-                                <td>Üretilen Toplam Boru</td>
-                                <td>=</td>
-                                {operations
-                                    .filter(
-                                        (operation) =>
-                                            operation.operationType ===
-                                            'BORU_KAYNAK'
-                                    )
-                                    .map((operation, index) => (
-                                        <td key={index}>
-                                            {operation.completedQuantity}
-                                        </td>
-                                    ))}
-                            </tr>
-                            <tr className={styles.mil}>
-                                <td>Biten Montaj</td>
-                                <td>=</td>
-                                {operations
-                                    .filter(
-                                        (operation) =>
-                                            operation.operationType ===
-                                            'BASLIK_TAKMA'
-                                    )
-                                    .map((operation, index) => (
-                                        <td key={index}>
-                                            {operation.completedQuantity}
-                                        </td>
-                                    ))}
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                
                 <InfoAndRollBack order={order} operations={sortedOperations} />
             </div>
         </main>

@@ -131,6 +131,9 @@
 
 /* Shape for the first button (Index 0) */
 .polygon_button.index-0 {
+    :disabled{
+        cursor: not-allowed !important;
+    }
     clip-path: polygon(
         0% 0%,   /* Top left corner */
         100% 0%, /* Top right corner */

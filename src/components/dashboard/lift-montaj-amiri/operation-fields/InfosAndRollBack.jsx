@@ -19,13 +19,10 @@ const OperationsInfo = ({ operations, order }) => {
         );
         if (!answer.isConfirmed) return;
 
-        const res = await rollBackLastChangeAction(operation.id);
+        const res = await rollBackLastChangeAction(operation.id, order.id);
 
         if (res.success) {
-            setTimeout(() => {
                 swAlert(res.message, 'success');
-            }, 1000);
-            window.location.reload();
         } else {
             swAlert(res.message, 'error');
         }

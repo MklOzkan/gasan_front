@@ -11,6 +11,13 @@ import {
     boruKaynakAction
 } from '@/actions/bloklift_actions';
 import { swAlert } from '@/helpers/swal';
+const operationList = {
+    BORU_KAPAMA: 'BORU KAPAMA',
+    BORU_KAYNAK: 'BORU KAYNAK',
+    BLOK_LIFT_MONTAJ: 'BLOK LİFT MONTAJ',
+    GAZ_DOLUM: 'GAZ DOLUM',
+    TEST: 'TEST'
+};
 
 const operationOrderForBlokLift = [
     'BLOK_LIFT_MONTAJ',
@@ -106,23 +113,19 @@ const UpdateButtons = ({order, operations}) => {
 
             switch (operationType) {
                 case 'BORU_KAYNAK':
-                    response = await boruKaynakAction(formData, operationId);
+                    response = await boruKaynakAction(formData, operationId, order.id);
                     break;
                 case 'BLOK_LIFT_MONTAJ':
-                    response = await blMontajAction(formData, operationId);
+                    response = await blMontajAction(formData, operationId, order.id);
                     break;
                 case 'BORU_KAPAMA':
-                    response = await boruKapamaAction(
-                        formData,
-                        operationId,
-                        order.orderType
-                    );
+                    response = await boruKapamaAction(formData,operationId,order.orderType, order.id);
                     break;
                 case 'GAZ_DOLUM':
-                    response = await gazDolumAction(formData, operationId);
+                    response = await gazDolumAction(formData, operationId, order.id);
                     break;
                 case 'TEST':
-                    response = await testAction(formData, operationId);
+                    response = await testAction(formData, operationId, order.id);
                     break;
                 default:
                     throw new Error(`Unknown operation type: ${operationType}`);
@@ -132,9 +135,6 @@ const UpdateButtons = ({order, operations}) => {
 
             if (response.success) {
                 swAlert(response.message);
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
             }
         } catch (error) {
             swAlert(error.message, 'error');
@@ -160,7 +160,7 @@ const UpdateButtons = ({order, operations}) => {
                                       `}
                                   disabled={operation.remainingQuantity <= 0}
                               >
-                                  {operation.operationType}
+                                  {operationList[operation.operationType]}
                               </button>
                           </div>
                           {isPopupOpen === operation.id && (
@@ -206,7 +206,7 @@ const UpdateButtons = ({order, operations}) => {
                                   </div>
                               </div>
                           )}
-                          {operation.operationType === 'BLOK_LIFT_MONTAJ' && (
+                          {(operation.operationType === 'BLOK_LIFT_MONTAJ' && order.orderType === 'DAMPER') &&(
                               <button
                                   onClick={() => togglePopup(operation.id)}
                                   className={`${styles.kalite_kontrol_button}`}
@@ -226,7 +226,7 @@ const UpdateButtons = ({order, operations}) => {
                   <table className={styles.mil_pipe}>
                       <tbody>
                           <tr className={styles.mil}>
-                              <td>Üretilen Toplam Boru</td>
+                              <td>Üretilen Toplam Mil</td>
                               <td>=</td>
                               {operations
                                   .filter(
