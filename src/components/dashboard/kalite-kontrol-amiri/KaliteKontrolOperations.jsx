@@ -19,7 +19,6 @@ const kaliteKontrolStages = {
 const KaliteKontrolOperations = ({ responses }) => {
     const { returnBody, returnBody3 } = responses;
     const router = useRouter();
-    console.log('returnBody3 from KaliteKontrolOperations', returnBody3);
 
     const handleRowClick = (stage) => {
         router.push(`/dashboard/kalite-kontrol-amiri/stage/${stage.id}`);

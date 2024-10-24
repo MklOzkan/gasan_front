@@ -5,6 +5,7 @@ import { Col, Pagination, Form, Button } from 'react-bootstrap';
 import PageHeader from '@/components/common/page-header';
 import styles from './boyama-paketleme.module.scss';
 import { useRouter } from 'next/navigation';
+import Spacer from '@/components/common/spacer';
 
 const BoyaPaket = ({ data, currentPage, sortBy, sortOrder }) => {
     const router = useRouter();
@@ -30,15 +31,6 @@ const BoyaPaket = ({ data, currentPage, sortBy, sortOrder }) => {
         router.push(url.toString());
     };
 
-    // Handle reset
-    const handleReset = () => {
-        const url = new URL(window.location);
-        url.searchParams.set('sortBy', 'orderDate');
-        url.searchParams.set('sortOrder', 'desc');
-        url.searchParams.delete('currentPage');
-        window.location.href = url.toString();
-    };
-
     // Handle page change
     const handlePageChange = (page) => {
         const url = new URL(window.location);
@@ -49,18 +41,8 @@ const BoyaPaket = ({ data, currentPage, sortBy, sortOrder }) => {
     return (
         <>
             <PageHeader>Boya ve Paketleme Amiri </PageHeader>
+            <Spacer height={20} />
             <main className={styles.main_container}>
-                <div className={styles.button_container}>
-                    <Col className={`${styles.outer_reset}`}>
-                        <button
-                            type="button"
-                            className={styles.inner_reset}
-                            onClick={handleReset} // Reset sorting and pagination
-                        >
-                            Sıralamayı Sıfırla
-                        </button>
-                    </Col>
-                </div>
                 <div className={styles.table_responsive}>
                     <table>
                         <thead className={styles.table_head}>

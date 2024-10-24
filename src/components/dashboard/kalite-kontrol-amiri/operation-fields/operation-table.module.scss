@@ -114,9 +114,10 @@ margin-top: 1rem;
     border: none; /* No border */
     border-radius: 5px; /* Rounded corners */
     padding: 5px 10px; /* Padding inside the button */
+    width: 100px; /* Set fixed width */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s ease; /* Smooth background transition */
-    text-align: left;
+    text-align: center;
 }
 
 /* Hover effect for edit button */
