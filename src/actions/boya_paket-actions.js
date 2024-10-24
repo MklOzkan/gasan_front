@@ -15,7 +15,7 @@ import {
     rollBackLastChange
 } from '@/services/boyapaketlemeamiri-service';
 
-export const boyaAction = async (formData, operationId) => {
+export const boyaAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from boruKaynakAction:', formData, operationId);
 
@@ -26,7 +26,7 @@ export const boyaAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/boya-paketleme-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -39,7 +39,7 @@ export const boyaAction = async (formData, operationId) => {
     }
 };
 
-export const paketlemeAction = async (formData, operationId) => {
+export const paketlemeAction = async (formData, operationId, orderId) => {
     try {
         console.log('formData from updateLiftMontaj:', formData, operationId);
 
@@ -50,7 +50,7 @@ export const paketlemeAction = async (formData, operationId) => {
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/boya-paketleme-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -63,16 +63,15 @@ export const paketlemeAction = async (formData, operationId) => {
     }
 };
 
-export const rollBackLastChangeAction = async (operationId) => {
+export const rollBackLastChangeAction = async (operationId, orderId) => {
     try {
-        console.log('formData from rollBackLastChangeAction:', operationId);
         const res = await rollBackLastChange(operationId);
         const data = await res.json();
 
         if (!res.ok) {
             throw new Error(`${data.message}`);
         }
-
+        revalidatePath(`/dashboard/boya-paketleme-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
