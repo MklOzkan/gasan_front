@@ -1,9 +1,9 @@
 export const config = {
     api: {
-        baseUrl:
-            process.env.NODE_ENV === 'development'
-                ? 'http://localhost:8080'
-                : process.env.NEXT_PUBLIC_API_URL
+        baseUrl:process.env.NEXT_PUBLIC_API_URL
+            // process.env.NODE_ENV === 'development'
+            //     ? 'http://localhost:8080'
+            //     : process.env.NEXT_PUBLIC_API_URL
     },
     project: {
         name: 'Gasan App',
