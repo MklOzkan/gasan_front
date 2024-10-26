@@ -21,7 +21,7 @@ RUN npm run build
 EXPOSE 3000
 
 # Define environment variables for Next.js
-ENV NEXT_PUBLIC_API_URL=http://18.156.4.78:8080 
+ENV NEXT_PUBLIC_API_URL=http://backend:8080 
 
 # Start the Next.js app
 CMD ["npm", "start"]
