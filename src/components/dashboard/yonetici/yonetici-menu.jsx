@@ -7,7 +7,7 @@ import Spacer from '@/components/common/spacer.jsx';
 import PageHeader from '@/components/common/page-header.jsx';
 import { auth } from '@/auth';
 import Link from 'next/link';
-import './yonetici-menu.scss';
+import styles from './yonetici-menu.module.scss';
 
 const YoneticiMenu = async () => {
     const session = await auth();
@@ -16,26 +16,22 @@ const YoneticiMenu = async () => {
 
     return (
         <>
-            <div className='menu'>
-                <PageHeader >YÖNETİCİ EKRANI </PageHeader>
-                
-            </div>
+            <PageHeader>YÖNETİCİ EKRANI </PageHeader>
             <Spacer height={50} />
-            <Container className="text-center m-auto">
-                <Row className="menuRow">
-                    {adminMenu.map((item) => (
-                        <Col key={item.id} className='inner-column'>
-                            <Link
-                                href={item.link}
-                                style={{ backgroundColor: item.color }}
-                                className="btn btn-outline-secondary w-100 h-100 align-items-center justify-content-center inner-button "
-                            >
-                                {item.text}
-                            </Link>
-                        </Col>
-                    ))}
-                </Row>
-            </Container>
+            <div className={styles.container}>
+                {adminMenu.map((item) => (
+                    <div key={item.id} className={styles.inner_container}>
+                        <Link
+                            href={item.link}
+                            style={{ backgroundColor: item.color }}
+                            type='button'
+                            className={styles.button}
+                        >
+                            {item.text}
+                        </Link>
+                    </div>
+                ))}
+            </div>
         </>
     );
 };

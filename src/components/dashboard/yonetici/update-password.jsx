@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 import { Col, Container, Row, Form, InputGroup } from 'react-bootstrap';
 import PageHeader from '@/components/common/page-header.jsx';
 import Spacer from '@/components/common/spacer.jsx';
-import LogoutButton from '@/components/common/form-fields/logout-button';
 import { SubmitButton, BackButton } from '@/components/common/form-fields';
 import { useFormState } from "react-dom";
 import { updatePasswordAction } from '@/actions/yonetici-actions';
@@ -82,28 +81,30 @@ const UpdatePassword = () => {
             <Spacer height={50} />
             <Container className="text-center m-auto">
                 <Row className="menuRow">
-                    <Col>
+                    <div className='inner_container'>
                         <Form onSubmit={handleSubmit} noValidate>
                             <div className="passwordMenu">
-                                <Form.Group controlId="userSelect">
-                                    <Form.Label>Kullanıcı Seçin</Form.Label>
-                                    <Form.Control
-                                        as="select"
+                                <div controlId="userSelect">
+                                    <label>Kullanıcı Seçin</label>
+                                    <select
+                                        className='select'
+                                        typeof="select"
                                         value={selectedUsername}
                                         onChange={handleUserChange}
                                         required
                                     >
-                                        <option value="">Seçin...</option>
+                                        <option className='option' value="">Seçin...</option>
                                         {data.map((item) => (
                                             <option
+                                                className='option'
                                                 key={item.id}
                                                 value={item.username}
                                             >
                                                 {item.text}
                                             </option>
                                         ))}
-                                    </Form.Control>
-                                </Form.Group>
+                                    </select>
+                                </div>
 
                                 <Form.Group controlId="password">
                                     <Form.Label>Yeni Şifre</Form.Label>
@@ -150,7 +151,7 @@ const UpdatePassword = () => {
                                 />
                             </div>
                         </Form>
-                    </Col>
+                    </div>
                 </Row>
             </Container>
         </>

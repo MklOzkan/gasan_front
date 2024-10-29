@@ -72,6 +72,10 @@ export const config = {
             roles: ['Yonetici']
         },
         {
+            urlRegex: /\/dashboard\/yonetici-menu\/musteri-islemleri$/,
+            roles: ['Yonetici']
+        },
+        {
             urlRegex: /\/dashboard\/password-update$/,
             roles: ['Yonetici']
         },
