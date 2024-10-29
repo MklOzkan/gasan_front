@@ -80,7 +80,7 @@
     
 }
 
-.kalite-container {
+.kalite_container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,6 +88,8 @@
     background-image: linear-gradient(270deg, v.$color1-op-50, v.$color1, v.$color1-op-50);
     position: sticky;
     top: 0;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .kalite {

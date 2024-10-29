@@ -12,6 +12,77 @@
     
 }
 
+.filter_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap:40px;
+}
+.search_input{
+    margin-right: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #706d6d;
+}
+
+.clear_button{
+    background-color: #d48c8c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover{
+        background-color: #c75f5f;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .filter_container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+    .clear_button{
+        padding: 1px 3px;
+        display: flex;
+    }
+    .search_clear{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    .search_input{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 300px;
+    }
+    .start_date{
+        display: flex;
+        flex-direction: end;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+    }
+    .end_date{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+    }
+    
+}
+
+
+
 .colum_inner{
     display: flex;
     flex-direction: column;
@@ -26,6 +97,7 @@
         margin: 5px;
     }
 }
+
 
 .select{
     border: 1px solid #d48c8c;
@@ -54,6 +126,7 @@
 }
 
 .table_responsive th, .table_responsive td {
+    padding: 3px;
     border: 1px solid black;
     text-align: center;
     white-space: nowrap; /* Prevent text from wrapping in cells */
@@ -72,6 +145,24 @@
 
 .table_head , .table_body{
     margin: 0 auto;
+}
+
+.processing{
+    background-color: #e7f706ad;
+    color: #050505;
+    font-weight: bolder;
+}
+
+.completed{
+    background-color: #3ae05e;
+    color: white;
+    font-weight: bolder;
+}
+
+.cancelled{
+    background-color: #e05e5e;
+    color: white;
+    font-weight: bolder;
 }
 
 .table_head{
