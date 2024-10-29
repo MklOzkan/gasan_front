@@ -9,7 +9,7 @@
         "id": "2",
         "color": " rgb(245, 247, 130)",
         "text": "Müşteri İşleri Görüntüle",
-        "link": "/dashboard/yonetici-menu/get-orders"
+        "link": "/dashboard/yonetici-menu/musteri-islemleri"
     }
 
     ]

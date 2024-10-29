@@ -9,18 +9,50 @@ import { FaPlus } from 'react-icons/fa';
 import styles from './uretim-list.module.scss';
 import OrderList from './OrderList';
 import { useRouter } from 'next/navigation';
-import { Col } from 'react-bootstrap';
+import { RxReset } from 'react-icons/rx';
+import { BiReset } from 'react-icons/bi';
 
 const Uretim = ({ data, sortBy, sortOrder }) => {
     const { content, page} = data;
     const { totalPages, number, totalElements, size } = page;
     const [currentUrl, setCurrentUrl] = useState('');
     const router = useRouter();
-    console.log('data :>> ', data);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [filteredContent, setFilteredContent] = useState(content);
+    const resetSearch = () => setSearchTerm('');
+    const resetStartDate = () => setStartDate('');
+    const resetEndDate = () => setEndDate('');
 
     useEffect(() => {
         setCurrentUrl(new URL(window.location.href).pathname);
-    }, [data]);
+
+        let filteredData = content;
+
+        // Apply search filter
+        if (searchTerm) {
+            filteredData = filteredData.filter((order) =>
+                order.customerName
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+            );
+        }
+
+        // Apply date range filter
+        if (startDate) {
+            filteredData = filteredData.filter(
+                (order) => new Date(order.orderDate) >= new Date(startDate)
+            );
+        }
+        if (endDate) {
+            filteredData = filteredData.filter(
+                (order) => new Date(order.orderDate) <= new Date(endDate)
+            );
+        }
+
+        setFilteredContent(filteredData);
+    }, [data, searchTerm, startDate, endDate, content]);
 
    
 
@@ -40,19 +72,14 @@ const Uretim = ({ data, sortBy, sortOrder }) => {
     };
 
 
-    // Handle sorting reset (Reset button functionality)
-    const handleReset = () => {
-        const url = new URL(window.location);
-        url.searchParams.delete('sortBy');
-        url.searchParams.delete('sortOrder');
-        url.searchParams.delete('currentPage'); // Reset to the first page
-        window.location.href = url.toString(); // Reload with cleared params
-    };
-
     const handlePageChange = (page) => {
         const url = new URL(window.location);
         url.searchParams.set('currentPage', page); // Set the new page number
         router.push(url.toString()); // Use router.push for navigation
+    };
+
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
     };
 
     return (
@@ -60,38 +87,95 @@ const Uretim = ({ data, sortBy, sortOrder }) => {
             <PageHeader>Üretİm Planlama</PageHeader>
             <Spacer height={10} />
             <main className={styles.main_container}>
-                <div className={styles.button_container}>
-                    <Link
-                        href="/dashboard/uretim/new"
-                        className={styles.btn}
-                        type="button"
-                        title="Sipariş Oluştur"
-                    >
-                        <FaPlus /> Sipariş Oluştur
-                    </Link>
-                    <Spacer height={10} />
-                    <Col
-                        className={`${styles.outer_reset}`}
-                    >
-                        <button
-                            type='button'
-                            className={styles.inner_reset}
-                            onClick={handleReset} // Reset sorting and pagination
+                <div className={styles.inner_container}>
+                    <div className={styles.button_container}>
+                        <Link
+                            href="/dashboard/uretim/new"
+                            className={styles.btn}
+                            type="button"
+                            title="Sipariş Oluştur"
                         >
-                            Sıralamayı Sıfırla
-                        </button>
-                    </Col>
+                            <FaPlus />
+                            Yeni Sipariş
+                        </Link>
+                    </div>
+                    <div className={styles.filter_container}>
+                        <div className={styles.search}>
+                            <div className={styles.search_clear}>
+                                <input
+                                    type="text"
+                                    placeholder="Arama"
+                                    value={searchTerm}
+                                    className={styles.search_input}
+                                    onChange={handleSearch}
+                                />
+                                {searchTerm && (
+                                    <button
+                                        onClick={resetSearch}
+                                        className={styles.clear_button}
+                                    >
+                                        <RxReset />
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                        <div className={styles.start_date}>
+                            <label htmlFor="startDate" className="me-2">
+                                Başlangıç Tarihi
+                            </label>
+                            <div className={styles.search_clear}>
+                                <input
+                                    type="date"
+                                    name="startDate"
+                                    value={startDate}
+                                    className={styles.search_input}
+                                    onChange={(e) =>
+                                        setStartDate(e.target.value)
+                                    }
+                                />
+                                {startDate && (
+                                    <button
+                                        onClick={resetStartDate}
+                                        className={styles.clear_button}
+                                    >
+                                        <RxReset />
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                        <div className={styles.end_date}>
+                            <label htmlFor="endDate" className="me-2">
+                                Bitiş Tarihi
+                            </label>
+                            <div className={styles.search_clear}>
+                                <input
+                                    type="date"
+                                    name="endDate"
+                                    value={endDate}
+                                    className={styles.search_input}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                />
+                                {endDate && (
+                                    <button
+                                        onClick={resetEndDate}
+                                        className={styles.clear_button}
+                                    >
+                                        <RxReset />
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <OrderList
                     currentUrl={currentUrl}
-                    orders={content}
+                    orders={filteredContent}
                     totalPages={totalPages}
                     currentpage={number}
                     totalElements={totalElements}
                     sortBy={sortBy}
                     sortOrder={sortOrder}
-                    handleReset={handleReset}
                     handlePageChange={handlePageChange}
                     handleSorting={handleSorting}
                 />
