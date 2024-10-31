@@ -39,3 +39,12 @@ export const updatePassword = async ( payload) => {
     });
     
 };
+
+export const getReports = async (orderId) => {
+    const response = fetch(`${API_URL}/yonetici/reports/${orderId}`, {
+        method: 'GET',
+        headers: await getAuthHeader()
+    });
+
+    return response;
+}

@@ -6,7 +6,7 @@ import {
     response,
     transformYupErrors
 } from '@/helpers/form-validation';
-import { updatePassword } from '@/services/yonetici-service';
+import { updatePassword, getReports } from '@/services/yonetici-service';
 import { revalidatePath } from 'next/cache';
 
 export const updatePasswordAction = async (prevState, formData) => {
@@ -29,3 +29,19 @@ export const updatePasswordAction = async (prevState, formData) => {
         throw err;
     }
 };
+
+export const getCustomerReport = async (orderId) => {
+    try {
+        const res = await getReports(orderId);
+
+        if (!res.ok) {
+            throw new Error(res.mesage || 'Raporlar getirilirken bir hata oluştu');
+        }
+
+        const data = await res.json();
+        revalidatePath(`/dashboard/yonetici-menu/musteri-islemleri/${orderId}`);
+        return data;
+    } catch (err) {
+        throw err;
+    }
+}
