@@ -12,7 +12,6 @@ const TalasliOperations = ({ order }) => {
     return (
         <>
             <PageHeader>Talaşlı İmalat amİrİ</PageHeader>
-            <main className={styles.main_page}>
                 
                 <Spacer height={5} />
                 <OrderForOperation order={returnBody} />
@@ -22,7 +21,7 @@ const TalasliOperations = ({ order }) => {
                     operations={returnBody2}
                     productionProcess={returnBody3}
                 />
-            </main>
+            
         </>
     );
 };

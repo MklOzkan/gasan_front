@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import {
-    Col,
-} from 'react-bootstrap';
 import styles from './operations-screen.module.scss';
 import ButtonColumn from './ButtonsForEachOperation';
 import OperationsInfo from './InfosAndRollBack';
@@ -13,7 +10,7 @@ import {
     boruKesmeAction,
     ezmeAction
 } from '@/actions/talasli-actions';
-import { swAlert, swConfirm } from '@/helpers/swal';
+import { swAlert } from '@/helpers/swal';
 
 const OperationButton = ({order, operations, productionProcess}) => {
     const [isPopupOpen, setIsPopupOpen] = useState(null); // **Highlight: Initialize state as null**

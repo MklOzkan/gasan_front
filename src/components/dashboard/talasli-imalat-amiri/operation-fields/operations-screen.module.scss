@@ -11,6 +11,7 @@
         justify-content: center;
         align-items: center;
         width: 100%;
+        margin-bottom: 50px;
     }
 }
 
@@ -34,6 +35,10 @@
 
 .operation_info{
     margin-top: 20px;
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        margin-bottom: 50px;
+    }
 }
 
 

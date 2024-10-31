@@ -55,7 +55,9 @@ const MusteriIslemleri = ({ data, currentPage, sortBy, sortOrder }) => {
    console.log(content);
 
     const handleRowClick = (order) => {
-            router.push(`/dashboard/yonetici-menu/musteri-sayfasi/${order.id}`);
+            router.push(
+                `/dashboard/yonetici-menu/musteri-islemleri/${order.id}`
+            );
     };
 
 

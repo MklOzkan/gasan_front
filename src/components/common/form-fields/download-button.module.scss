@@ -1,0 +1,21 @@
+@use "@/styles/variables" as v;
+
+.btn{
+    width: 150px;
+    color: white;
+    border: 1px solid v.$color1;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    background-image: linear-gradient(270deg, v.$color1-op-50, v.$color1, v.$color1-op-50);
+    &:hover{
+        background-image: linear-gradient(270deg, v.$color4-op-50, v.$color4, v.$color4-op-50);
+    }
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        
+    }
+}

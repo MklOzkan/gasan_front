@@ -120,14 +120,14 @@ export const finishOrderAction = async (orderId) => {
         const res = await finishOrder(orderId);
         const data = await res.json();
         if (!res.ok) {
-            return {
-                success: false,
-                message: data.message || 'Bir hata oluştu'
-            };
+            
+              throw new Error(data.message || 'Bir hata oluştu');
+            
         }
+        revalidatePath('/dashboard/uretim');
         return {
             success: true,
-            message: 'Sipariş başarıyla silindi'
+            message: data.message || 'Sipariş başarıyla tamamlandı'
         };
     } catch (err) {
         if (err instanceof YupValidationError) {
