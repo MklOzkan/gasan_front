@@ -11,6 +11,7 @@ import OrderList from './OrderList';
 import { useRouter } from 'next/navigation';
 import { RxReset } from 'react-icons/rx';
 import { BiReset } from 'react-icons/bi';
+import DownloadButton from '@/components/common/form-fields/DownloadButton';
 
 const Uretim = ({ data, sortBy, sortOrder }) => {
     const { content, page} = data;
@@ -98,7 +99,9 @@ const Uretim = ({ data, sortBy, sortOrder }) => {
                             <FaPlus />
                             Yeni Sipariş
                         </Link>
+                        <DownloadButton />
                     </div>
+
                     <div className={styles.filter_container}>
                         <div className={styles.search}>
                             <div className={styles.search_clear}>

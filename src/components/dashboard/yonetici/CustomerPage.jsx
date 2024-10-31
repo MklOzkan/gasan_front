@@ -1,0 +1,67 @@
+import PageHeader from '@/components/common/page-header'
+import React from 'react'
+import KaliteKontrolChart from './KaliteKontrolChart'
+import CurrentOrder from './CurrentOrderChart';
+import OtherOrders from './OtherOrders';
+import Spacer from '@/components/common/spacer';
+import styles from './customer-page.module.scss';
+
+const CustomerPage = ({data, searchParams}) => {
+    const { returnBody1, 
+            returnBody2,
+            returnBody3,
+            returnBody4,
+            returnBody5,
+            returnBody6,
+            returnBody7,
+            returnBody8,
+            returnBody9
+    } = data;
+    
+    const totalHurda = returnBody8.reduce((acc, item) => acc + item.scrapCount, 0);
+
+  return (
+      <>
+          <PageHeader> Müşteri İşlemleri </PageHeader>
+          <Spacer height={20} />
+          <div className={styles.container}>
+              <div className={styles.order_container}>
+                  <CurrentOrder
+                      order={returnBody1}
+                      production={returnBody2}
+                      talasli={returnBody3}
+                      polisaj={returnBody4}
+                      lift={returnBody5}
+                      blok={returnBody6}
+                      boyaPaket={returnBody7}
+                      kalite={returnBody8}
+                  />
+              </div>
+              <div className={styles.blok_container}>
+                  <div className={styles.outer_container}>
+                      <div className={styles.chart_container}>
+                      {returnBody8 &&
+                          returnBody8.map((item, index) => (
+                              <KaliteKontrolChart
+                                  key={index}
+                                  kaliteKontrol={item}
+                              />
+                          ))}
+                      
+                      </div>
+                      <h2 className={styles.h2}>Toplam Hurda: {totalHurda}</h2>
+                  </div>
+                  
+                  <div className={styles.others_container}>
+                      <OtherOrders
+                          orders={returnBody9}
+                          searchParams={searchParams}
+                      />
+                  </div>
+              </div>
+          </div>
+      </>
+  );
+}
+
+export default CustomerPage

@@ -101,5 +101,27 @@ export const finishOrder = async (orderId) => {
     return response;
 };
 
+export const downloadExcelFile = async (startDate = '', endDate = '') => {
+    const response = await fetch(
+        `${API_URL}/orders/download?startDate=${startDate}&endDate=${endDate}`,
+        {
+            headers: await getAuthHeader()
+        }
+    );
+    if (!response.ok) {
+        throw new Error(`Error downloading orders: ${response.statusText}`);
+    }
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'orders.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    return response; // For downloading the Excel file
+};
+
 
 
