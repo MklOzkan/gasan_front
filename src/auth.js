@@ -88,7 +88,7 @@ const config = {
         signIn: '/login',
         signOut: '/login'
     },
-    trustHost: process.env.NODE_ENV === 'development' || ['localhost']
+    trustHost: process.env.NODE_ENV === 'development' || ['localhost', process.env.NEXT_PUBLIC_API_URL].includes(new URL(process.env.NEXT_PUBLIC_API_URL).hostname)
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
