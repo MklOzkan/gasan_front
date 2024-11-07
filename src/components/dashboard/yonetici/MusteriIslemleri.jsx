@@ -11,6 +11,7 @@ import { swAlert } from '@/helpers/swal';
 import { wait } from '@/utils/wait';
 import Spacer from '@/components/common/spacer';
 import { RxReset } from 'react-icons/rx';
+import Link from 'next/link';
 
 const MusteriIslemleri = ({ data, currentPage, sortBy, sortOrder }) => {
     const { content, page } = data;
@@ -91,6 +92,13 @@ const MusteriIslemleri = ({ data, currentPage, sortBy, sortOrder }) => {
             <PageHeader>Müşterİ İşlemlerİ</PageHeader>
             <Spacer height={30} />
             <div className={styles.filter_container}>
+                <div>
+                    <Link
+                        href={'/dashboard/yonetici-menu/musteri-islemleri/musteri-reports/'}
+                    >
+                        All Report
+                    </Link>
+                </div>
                 <div className={styles.search}>
                     <div className={styles.search_clear}>
                         <input
@@ -221,7 +229,9 @@ const MusteriIslemleri = ({ data, currentPage, sortBy, sortOrder }) => {
                                             'İşlenmeyi Bekliyor' ||
                                         order.orderStatus === 'İptal'
                                             ? order.orderStatus ===
-                                              'İşlenmeyi Bekliyor' ? '' : styles.cancelled
+                                              'İşlenmeyi Bekliyor'
+                                                ? ''
+                                                : styles.cancelled
                                             : order.orderStatus ===
                                                   'İşlenmekte' ||
                                               order.orderStatus === 'Beklemede'

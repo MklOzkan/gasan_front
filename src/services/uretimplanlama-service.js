@@ -102,14 +102,19 @@ export const finishOrder = async (orderId) => {
 };
 
 export const downloadExcelFile = async (startDate = '', endDate = '') => {
+    console.log(config.api.baseUrl);
     const response = await fetch(
         `${API_URL}/orders/download?startDate=${startDate}&endDate=${endDate}`,
         {
             headers: await getAuthHeader()
         }
     );
+    console.log('response', response);
     if (!response.ok) {
-        throw new Error(`Error downloading orders: ${response.statusText}`);
+        return {
+            success: false,
+            message: response.statusText|| 'İndirme işlemi sırasında bir hata oluştu.'
+        }
     }
     const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
