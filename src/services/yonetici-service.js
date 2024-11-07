@@ -48,3 +48,15 @@ export const getReports = async (orderId) => {
 
     return response;
 }
+
+export const getAllReports = async (startDate = '', endDate = '') => {
+    const response = fetch(
+        `${API_URL}/yonetici/getCompletedAndActiveReports?startDate=${startDate}&endDate=${endDate}`,
+        {
+            method: 'GET',
+            headers: await getAuthHeader()
+        }
+    );
+
+    return response;
+};
