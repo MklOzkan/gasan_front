@@ -9,9 +9,12 @@ export const getOrders = async (
     page = 0,
     size = 10,
     sort = 'orderDate',
-    type = 'desc'
+    type = 'desc',
+    searchTerm,
+    startDate,
+    endDate
 ) => {
-    const qs = `page=${page}&size=${size}&sort=${sort}&type=${type}`;
+    const qs = `page=${page}&size=${size}&sort=${sort}&type=${type}&searchTerm=${searchTerm}&startDate=${startDate}&endDate=${endDate}`;
     const response = await fetch(`${API_URL}/orders/getAllOrders?${qs}`, {
         method: 'GET',
         headers: await getAuthHeader()
@@ -102,7 +105,6 @@ export const finishOrder = async (orderId) => {
 };
 
 export const downloadExcelFile = async (startDate = '', endDate = '') => {
-    console.log(config.api.baseUrl);
     const response = await fetch(
         `${API_URL}/orders/download?startDate=${startDate}&endDate=${endDate}`,
         {

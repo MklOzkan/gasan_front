@@ -2,17 +2,24 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 
-const TextInput = ({ className, label, error, readOnly, onChange, options, ...rest }) => {
+const TextInput = ({
+    className,
+    label,
+    error,
+    readOnly,
+    onChange,
+    options,
+    existingValue,
+    ...rest
+}) => {
     const [orderType, setOrderType] = useState('');
-    if(window.location.pathname === '/dashboard/uretim/order-edit') {
+    if (window.location.pathname === '/dashboard/uretim/order-edit') {
         if (rest.name === 'orderType') {
             setOrderType(rest.value);
         }
     }
 
-    
-
-	return (
+    return (
         <Form.Group className={className} controlId={rest.name}>
             <Form.Label>{label}</Form.Label>
             {options ? ( // Added conditional rendering based on 'options' prop
@@ -22,13 +29,18 @@ const TextInput = ({ className, label, error, readOnly, onChange, options, ...re
                     readOnly={readOnly}
                     onChange={onChange || (() => {})}
                 >
-                    <option value="">Seçiniz</option> 
+                    {existingValue ? (
+                        <option defaultValue={existingValue}>
+                            {existingValue}
+                        </option>
+                    ) : (
+                        <option value="">Seçiniz</option>
+                    )}
                     {options.map((option) => (
                         <option key={option} value={option}>
                             {option}
                         </option>
                     ))}{' '}
-                    
                 </Form.Select>
             ) : (
                 <Form.Control

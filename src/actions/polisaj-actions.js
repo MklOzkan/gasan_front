@@ -13,14 +13,16 @@ import { updatePolisaj, rollBackLastChange } from '@/services/polisajamiri-servi
 
 export const polisajAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from milTornalamaAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updatePolisaj(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/polisaj-amiri/${orderId}`);
         return {
@@ -28,7 +30,6 @@ export const polisajAction = async (formData, operationId, orderId) => {
             message: data.message || 'Sipariş başarıyla güncellendi'
         };
     } catch (err) {
-        console.error('Error in milTornalamaAction:', err);
         if (err instanceof YupValidationError) {
             return transformYupErrors(err.inner);
         }
@@ -38,12 +39,14 @@ export const polisajAction = async (formData, operationId, orderId) => {
 
 export const rollBackLastChangeAction = async (operationId, orderId) => {
     try {
-        console.log('formData from boruKesmeActıon:', operationId);
         const res = await rollBackLastChange(operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/polisaj-amiri/${orderId}`);
         return {

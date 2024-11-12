@@ -99,3 +99,16 @@ export const rollBackLastChange = async (operationId) => {
     );
     return response;
 };
+
+export const updateScrap = async (payload, id) => {
+    console.log('payload', payload);
+    const response = await fetch(
+        `${API_URL}/montaj/updateScrapCount/${id}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader(),
+            body: JSON.stringify(payload)
+        }
+    );
+    return response;
+};

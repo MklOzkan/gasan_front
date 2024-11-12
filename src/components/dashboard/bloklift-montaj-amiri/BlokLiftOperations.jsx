@@ -6,6 +6,7 @@ import UpdateButtons from './operation-fields/UpdateButtons';
 
 const BlokLiftOperations = ({ order }) => {
     const { returnBody, returnBody2, returnBody3 } = order;
+    console.log('returnBody 3', returnBody3);
     return (
         <>
             <PageHeader>Blok Lift Montaj Amiri</PageHeader>

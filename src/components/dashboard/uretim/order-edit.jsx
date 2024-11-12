@@ -19,6 +19,13 @@ import styles from './order-form.module.scss';
 
 const orderTypes = ['Lift', 'Damper', 'Blok Lift', 'Paslanmaz'];
 
+const orders = {
+    LIFT: 'Lift',
+    DAMPER: 'Damper',
+    BLOK_LIFT: 'Blok Lift',
+    PASLANMAZ: 'Paslanmaz'
+};
+
 const OrderEdit = ({ order}) => {
      const [state, setState] = useState(initialResponse);
      const router = useRouter();
@@ -29,7 +36,7 @@ const OrderEdit = ({ order}) => {
      }
 
      const { returnBody } = order;
-     console.log('order', order);
+     console.log('order', returnBody);
 
      const handleSubmit = async (e) => {
          e.preventDefault();
@@ -102,7 +109,7 @@ const OrderEdit = ({ order}) => {
                                 className="mb-3"
                                 label="Sipariş Türü"
                                 error={state?.errors?.orderType}
-                                defaultValue={returnBody.orderType} // **Initial value from the database**
+                                existingValue={orders[returnBody.orderType]} // **Initial value from the database**
                                 onChange={(e) => {
                                     setOrderType(e.target.value);
                                 }} // **onChange function is not
@@ -127,12 +134,12 @@ const OrderEdit = ({ order}) => {
                                 label="Hazir Mil Miktarı"
                                 error={state?.errors?.readyMilCount}
                                 defaultValue={
-                                    orderType !== 'Lift'
+                                    returnBody.orderType !== 'LIFT'
                                         ? 0
                                         : returnBody.readyMilCount
                                 }
                                 required
-                                disabled={orderType !== 'Lift'} // **Disable the field based on the selected order type**
+                                disabled={returnBody.orderType !== 'LIFT'} // **Disable the field based on the selected order type**
                             />
 
                             <TextInput
@@ -143,7 +150,7 @@ const OrderEdit = ({ order}) => {
                                 defaultValue={returnBody.orderStatus}
                                 required
                             />
-                            <SubmitButton title='Güncelle' />
+                            <SubmitButton title="Güncelle" />
                         </Form>
                     </Card.Body>
                 </Card>

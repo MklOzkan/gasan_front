@@ -62,7 +62,6 @@ export default function Reports({ data }) {
             reportsOrder.indexOf(b.orderType)
         );
     });
-    console.log(sortedReports);
     
 
     const handleSubmit = async (start, end) => {

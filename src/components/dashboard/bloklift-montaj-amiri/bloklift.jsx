@@ -1,20 +1,24 @@
 'use client';
 
-import React from 'react';
-import {
-    Col,
-    Pagination,
-    Form,
-    Button
-} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Paginations } from '@/components/common/Paginations';
 import PageHeader from '@/components/common/page-header';
-import styles from './block-lift.module.scss';
 import { useRouter } from 'next/navigation';
 import Spacer from '@/components/common/spacer';
+import styles from './block-lift.module.scss';
 
 const BlockLift = ({ data, currentPage, sortBy, sortOrder }) => {
+    const { content, page } = data;
+    const { totalPages, number, totalElements, size } = page;
     const router = useRouter();
-    const { content, totalPages } = data;
+    const [currentUrl, setCurrentUrl] = useState('');
+   
+    useEffect(() => {
+        const url = new URL(window.location.href);
+
+        setCurrentUrl(url.pathname);
+        router.push(url.toString());
+    }, [data, router]);
 
     const handleRowClick = (order) => {
         router.push(`/dashboard/bloklift-montaj-amiri/${order.id}`);
@@ -33,14 +37,6 @@ const BlockLift = ({ data, currentPage, sortBy, sortOrder }) => {
 
         // Navigate to the updated URL
         router.push(url.toString());
-    };
-
-    
-    // Handle page change
-    const handlePageChange = (page) => {
-        const url = new URL(window.location);
-        url.searchParams.set('currentPage', page);
-        window.location.href = url.toString();
     };
 
     return (
@@ -62,14 +58,12 @@ const BlockLift = ({ data, currentPage, sortBy, sortOrder }) => {
                                     {sortBy === 'customerName' &&
                                         (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                                 </th>
-                                <th>Gasan No</th>
-                                <th>Sipariş No</th>
                                 <th
                                     style={{ cursor: 'pointer' }}
-                                    onClick={() => handleSorting('orderDate')}
+                                    onClick={() => handleSorting('gasanNo')}
                                 >
-                                    Sipariş Tarihi
-                                    {sortBy === 'orderDate' &&
+                                    Gasan No{' '}
+                                    {sortBy === 'gasanNo' &&
                                         (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                                 </th>
                                 <th
@@ -105,7 +99,17 @@ const BlockLift = ({ data, currentPage, sortBy, sortOrder }) => {
                             {content.map((order, index) => (
                                 <tr
                                     key={index}
-                                    className={`${styles.table_body}`}
+                                    className={
+                                        order.orderStatus === 'İşlenmekte' ||
+                                        order.orderStatus === 'Beklemede'
+                                            ? `${styles.table_body} ${styles.islenmekte}`
+                                            : order.orderStatus === 'Tamamlandı'
+                                            ? `${styles.table_body} ${styles.tamamlandi}`
+                                            : order.orderStatus ===
+                                              'İptal Edildi'
+                                            ? `${styles.table_body} ${styles.iptal}`
+                                            : `${styles.table_body}`
+                                    }
                                     onClick={
                                         order.orderStatus ===
                                         'İşlenmeyi Bekliyor'
@@ -114,8 +118,6 @@ const BlockLift = ({ data, currentPage, sortBy, sortOrder }) => {
                                     }
                                 >
                                     <td>{order.customerName}</td>
-                                    <td>{order.gasanNo}</td>
-                                    <td>{order.orderNumber}</td>
                                     <td>{order.orderDate}</td>
                                     <td>{order.deliveryDate}</td>
                                     <td>{order.orderType}</td>
@@ -126,17 +128,12 @@ const BlockLift = ({ data, currentPage, sortBy, sortOrder }) => {
                         </tbody>
                     </table>
                 </div>
-                <Pagination>
-                    {[...Array(totalPages).keys()].map((page) => (
-                        <Pagination.Item
-                            key={page}
-                            active={page === currentPage}
-                            onClick={() => handlePageChange(page)}
-                        >
-                            {page + 1}
-                        </Pagination.Item>
-                    ))}
-                </Pagination>
+                <Paginations
+                    baseUrl={currentUrl}
+                    currentPage={number + 1}
+                    size={size}
+                    totalPages={totalPages}
+                />
             </main>
         </>
     );

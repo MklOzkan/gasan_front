@@ -94,10 +94,10 @@ const OperationButton = ({order, operations, productionProcess}) => {
 
             if (response.success) {
                 swAlert(response.message, 'success');
-                // setTimeout(() => {   
-                //     window.location.reload();
-                // }, 2000);
+            }else{
+                swAlert(response.message, 'error');
             }
+
         } catch (error) {
             swAlert(error.message, 'error');
         } finally {

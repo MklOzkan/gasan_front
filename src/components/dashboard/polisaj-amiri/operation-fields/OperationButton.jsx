@@ -47,7 +47,9 @@ const OperationButton = ({order, operation, productionProcess}) => {
             const response = await polisajAction(formData, operationId, order.id); 
 
             if (response.success) {
-                swAlert(response.message);
+                swAlert(response.message, 'success');
+            }else {
+                swAlert(response.message, 'error');
             }
         } catch (error) {
             swAlert(error.message, 'error');

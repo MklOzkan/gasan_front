@@ -20,7 +20,6 @@ export const getAllOrdersByPage = async (
         }
         return response.json(); // Automatically parse JSON response
     } catch (error) {
-        console.error(error);
         throw error;
     }
 };

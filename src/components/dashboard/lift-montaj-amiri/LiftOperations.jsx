@@ -14,10 +14,7 @@ const LiftOperations = ({order}) => {
               <Spacer height={5} />
               <OrderForOperation order={returnBody} />
               <Spacer height={5} />
-              <div >
                   <UpdateButtons order={returnBody} operations={returnBody2} />
-                  
-              </div>
           </main>
       </>
   );

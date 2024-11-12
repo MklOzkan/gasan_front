@@ -1,59 +1,42 @@
 'use client';
 
 import { useEffect, useState } from 'react'
-import Pagination from 'react-bootstrap/Pagination'
-import styles from './musteri-islemleri.module.scss'
-
+import { Paginations } from '@/components/common/Paginations';
 import PageHeader from '@/components/common/page-header';
 import { useRouter } from 'next/navigation'; // Use Next.js router for redirection
-import { updateOrderStatus } from '@/actions/order-actions'; // External function for API call
-import { swAlert } from '@/helpers/swal';
-import { wait } from '@/utils/wait';
 import Spacer from '@/components/common/spacer';
 import { RxReset } from 'react-icons/rx';
 import Link from 'next/link';
+import styles from './musteri-islemleri.module.scss';
 
-const MusteriIslemleri = ({ data, currentPage, sortBy, sortOrder }) => {
+const MusteriIslemleri = ({ data, sortBy, sortOrder }) => {
     const { content, page } = data;
     const { totalPages, number, totalElements, size } = page;
+    const [currentUrl, setCurrentUrl] = useState('');
     const router = useRouter();
     const [searchTerm, setSearchTerm] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [filteredContent, setFilteredContent] = useState(content);
-
     const resetSearch = () => setSearchTerm('');
     const resetStartDate = () => setStartDate('');
     const resetEndDate = () => setEndDate('');
 
    useEffect(() => {
-       let filteredData = content;
+       const url = new URL(window.location.href);
 
-       // Apply search filter
-       if (searchTerm) {
-           filteredData = filteredData.filter((order) =>
-               order.customerName
-                   .toLowerCase()
-                   .includes(searchTerm.toLowerCase())
-           );
-       }
+       setCurrentUrl(url.pathname);
 
-       // Apply date range filter
-       if (startDate) {
-           filteredData = filteredData.filter(
-               (order) => new Date(order.orderDate) >= new Date(startDate)
-           );
-       }
-       if (endDate) {
-           filteredData = filteredData.filter(
-               (order) => new Date(order.orderDate) <= new Date(endDate)
-           );
-       }
+       if (searchTerm) url.searchParams.set('searchTerm', searchTerm);
+       else url.searchParams.delete('searchTerm');
+       if (startDate) url.searchParams.set('startDate', startDate);
+       else url.searchParams.delete('startDate');
+       if (endDate) url.searchParams.set('endDate', endDate);
+       else url.searchParams.delete('endDate');
 
-       setFilteredContent(filteredData);
-   }, [searchTerm, startDate, endDate, content]);
-
-   console.log(content);
+       setFilteredContent(content);
+       router.push(url.toString());
+   }, [data, searchTerm, startDate, endDate, content, router]);
 
     const handleRowClick = (order) => {
             router.push(
@@ -77,12 +60,6 @@ const MusteriIslemleri = ({ data, currentPage, sortBy, sortOrder }) => {
         window.location.href = url.toString();
     };
 
-    const handlePageChange = (pageIn) => {
-        const url = new URL(window.location);
-        url.searchParams.set('currentPage', pageIn); // Set the new page number
-        router.push(url.toString()); // Use router.push for navigation
-    };
-
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
     };
@@ -94,13 +71,16 @@ const MusteriIslemleri = ({ data, currentPage, sortBy, sortOrder }) => {
             <div className={styles.filter_container}>
                 <div>
                     <Link
-                        href={'/dashboard/yonetici-menu/musteri-islemleri/musteri-reports/'}
+                        href={
+                            '/dashboard/yonetici-menu/musteri-islemleri/musteri-reports/'
+                        }
                     >
                         All Report
                     </Link>
                 </div>
                 <div className={styles.search}>
                     <div className={styles.search_clear}>
+                        <select name="" id=""></select>
                         <input
                             type="text"
                             placeholder="Arama"
@@ -180,7 +160,14 @@ const MusteriIslemleri = ({ data, currentPage, sortBy, sortOrder }) => {
                                     {sortBy === 'customerName' &&
                                         (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                                 </th>
-                                <th>Gasan No</th>
+                                <th
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => handleSorting('gasanNo')}
+                                >
+                                    Gasan No{' '}
+                                    {sortBy === 'gasanNo' &&
+                                        (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
+                                </th>
                                 <th>Sipariş No</th>
                                 <th
                                     style={{ cursor: 'pointer' }}
@@ -224,20 +211,17 @@ const MusteriIslemleri = ({ data, currentPage, sortBy, sortOrder }) => {
                             {filteredContent.map((order, index) => (
                                 <tr
                                     key={index}
-                                    className={`${styles.table_body} ${
-                                        order.orderStatus ===
-                                            'İşlenmeyi Bekliyor' ||
-                                        order.orderStatus === 'İptal'
-                                            ? order.orderStatus ===
-                                              'İşlenmeyi Bekliyor'
-                                                ? ''
-                                                : styles.cancelled
+                                    className={
+                                        order.orderStatus === 'İşlenmekte' ||
+                                        order.orderStatus === 'Beklemede'
+                                            ? `${styles.table_body} ${styles.islenmekte}`
+                                            : order.orderStatus === 'Tamamlandı'
+                                            ? `${styles.table_body} ${styles.tamamlandi}`
                                             : order.orderStatus ===
-                                                  'İşlenmekte' ||
-                                              order.orderStatus === 'Beklemede'
-                                            ? styles.processing
-                                            : styles.completed
-                                    }`}
+                                              'İptal Edildi'
+                                            ? `${styles.table_body} ${styles.iptal}`
+                                            : `${styles.table_body}`
+                                    }
                                     onClick={() => handleRowClick(order)}
                                 >
                                     <td>{order.customerName}</td>
@@ -254,17 +238,12 @@ const MusteriIslemleri = ({ data, currentPage, sortBy, sortOrder }) => {
                         </tbody>
                     </table>
                 </div>
-                <Pagination>
-                    {[...Array(totalPages).keys()].map((pageIn) => (
-                        <Pagination.Item
-                            key={pageIn}
-                            active={pageIn === number - 1}
-                            onClick={() => handlePageChange(pageIn)}
-                        >
-                            {pageIn + 1}
-                        </Pagination.Item>
-                    ))}
-                </Pagination>
+                <Paginations
+                    baseUrl={currentUrl}
+                    currentPage={number + 1}
+                    size={size}
+                    totalPages={totalPages}
+                />
             </main>
         </>
     );

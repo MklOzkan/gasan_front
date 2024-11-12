@@ -26,7 +26,7 @@ const OrderToolbar = ({
             // your client-side logic here
         }
         return () => {
-            console.log('cleanup');
+            
         };
     }, [order, currentPage, currentUrl]);
 
@@ -53,8 +53,6 @@ const OrderToolbar = ({
 
         if (res.success) {
             swAlert(res.message, 'success');
-            await wait(1000);
-            window.location.reload();
         } else {
             swAlert(res.message, 'error', '', 2000);
         }

@@ -11,7 +11,7 @@
     /* Maintain column layout on all screen sizes */
     @media (max-width: 1024px) {
         flex-direction: column;
-        gap: 20px;
+        gap: 10px;
         padding: 30px 0;
         width: 100%;
     }
@@ -36,7 +36,6 @@
 
     /* Optional: Set a max height and enable scrolling */
     max-height: 80vh;
-    overflow-y: auto;
 }
 
 .menuDiv {

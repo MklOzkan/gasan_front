@@ -110,7 +110,9 @@ const UpdateButtons = ({ order, operations }) => {
             }
 
             if (response.success) {
-                swAlert(response.message);
+                swAlert(response.message, 'success');
+            } else {
+                swAlert(response.message, 'error');
             }
         } catch (error) {
             swAlert(error.message, 'error');

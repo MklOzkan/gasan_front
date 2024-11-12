@@ -1,7 +1,9 @@
 import React from 'react'
 import { Col, Form, Button, Pagination } from 'react-bootstrap'
-import styles from './order-list.module.scss'
+
 import OrderToolbar from '@/components/dashboard/uretim/OrderToolbar';
+import { Paginations } from '@/components/common/Paginations';
+import styles from './order-list.module.scss';
 
 const OrderList = ({
     currentUrl,
@@ -12,7 +14,8 @@ const OrderList = ({
     sortBy,
     sortOrder,
     handlePageChange,
-    handleSorting
+    handleSorting,
+    size
 }) => {
 
     return (
@@ -29,7 +32,14 @@ const OrderList = ({
                                 {sortBy === 'customerName' &&
                                     (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                             </th>
-                            <th>Gasan No</th>
+                            <th
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => handleSorting('gasanNo')}
+                            >
+                                Gasan No{' '}
+                                {sortBy === 'gasanNo' &&
+                                    (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
+                            </th>
                             <th>Sipariş No</th>
                             <th
                                 style={{ cursor: 'pointer' }}
@@ -74,16 +84,21 @@ const OrderList = ({
                             <tr
                                 key={index}
                                 className={
-                                    index % 2 === 0
-                                        ? `${styles.table_body} ${styles.index}`
-                                        : styles.table_body
+                                    order.orderStatus === 'İşlenmekte' ||
+                                    order.orderStatus === 'Beklemede'
+                                        ? `${styles.table_body} ${styles.islenmekte}`
+                                        : order.orderStatus === 'Tamamlandı'
+                                        ? `${styles.table_body} ${styles.tamamlandi}`
+                                        : order.orderStatus === 'İptal Edildi'
+                                        ? `${styles.table_body} ${styles.iptal}`
+                                        : `${styles.table_body}`
                                 }
                                 style={{
                                     cursor:
                                         order.orderStatus === 'İşlenmekte'
                                             ? 'pointer'
                                             : 'default'
-                                }} // Change cursor style for clickable rows
+                                }}
                             >
                                 <td>{order.customerName}</td>
                                 <td>{order.gasanNo}</td>
@@ -112,17 +127,12 @@ const OrderList = ({
                     </tbody>
                 </table>
             </div>
-            <Pagination>
-                {[...Array(totalPages).keys()].map((page) => (
-                    <Pagination.Item
-                        key={page}
-                        active={page === currentPage}
-                        onClick={() => handlePageChange(page)}
-                    >
-                        {page + 1}
-                    </Pagination.Item>
-                ))}
-            </Pagination>
+            <Paginations
+                baseUrl={currentUrl}
+                currentPage={currentPage}
+                size={size}
+                totalPages={totalPages}
+            />
         </main>
     );
 };

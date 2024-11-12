@@ -2,14 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-    Col,
-    Pagination,
-    Form,
     Button
 } from 'react-bootstrap';
 import PageHeader from '@/components/common/page-header';
-import { useRouter } from 'next/navigation'; // Use Next.js router for redirection
-import { updateOrderStatus } from '@/actions/order-actions'; // External function for API call
+import { useRouter } from 'next/navigation';
+import { Paginations } from '@/components/common/Paginations';
+import { updateOrderStatus } from '@/actions/order-actions';
 import styles from './talasli.module.scss';
 import { swAlert } from '@/helpers/swal';
 import { wait } from '@/utils/wait';
@@ -19,11 +17,17 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
     const { content, page } = data;
     const { totalPages, number, totalElements, size } = page;
     const router = useRouter();
+     const [currentUrl, setCurrentUrl] = useState('');
 
     // Check if any order has the status 'İşlenmekte'
     useEffect(() => {
+
+        const url = new URL(window.location.href);
+
+        setCurrentUrl(url.pathname);
+        router.push(url.toString());
         
-    }, [data]);
+    }, [data, router]);
 
     // Handle order status change (start or stop processing an order)
     const handleStatusChange = async (order, newStatus) => {
@@ -77,7 +81,6 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                     <table>
                         <thead className={styles.table_head}>
                             <tr>
-                                <th>Siparis No</th>
                                 <th
                                     style={{ cursor: 'pointer' }}
                                     onClick={() =>
@@ -88,14 +91,14 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                     {sortBy === 'customerName' &&
                                         (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                                 </th>
-                                <th>Gasan No</th>
-                                <th>Sipariş No</th>
                                 <th
                                     style={{ cursor: 'pointer' }}
-                                    onClick={() => handleSorting('orderDate')}
+                                    onClick={() =>
+                                        handleSorting('gasanNo')
+                                    }
                                 >
-                                    Sipariş Tarihi
-                                    {sortBy === 'orderDate' &&
+                                    Gasan No{' '}
+                                    {sortBy === 'gasanNo' &&
                                         (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                                 </th>
                                 <th
@@ -133,7 +136,17 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                             {content.map((order, index) => (
                                 <tr
                                     key={index}
-                                    className={`${styles.table_body}`}
+                                    className={
+                                        order.orderStatus === 'İşlenmekte' ||
+                                        order.orderStatus === 'Beklemede'
+                                            ? `${styles.table_body} ${styles.islenmekte}`
+                                            : order.orderStatus === 'Tamamlandı'
+                                            ? `${styles.table_body} ${styles.tamamlandi}`
+                                            : order.orderStatus ===
+                                              'İptal Edildi'
+                                            ? `${styles.table_body} ${styles.iptal}`
+                                            : `${styles.table_body}`
+                                    }
                                     onClick={() =>
                                         order.orderStatus === 'İşlenmekte'
                                             ? handleRowClick(order)
@@ -146,11 +159,8 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                                 : 'default'
                                     }} // Change cursor style for clickable rows
                                 >
-                                    <td>{order.id}</td>
                                     <td>{order.customerName}</td>
                                     <td>{order.gasanNo}</td>
-                                    <td>{order.orderNumber}</td>
-                                    <td>{order.orderDate}</td>
                                     <td>{order.deliveryDate}</td>
                                     <td>{order.orderType}</td>
                                     <td>{order.orderQuantity}</td>
@@ -201,17 +211,12 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                         </tbody>
                     </table>
                 </div>
-                <Pagination>
-                    {[...Array(totalPages).keys()].map((pageIn) => (
-                        <Pagination.Item
-                            key={pageIn}
-                            active={pageIn === number - 1}
-                            onClick={() => handlePageChange(pageIn)}
-                        >
-                            {pageIn + 1}
-                        </Pagination.Item>
-                    ))}
-                </Pagination>
+                <Paginations
+                    baseUrl={currentUrl}
+                    currentPage={number + 1}
+                    size={size}
+                    totalPages={totalPages}
+                />
             </main>
         </>
     );

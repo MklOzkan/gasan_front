@@ -9,7 +9,6 @@ export const response = (ok, message, errors) => ({
 export const initialResponse = response(null, '', {});
 
 export const convertFormDataToJSON = (formData) => {
-    console.log('FORMDATA:', formData);
     return Object.fromEntries(formData.entries());
 };
 

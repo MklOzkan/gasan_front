@@ -38,10 +38,6 @@ const OperationButton = ({order,  stage}) => {
     };
 
     const handleSubmit = async (operationId, kaliteKontrolStage, producedAmount, buttonName) => {
-        console.log('operationId:', operationId);
-        console.log('operationType:', kaliteKontrolStage);
-        console.log('producedAmount:', producedAmount);
-        console.log('buttonName:', buttonName);
     
         try {
             // Construct the payload
@@ -67,10 +63,9 @@ const OperationButton = ({order,  stage}) => {
             }
 
             if (response.success) {
-                swAlert(response.message ,'success');
-                // setTimeout(() => {   
-                //     window.location.reload();
-                // }, 2000);
+                swAlert(response.message, 'success');
+            } else {
+                swAlert(response.message, 'error');
             }
         } catch (error) {
             swAlert(error.message, 'error');

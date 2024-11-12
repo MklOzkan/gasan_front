@@ -69,8 +69,6 @@ const UpdateButtons = ({ order, operations }) => {
             formData.append('operationType', operationType);
             formData.append('completedQuantity', parseInt(producedAmount, 10));
 
-            console.log('Form Data:', formData);
-
             let response;
 
             switch (operationType) {
@@ -84,10 +82,10 @@ const UpdateButtons = ({ order, operations }) => {
                     throw new Error(`Bilinmeyen islem türü: ${operationType}`);
             }
 
-            console.log('Response:', response);
-
             if (response.success) {
-                swAlert(response.message);
+                swAlert(response.message, 'success');
+            } else {
+                swAlert(response.message, 'error');
             }
         } catch (error) {
             swAlert(error.message, 'error');

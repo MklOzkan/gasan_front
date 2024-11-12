@@ -11,6 +11,7 @@ import {
     boruKaynakAction
 } from '@/actions/bloklift_actions';
 import { swAlert } from '@/helpers/swal';
+import ScrapOperation from '@/components/common/scrap-for-montaj/ScrapOperation';
 const operationList = {
     BORU_KAPAMA: 'BORU KAPAMA',
     BORU_KAYNAK: 'BORU KAYNAK',
@@ -131,10 +132,10 @@ const UpdateButtons = ({order, operations}) => {
                     throw new Error(`Unknown operation type: ${operationType}`);
             }
 
-            console.log('Response:', response);
-
             if (response.success) {
-                swAlert(response.message);
+                swAlert(response.message, 'success');
+            } else {
+                swAlert(response.message, 'error');
             }
         } catch (error) {
             swAlert(error.message, 'error');
@@ -155,7 +156,8 @@ const UpdateButtons = ({order, operations}) => {
                               <button
                                   onClick={() => togglePopup(operation.id)}
                                   className={`${styles.polygon_button} ${
-                                      styles[`index-${index}`]}
+                                      styles[`index-${index}`]
+                                  }
                                       ${styles[operationColors[index]]}
                                       `}
                                   disabled={operation.remainingQuantity <= 0}
@@ -206,15 +208,16 @@ const UpdateButtons = ({order, operations}) => {
                                   </div>
                               </div>
                           )}
-                          {(operation.operationType === 'BLOK_LIFT_MONTAJ' && order.orderType === 'DAMPER') &&(
-                              <button
-                                  onClick={() => togglePopup(operation.id)}
-                                  className={`${styles.kalite_kontrol_button}`}
-                                  disabled={true}
-                              >
-                                  Kalite Kontrol
-                              </button>
-                          )}
+                          {operation.operationType === 'BLOK_LIFT_MONTAJ' &&
+                              order.orderType === 'DAMPER' && (
+                                  <button
+                                      onClick={() => togglePopup(operation.id)}
+                                      className={`${styles.kalite_kontrol_button}`}
+                                      disabled={true}
+                                  >
+                                      Kalite Kontrol
+                                  </button>
+                              )}
                       </div>
                   ))
               ) : (
@@ -270,6 +273,7 @@ const UpdateButtons = ({order, operations}) => {
               </div>
               <InfoAndRollBack order={order} operations={sortedOperations} />
           </div>
+          <ScrapOperation operations={sortedOperations} orderId={order?.id} />
       </main>
   );
 }
