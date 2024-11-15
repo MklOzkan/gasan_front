@@ -81,8 +81,6 @@ const OrderForm = () => {
 
         const response = await createOrderAction(formData);
         setState(response);
-        console.log('response from order-form', response);
-        console.log('response from order-form', response.message);
 
         if (response.ok) {
             swAlert(response.message, 'success');

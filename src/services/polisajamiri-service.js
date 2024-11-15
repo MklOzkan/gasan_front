@@ -42,7 +42,6 @@ export const updatePolisaj = async (payload, orderId) => {
 };
 
 export const rollBackLastChange = async (operationId) => {
-    console.log('operationId from rollBackLastChange:', operationId);
     const response = await fetch(
         `${API_URL}/polisaj/removeLastChange/${operationId}`,
         {

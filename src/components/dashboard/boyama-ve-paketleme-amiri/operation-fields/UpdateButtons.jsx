@@ -37,7 +37,6 @@ const UpdateButtons = ({ order, operations }) => {
         const updatedColors = operations.map((operation) =>setColor(operation));
         setOperationColors(updatedColors);
 
-        console.log('Operations:', operations);
     }, [operations, order]);
 
     const compareOperations = (a, b) => {

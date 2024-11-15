@@ -48,8 +48,6 @@ const OperationButton = ({order,  stage}) => {
             formData.append('operationField', buttonName);
             formData.append(`${buttonName}`, parseInt(producedAmount, 10));
 
-            console.log('FORMDATA IN OP_BUTTON', kaliteKontrolStage, buttonName, producedAmount);
-
             // Declare response variable
             let response;
             if(kaliteKontrolStage === 'AFTER_POLISAJ') {

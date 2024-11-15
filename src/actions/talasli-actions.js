@@ -200,7 +200,6 @@ export const ezmeAction = async (formData, operationId, orderId) => {
 
 export const rollBackLastChangeAction = async ( operationId, orderId) => {
     try {
-        console.log('formData from boruKesmeActıon:', operationId);
         const res = await rollBackLastChange(operationId);
         const data = await res.json();
 

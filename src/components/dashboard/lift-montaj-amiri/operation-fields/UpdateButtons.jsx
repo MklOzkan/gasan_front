@@ -53,7 +53,6 @@ const UpdateButtons = ({ order, operations }) => {
         const updatedColors = operations.map((operation) =>setColor(operation));
         setOperationColors(updatedColors);
 
-        console.log('Operations:', operations);
     }, [operations, order]);
 
     const compareOperations = (a, b) => {
@@ -84,8 +83,6 @@ const UpdateButtons = ({ order, operations }) => {
 
             formData.append('operationType', operationType);
             formData.append('completedQuantity', parseInt(producedAmount, 10));
-
-            console.log('Form Data:', formData);
 
             let response;
 

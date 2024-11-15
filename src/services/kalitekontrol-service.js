@@ -18,7 +18,6 @@ export const fetchDataKaliteKontrol = async (
                 headers: await getAuthHeader()
             }
         );
-        console.log('RESPONSE STATUS:', response.status);
         return response;
 };
 
@@ -89,7 +88,6 @@ export const updateAFterEzme = async (payload, operationId) => {
             body: JSON.stringify(payload)
         }
     );
-    console.log('RESPONSE:', response);
     return response;
 };
 
@@ -118,7 +116,6 @@ export const rollbackAfterPolisaj = async (payload, operationId) => {
 };
 
 export const rollbackAfterEzme = async (payload, operationId) => {
-    console.log('payload in rollbackAfterEzme:', payload)
     const response = await fetch(
         `${API_URL}/kalitekontrol/rollbackAfterEzme/${operationId}`,
         {
@@ -127,12 +124,10 @@ export const rollbackAfterEzme = async (payload, operationId) => {
             body: JSON.stringify(payload)
         }
     );
-    console.log('operationField in Json:', payload.operationField);
     return response;
 };
 
 export const rollbackAfterMilTaslama = async (payload, operationId) => {
-    console.log('payload in rollbackAfterMiltaslama:', payload);
     const response = await fetch(
         `${API_URL}/kalitekontrol/rollbackAfterMilTaslama/${operationId}`,
         {

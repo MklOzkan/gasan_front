@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from "react-bootstrap";
 import Icon from "../icon";
 import { useRouter } from "next/navigation";
+import styles from "./back-button.module.scss";
 
 const BackButton = ({
     title = 'Geri',
@@ -27,7 +28,7 @@ const BackButton = ({
 
     return (
         window.location.pathname === "/" ?(null):
-        <Button type="button" variant="primary" {...rest} onClick={handleClick}>
+        <Button className={styles.button} type="button" variant="primary" {...rest} onClick={handleClick}>
             {/* <Icon family={iconfamily} icon={icon} />  */}
             {title}
         </Button>

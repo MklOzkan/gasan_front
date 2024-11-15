@@ -8,8 +8,6 @@ const BlokLiftPage = async ({ params }) => {
     const res = await fetchOrderById(params.id); // This returns a Response object
     if (!res.ok) throw new Error(order.message || 'Failed to fetch order data');
     const order = await res.json();
-
-    console.log('order from BlokLiftPage', order);
     return (
         <>
             <BlokliftOperations order={order} />

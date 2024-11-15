@@ -18,8 +18,6 @@ const Menu = () => {
                 )}&link=${encodeURIComponent(link)}
                 &user=${encodeURIComponent(text)}`
             );
-        } else {
-            console.error('Username must be a string');
         }
     };
 
@@ -27,10 +25,9 @@ const Menu = () => {
         <>
             <PageHeader>ANA SAYFA</PageHeader>
             <Spacer height={25} />
-            <main className="text-center m-auto">
-                <Row className= {styles.menuRow}>
+            <main className={styles.container}>
                     {menuItems.map((item) => (
-                        <Col key={item.id}>
+                        <div key={item.id} className={styles.innerContainer}>
                             <div
                                 style={{ backgroundColor: item.color }}
                                 onClick={() => handleClick(item.username, item.link, item.text)}
@@ -38,9 +35,8 @@ const Menu = () => {
                             >
                                 {item.text}
                             </div>
-                        </Col>
+                        </div>
                     ))}
-                </Row>
             </main>
         </>
     );

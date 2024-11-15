@@ -85,8 +85,6 @@ export const updateStatus = async (orderId) => {
         method: 'PUT',
         headers:  await getAuthHeader()
     });
-    
-    console.log('response', response);
     return response;
 };
 
@@ -105,20 +103,22 @@ export const finishOrder = async (orderId) => {
 };
 
 export const downloadExcelFile = async (startDate = '', endDate = '') => {
+
     const response = await fetch(
         `${API_URL}/orders/download?startDate=${startDate}&endDate=${endDate}`,
         {
+            method: 'GET',
             headers: await getAuthHeader()
         }
     );
-    console.log('response', response);
     if (!response.ok) {
         return {
             success: false,
-            message: response.statusText|| 'İndirme işlemi sırasında bir hata oluştu.'
+            message: 'İndirme işlemi sırasında bir hata oluştu.'
         }
     }
-    const blob = await response.blob();
+    try {
+        const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -126,8 +126,12 @@ export const downloadExcelFile = async (startDate = '', endDate = '') => {
     document.body.appendChild(a);
     a.click();
     a.remove();
+    }catch(err){
+        console.log(err);
+    }
+    
 
-    return response; // For downloading the Excel file
+    return response;
 };
 
 

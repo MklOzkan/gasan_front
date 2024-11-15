@@ -25,7 +25,6 @@ const OperationButton = ({order, operations, productionProcess}) => {
     ];
 
     useEffect(() => {
-        console.log('Operations:', operations);
     }, [operations, order]);
 
     const compareOperations = (a, b) => {
@@ -89,8 +88,6 @@ const OperationButton = ({order, operations, productionProcess}) => {
                 default:
                     throw new Error(`Unknown operation type: ${operationType}`);
             }
-
-            console.log('Response:', response);
 
             if (response.success) {
                 swAlert(response.message, 'success');

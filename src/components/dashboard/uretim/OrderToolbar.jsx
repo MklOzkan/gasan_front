@@ -47,7 +47,6 @@ const OrderToolbar = ({
             answer = { isConfirmed: false };
         }
         if (!answer.isConfirmed) return;
-        console.log('row.id', order.id);
 
         const res = await finishOrderAction(order.id);
 
@@ -66,25 +65,11 @@ const OrderToolbar = ({
             `${order.orderNumber} numaralı siparişi silmek istediğinize emin misiniz?`
         );
         if (!answer.isConfirmed) return;
-        console.log('row.id', order.id);
 
         const res = await deleteOrderAction(order.orderNumber);
 
         if (res.success) {
-            // After successful deletion, check if the page needs to be changed
-
-            let page;
-
-            
-            if (totalElements % 10 === 1 && totalPages > 1) {
-                swAlert(res.message, 'success');
-                await wait(2000);
-                page = currentPage - 1;
-                handlePageChange(page);
-            } else {
-                swAlert(res.message, 'success');
-                window.location.reload();
-            }
+            swAlert(res.message, 'success');
         } else {
             swAlert(res.message, 'error');
         }

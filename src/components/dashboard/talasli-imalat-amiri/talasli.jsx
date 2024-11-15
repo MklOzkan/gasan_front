@@ -33,17 +33,14 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
     const handleStatusChange = async (order, newStatus) => {
         
         try {
-            const response = await updateOrderStatus(order.id, newStatus); // Call external functio
-            console.log('API Response:', response); // Log the response for debugging
+            const response = await updateOrderStatus(order.id, newStatus); 
             if (response && response.success) {
-                console.log('message', response.message);
                 swAlert(response.message, 'success');
                 await wait(2000);
             } else {
-                console.error('Sipariş durumu güncellenemedi');
             }
         } catch (error) {
-            console.error('Error updating order status:', error);
+            swAlert('Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
         }
     };
 

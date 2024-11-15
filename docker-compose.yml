@@ -1,31 +1,30 @@
 version: '3.8'
 
 services:
-  frontend:
-    image: mikailozkan/frontend-gasan:latest
-    # build:
-    #   context: C:/Users/ozkan/Desktop/Develop-ProductProcess-Fr/Develop-ProductProcess-Fr
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-    environment:
-      NEXT_PUBLIC_API_URL: "http://backend:8080"
-    networks:
-      - app-network
-
-  backend:
+  spring-boot-gasan:
+    container_name: spring-boot-gasan
     image: mikailozkan/backend-gasan:latest
-    # build:
-    #   context: C:/Users/ozkan/Desktop/GasanApp-Backend/Develop-ProductProcess-Dv
     ports:
-      - "8080:8080"
+      - "9000:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/stajProje
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: 1234
     depends_on:
       - db
+    volumes:
+      - C:/Users/ozkan/Downloads/Documents/private.key:/app/private.key
+      - C:/Users/ozkan/Downloads/Documents/certificate.crt:/app/certificate.crt
+    networks:
+      - app-network
+
+  front-end-gasan:
+    container_name: front-end-gasan
+    image: mikailozkan/frontend-gasan:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - spring-boot-gasan
     networks:
       - app-network
 

@@ -5,6 +5,8 @@ import { FaDownload } from 'react-icons/fa6';
 import DateSelectModal from '@/components/common/form-fields/DateSelectionModal.jsx';
 import React, { useState } from 'react';
 import styles from './download-button.module.scss';
+import { swAlert } from '@/helpers/swal';
+import { convertFormDataToJSON } from '@/helpers/form-validation';
 
 export default function DownloadButton() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,9 +21,14 @@ export default function DownloadButton() {
 
     const downloadExcel = async (startDate, endDate) => {
         try {
-            await downloadExcelFile(startDate || '', endDate || '');
+            const res = await downloadExcelFile(startDate || '', endDate || '');
+            if (res.ok) {
+                swAlert('Excel dosyası başarıyla indirildi.', 'success');
+            } else {
+                swAlert('Excel dosyası indirilirken bir hata oluştu.', 'error');
+            }
         } catch (error) {
-            console.error('Error downloading file:', error);
+            swAlert(error.message, 'error');
         }
     };
 

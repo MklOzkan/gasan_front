@@ -6,8 +6,7 @@ const ReportsPAge = async () => {
 
   const response = await getAllReports(); 
   if (!response.ok) { throw new Error(`Error fetching reports: ${response.statusText}`); }
-  const data = await response.json(); // Automatically parse JSON response
-  console.log('reports:', data);
+  const data = await response.json(); 
     return (
       <>
       

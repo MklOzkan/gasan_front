@@ -3,17 +3,17 @@ import styles from './infos-and-rollback.module.scss';
 import { Button } from 'react-bootstrap';
 import { swAlert, swConfirm } from '@/helpers/swal';
 import { rollBackLastChangeAction } from '@/actions/bloklift_actions';
+import { config } from '@/helpers/config';
+
 
 const OperationsInfo = ({ operations, order }) => {
 
     useEffect(() => {
-        console.log("rendered");
     }, [operations, order]);
 
 
 
     const rollBack = async (operation) => {
-        console.log('Selected Operation:', operation);
         const answer = await swConfirm(
             `En son girilen ${operation.lastCompletedQty} adetlik üretimi geri almak istediğinize emin misiniz??`
         );
@@ -43,7 +43,13 @@ const OperationsInfo = ({ operations, order }) => {
                     {operations.map((operation, index) => (
                         <React.Fragment key={index}>
                             <tr className={styles.table_body}>
-                                <td>{operation.operationType}</td>
+                                <td>
+                                    {
+                                        config.talasliList[
+                                            operation.operationType
+                                        ]
+                                    }
+                                </td>
                                 <td>
                                     <Button
                                         className={styles.edit_button}

@@ -15,6 +15,7 @@ export const OrderSchema = Yup.object().shape({
         .trim() // Removes leading/trailing spaces
         .matches(/^[A-Za-z0-9._-]+$/, 'Geçersiz sipariş numarası formatı')
         .min(10, 'Sipariş numarası 10 haneli olmal')
+        .max(10, 'Sipariş numarası 10 haneli olmal')
         .required('Sipariş numarası boş olamaz'),
 
     deliveryDate: Yup.date()

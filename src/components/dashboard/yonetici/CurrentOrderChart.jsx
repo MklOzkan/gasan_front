@@ -184,7 +184,6 @@ const CurrentOrder = ({
                 ))}
             </div>
         );
-    console.log('talasli', talasli);
 
     return (
         <main className={styles.container}>
