@@ -22,7 +22,6 @@ export const transformYupErrors = (errors) => {
 export const YupValidationError = ValidationError;
 
 export const isStringArray = (str) => {
-    console.log('STR:', str);
     const arr = JSON.parse(str);
     return Array.isArray(arr) && arr.length > 0;
 };

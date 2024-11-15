@@ -12,7 +12,6 @@ const OperationButton = ({order, operation, productionProcess}) => {
     const [productionQuantity, setProductionQuantity] = useState('');
     
     useEffect(() => {
-        console.log('Operations:', operation);
     }, [operation]);
 
 

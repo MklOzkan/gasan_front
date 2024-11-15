@@ -16,8 +16,10 @@ import {
     updateGazDolum,
     updateTest,
     rollBackLastChange,
-    updateScrap
+    updateScrap,
+    rollBackScrap
 } from '@/services/blmontajamiri-service';
+import { swAlert } from '@/helpers/swal';
 
 export const boruKaynakAction = async (formData, operationId, orderId) => {
     try {
@@ -176,11 +178,10 @@ export const rollBackLastChangeAction = async (operationId, orderId) => {
     }
 };
 
-export const scrapAction = async (formData, operationId, orderType, orderId) => {
+export const scrapAction = async (formData, operationId, orderId) => {
     try {
         const fields = convertFormDataToJSON(formData);
-        console.log('fields', fields);
-        const res = await updateScrap(fields, operationId, orderType);
+        const res = await updateScrap(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
@@ -193,6 +194,27 @@ export const scrapAction = async (formData, operationId, orderType, orderId) => 
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
+        };
+    } catch (err) {
+        
+    }
+};
+
+export const rollBackAction = async (operationId, orderId) => {
+    try {
+        const res = await rollBackScrap(operationId);
+        const data = await res.json();
+
+        if (!res.ok) {
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
+        }
+        revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
+        return {
+            success: true,
+            message: data.message || 'Güncellendi'
         };
     } catch (err) {
         if (err instanceof YupValidationError) {

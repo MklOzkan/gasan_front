@@ -29,14 +29,15 @@ const orders = {
 const OrderEdit = ({ order}) => {
      const [state, setState] = useState(initialResponse);
      const router = useRouter();
-     const [orderType, setOrderType] = useState('');
+    const [orderType, setOrderType] = useState('');
+    const [readyMilCount, setReadyMilCount] = useState(0);
 
      if (!order || !order.returnBody) {
          return <div>Loading...</div>; // Handle loading state when `order` or `order.returnBody` is not available
      }
 
-     const { returnBody } = order;
-     console.log('order', returnBody);
+    const { returnBody } = order;
+    console.log('orderType', returnBody.orderType);
 
      const handleSubmit = async (e) => {
          e.preventDefault();
@@ -109,7 +110,9 @@ const OrderEdit = ({ order}) => {
                                 className="mb-3"
                                 label="Sipariş Türü"
                                 error={state?.errors?.orderType}
-                                existingValue={orders[returnBody.orderType]} // **Initial value from the database**
+                                existingValue={
+                                    orderType ? orderType : returnBody.orderType
+                                }
                                 onChange={(e) => {
                                     setOrderType(e.target.value);
                                 }} // **onChange function is not
@@ -133,13 +136,20 @@ const OrderEdit = ({ order}) => {
                                 className="mb-3"
                                 label="Hazir Mil Miktarı"
                                 error={state?.errors?.readyMilCount}
-                                defaultValue={
-                                    returnBody.orderType !== 'LIFT'
+                                defaultValue={orderType ? (orderType !== 'Lift' ? 0 : readyMilCount) : 
+                                    (returnBody.orderType !== 'Lift'
                                         ? 0
-                                        : returnBody.readyMilCount
+                                        : returnBody.readyMilCount)
                                 }
                                 required
-                                disabled={returnBody.orderType !== 'LIFT'} // **Disable the field based on the selected order type**
+                                onChange={(e) => {
+                                    setReadyMilCount(e.target.value);
+                                }}
+                                disabled={
+                                    orderType
+                                        ? orderType !== 'Lift'
+                                        : returnBody.orderType !== 'Lift'
+                                } // **Disable the field based on the selected order type**
                             />
 
                             <TextInput

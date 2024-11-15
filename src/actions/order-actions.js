@@ -7,7 +7,8 @@ import {
     deleteOrder,
     downloadOrders,
     updateStatus,
-    finishOrder
+    finishOrder,
+    downloadExcelFile
 } from '@/services/uretimplanlama-service';
 import {
     YupValidationError,
@@ -16,7 +17,6 @@ import {
     transformYupErrors
 } from '@/helpers/form-validation';
 import { OrderSchema } from '@/helpers/schemas/order-schema';
-import { wait } from '@/utils/wait';
 
 export const createOrderAction = async (formData) => {
     try {
@@ -70,6 +70,7 @@ export const deleteOrderAction = async (orderNumber) => {
                 message: data.message || 'Bir hata oluştu'
             };
         }
+        revalidatePath('/dashboard/urretim');
         return {
             success: true, 
             message: 'Sipariş başarıyla silindi'
@@ -134,5 +135,32 @@ export const finishOrderAction = async (orderId) => {
         throw err;
     }
 };
+
+// export const downloadction = async (formData) => {
+
+//     console.log('formData', formData);
+//     try {
+//         const fields = convertFormDataToJSON(formData);
+
+//         console.log('fields', fields);
+
+//         const res = await downloadExcelFile(fields);
+       
+
+//         if (!res.ok) {
+//             return {
+//                 success: false,
+//                 message: 'Dosya indirme işlemi sırasında bir hata oluştu'
+//             };
+//         }
+
+//         return response(true, 'Excel dosyası başarıyla indirildi');
+//     } catch (err) {
+//         if (err instanceof YupValidationError) {
+//             return transformYupErrors(err.inner);
+//         }
+//         throw err;
+//     }
+// };
 
 

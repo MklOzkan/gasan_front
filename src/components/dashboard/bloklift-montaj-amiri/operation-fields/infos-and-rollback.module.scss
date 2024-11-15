@@ -4,13 +4,23 @@
     max-width: 800px; /* Set a max-width to avoid overflow */
     margin: 0 auto; /* Center the table */
     margin-top: 20px; /* Add space above the table */ 
-    padding: 10px; /* Add padding around the table */
+    padding: 20px; /* Add padding around the table */
     background-color: #f9f9f9; /* Light background color */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     table-layout: fixed; /* Fixed table layout */
     justify-content: center;
     align-items: center;
+
+    @media screen and (max-width: 1024px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin-right: 0;
+        
+    }
     @media screen and (max-width: 768px) {
         display: flex;
         flex-direction: column;
@@ -38,17 +48,15 @@
 
 /* Styling for table rows */
 .table_body td {
-    padding: 10px 15px; /* Padding inside table cells */
+    padding: 5px;
     border-bottom: 1px solid #f18e8e; /* Light border between rows */
 }
+.table_body td:nth-child(2) {
+    text-align: center; /* Center text in the last column */
+}
 
-/* Highlight the total row */
-.total_row th {
-    margin-top: 10px;
-    font-weight: bold; /* Bold text */
-    padding-top: 10px;
-    border-bottom: 1px solid #218838;
-    
+.table_body td:last-child {
+    text-align: center; /* Center text in the last column */
 }
 
 /* Edit button inside table cells */
@@ -56,7 +64,8 @@
     background-color: #007bff; /* Primary blue color */
     color: #ffffff; /* White text color */
     border-radius: 5px; /* Rounded corners */
-    padding: 5px 10px; /* Padding inside the button */
+    width: 70px; /* Fixed width */
+    text-align: center;
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s ease; /* Smooth background transition */
 }

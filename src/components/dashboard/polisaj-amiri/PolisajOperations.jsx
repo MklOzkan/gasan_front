@@ -10,7 +10,6 @@ import styles from '@/styles/pages/main-page.module.scss'
 
 const PolisajProduction = ({ order }) => {
     const { returnBody, returnBody2, returnBody3 } = order;
-    console.log('returnBody', returnBody2);
 
     return (
         <main className={styles.main_container}>

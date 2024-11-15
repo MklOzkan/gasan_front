@@ -87,7 +87,7 @@
 .table_responsive tbody::before {
     content: "";
     display: table-row;
-    height: 10px; /* Space between thead and tbody */
+    height: 20px; /* Space between thead and tbody */
 }
 
 .table_responsive th, .table_responsive td {
@@ -97,11 +97,11 @@
     white-space: nowrap; /* Prevent text from wrapping in cells */
 }
 
-.table_responsive th,
-.table_responsive td {
-    padding-left: 15px; /* Add space at the beginning */
-    padding-right: 15px; /* Add space at the end */
-}
+// .table_responsive th,
+// .table_responsive td {
+//     padding-left: 0px; /* Add space at the beginning */
+//     padding-right: 15px; /* Add space at the end */
+// }
 
 .table_head , .table_body{
     margin: 0 auto;
@@ -139,5 +139,11 @@
 
     .table_responsive table {
         min-width: 800px; /* Optional: Ensure table has a minimum width on small screens */
+    }
+
+    .table_responsive th,
+    .table_responsive td {
+        padding: 3px;
+        font-size: 10px;
     }
 }

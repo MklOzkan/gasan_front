@@ -67,7 +67,6 @@ export default function Reports({ data }) {
     const handleSubmit = async (start, end) => {
         const response = await getAllReportAction(start, end);
         const data = response?.returnBody;
-        console.log('data in handleSearch', data);
         setFilteredContent(data);
     };
 

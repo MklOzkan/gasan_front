@@ -15,9 +15,6 @@ const OrderList = ({
     handleToolbar,
     handlePageChange
 }) => {
-    console.log(currentUrl);
-
-    console.log('totalPages :>> ', totalPages);
 
     return (
         <main className={styles.main_container}>

@@ -26,7 +26,6 @@ const parseJWT = (token) => {
     try {
         return JSON.parse(atob(token.split('.')[1]));
     } catch (error) {
-        console.error('Error during parsing JWT:', error);
         return null;
     }
 };

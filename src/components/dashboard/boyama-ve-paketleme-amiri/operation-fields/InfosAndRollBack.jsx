@@ -9,11 +9,9 @@ import { rollBackLastChangeAction } from '@/actions/boya_paket-actions';
 const OperationsInfo = ({ operations, order }) => {
 
      useEffect(() => {
-         console.log('rendered');
      }, [operations, order]);
 
     const rollBack = async (operation) => {
-        console.log('Selected Operation:', operation);
         const answer = await swConfirm(
             `En son girilen ${operation.lastCompletedQty} adetlik üretimi geri almak istediğinize emin misiniz??`
         );
