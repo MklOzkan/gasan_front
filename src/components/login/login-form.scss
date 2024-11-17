@@ -19,3 +19,40 @@
         padding: 10px;
     }
 }
+
+@media screen and (min-width: 768px){
+    .login-form{
+        .card{
+            width: 50%;
+            margin: 0 auto;
+        }
+    }
+    
+}
+
+@media screen and (min-width: 992px){
+    .login-form{
+        .card{
+            width: 30%;
+        }
+    }
+    
+}
+
+@media screen and (min-width: 1200px){
+    .login-form{
+        .card{
+            width: 25%;
+        }
+    }
+    
+}
+
+@media screen and (min-width: 545px){
+    .login-form{
+        .card{
+            width: 40%;
+        }
+    }
+    
+}
