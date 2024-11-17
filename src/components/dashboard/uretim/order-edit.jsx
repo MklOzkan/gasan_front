@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-    Container,
     Form,
     Card,
 } from 'react-bootstrap';
@@ -26,29 +25,57 @@ const orders = {
     PASLANMAZ: 'Paslanmaz'
 };
 
+const orderStatuses = ['İşlenmeyi Bekliyor', 'İşlenmekte', 'İptal Edildi', 'Beklemede'];
+
 const OrderEdit = ({ order}) => {
      const [state, setState] = useState(initialResponse);
      const router = useRouter();
-    const [orderType, setOrderType] = useState('');
-    const [readyMilCount, setReadyMilCount] = useState(0);
+    const [orderType, setOrderType] = useState(order?.returnBody?.orderType);
+    const [milCount, setMilCount] = useState(order?.returnBody?.readyMilCount);
+    const [readyMilCount, setReadyMilCount] = useState(
+        order?.returnBody?.orderType === 'Lift'
+            ? order?.returnBody?.readyMilCount || 0
+            : 0
+    );
+
+    useEffect(() => {
+
+        if (orderType === 'Lift') {
+        setReadyMilCount(milCount || 0); // Set to milCount if Lift
+    } else {
+            setReadyMilCount(0);
+        }
+
+    }, [orderType, readyMilCount, milCount, order]);
+
+    
+    console.log('order type onchange: ', orderType, readyMilCount);
 
      if (!order || !order.returnBody) {
          return <div>Loading...</div>; // Handle loading state when `order` or `order.returnBody` is not available
      }
 
     const { returnBody } = order;
-    console.log('orderType', returnBody.orderType);
+    console.log('return.orderType', returnBody.orderType);
+    console.log('milCount', milCount);
+
+    const calculatedReadyMilCount =
+        orderType !== 'Lift'
+            ? readyMilCount // Use state if orderType is not 'Lift'
+            : milCount;
 
      const handleSubmit = async (e) => {
          e.preventDefault();
          const formData = new FormData(e.target);
+         console.log('formData in orderEdit', formData);
          const response = await updateOrderAction(formData);
-
-         if (response.ok) {
+            console.log('response', response);
+         if (response.success) {
              swAlert(response.message, 'success');
              router.push('/dashboard/uretim');
-         } else if (state.message) {
-             swAlert(state.message, 'error');
+         } else {
+             swAlert(response.message, 'error', '', 3000);
+             router.push('/dashboard/uretim');
          }
      };
 
@@ -109,15 +136,11 @@ const OrderEdit = ({ order}) => {
                                 name="orderType"
                                 className="mb-3"
                                 label="Sipariş Türü"
+                                title="Oluşturulmuş olan siparişlerin 'Sipariş Türü' daha sonra değiştirilemez."
                                 error={state?.errors?.orderType}
-                                existingValue={
-                                    orderType ? orderType : returnBody.orderType
-                                }
-                                onChange={(e) => {
-                                    setOrderType(e.target.value);
-                                }} // **onChange function is not
+                                value={orderType}
+                                disabled
                                 required
-                                options={orderTypes} // **Dropdown options for order type**
                             />
 
                             <TextInput
@@ -134,22 +157,14 @@ const OrderEdit = ({ order}) => {
                                 type="number"
                                 name="readyMilCount"
                                 className="mb-3"
-                                label="Hazir Mil Miktarı"
+                                label="Hazır Mil Miktarı"
                                 error={state?.errors?.readyMilCount}
-                                defaultValue={orderType ? (orderType !== 'Lift' ? 0 : readyMilCount) : 
-                                    (returnBody.orderType !== 'Lift'
-                                        ? 0
-                                        : returnBody.readyMilCount)
-                                }
-                                required
                                 onChange={(e) => {
-                                    setReadyMilCount(e.target.value);
+                                    setMilCount(e.target.value); // Update state with the new value
                                 }}
-                                disabled={
-                                    orderType
-                                        ? orderType !== 'Lift'
-                                        : returnBody.orderType !== 'Lift'
-                                } // **Disable the field based on the selected order type**
+                                value={calculatedReadyMilCount} // Use calculated value
+                                required
+                                disabled={orderType !== 'Lift'} // **Disable the field based on the selected order type**
                             />
 
                             <TextInput
@@ -157,8 +172,13 @@ const OrderEdit = ({ order}) => {
                                 name="orderStatus"
                                 className="mb-3"
                                 label="Sipariş Durumu"
+                                // disabled={
+                                //     returnBody.orderStatus !==
+                                //     'İşlenmeyi Bekliyor'
+                                // }
                                 defaultValue={returnBody.orderStatus}
                                 required
+                                options={orderStatuses}
                             />
                             <SubmitButton title="Güncelle" />
                         </Form>

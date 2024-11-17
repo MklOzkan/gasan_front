@@ -71,16 +71,16 @@ const MusteriIslemleri = ({ data, sortBy, sortOrder }) => {
             <div className={styles.filter_container}>
                 <div>
                     <Link
+                        className={styles.link}
                         href={
                             '/dashboard/yonetici-menu/musteri-islemleri/musteri-reports/'
                         }
                     >
-                        All Report
+                        Genel Raporlar
                     </Link>
                 </div>
                 <div className={styles.search}>
                     <div className={styles.search_clear}>
-                        <select name="" id=""></select>
                         <input
                             type="text"
                             placeholder="Arama"

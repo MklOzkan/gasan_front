@@ -76,7 +76,7 @@ const UpdatePassword = () => {
         // <div>update password</div>
         <>
             <PageHeader>
-                Şıfre Atama Ekranı 
+                Şİfre Atama Ekranı 
             </PageHeader>
             <Spacer height={50} />
             <Container className="text-center m-auto">
@@ -93,7 +93,7 @@ const UpdatePassword = () => {
                                         onChange={handleUserChange}
                                         required
                                     >
-                                        <option className='option' value="">Seçin...</option>
+                                        <option className='option' value="">Seçiniz...</option>
                                         {data.map((item) => (
                                             <option
                                                 className='option'

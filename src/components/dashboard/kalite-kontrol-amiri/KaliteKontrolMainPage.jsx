@@ -48,7 +48,7 @@ const KaliteKontrol = ({ data, currentPage, sortBy, sortOrder }) => {
 
     return (
         <>
-            <PageHeader>Kalite Kontrol Amiri</PageHeader>
+            <PageHeader>Kalİte Kontrol Amİrİ</PageHeader>
             <Spacer height={30} />
             <main className={styles.main_container}>
                 

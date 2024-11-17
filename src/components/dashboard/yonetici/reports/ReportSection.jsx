@@ -1,15 +1,22 @@
 import React from 'react';
-
 import styles from './reportSection.module.scss';
 
+const reportsOrder = ['LIFT', 'DAMPER', 'BLOKLIFT', 'PASLANMAZ'];
+
 export default function ReportSection({
-    sortedReports,
-    totalOrders,
-    totalOrderQuantity,
-    totalCompletedOrderQuantity,
-    totalScrapCount,
+    sortedReports = [], // default to an empty array
+    totalOrders = 0,
+    totalOrderQuantity = 0,
+    totalCompletedOrderQuantity = 0,
+    totalScrapCount = 0,
     section
 }) {
+    // Create a map for quick lookup of sortedReports data by orderType
+    const reportsMap = sortedReports.reduce((acc, report) => {
+        acc[report.orderType] = report;
+        return acc;
+    }, {});
+
     return (
         <div className={styles.container}>
             <div className={styles.sectionContainer}>{section}</div>
@@ -26,31 +33,27 @@ export default function ReportSection({
                             </tr>
                         </thead>
                         <tbody>
-                            {sortedReports && sortedReports.length > 0 ? (
-                                sortedReports.map((item, index) => (
+                            {reportsOrder.map((orderType, index) => {
+                                const report = reportsMap[orderType] || {}; // Get the report data or default to an empty object
+                                return (
                                     <tr
                                         key={index}
                                         className={styles.tableBody}
                                     >
-                                        <td>{item.orderType}</td>
-                                        <td>{item.totalOrderCount}</td>
-                                        <td>{item.totalOrderQuantity}</td>
-                                        <td>{item.completedOrderQuantity}</td>
-                                        <td>{item.totalScrapCount}</td>
+                                        <td>{orderType}</td>
+                                        <td>{report.totalOrderCount || 0}</td>
+                                        <td>
+                                            {report.totalOrderQuantity || 0}
+                                        </td>
+                                        <td>
+                                            {report.completedOrderQuantity || 0}
+                                        </td>
+                                        <td>{report.totalScrapCount || 0}</td>
                                     </tr>
-                                ))
-                            ) : (
-                                <tr className={styles.tableBody}>
-                                    <td
-                                        colSpan="5"
-                                        style={{ textAlign: 'center' }}
-                                    >
-                                        Herhangi bir rapor bulunamadi
-                                    </td>
-                                </tr>
-                            )}
+                                );
+                            })}
                             <tr className={styles.totalContainer}>
-                                <td></td>
+                                <td>Toplam</td>
                                 <td>{totalOrders}</td>
                                 <td>{totalOrderQuantity}</td>
                                 <td>{totalCompletedOrderQuantity}</td>

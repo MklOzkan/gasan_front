@@ -83,9 +83,9 @@ const config = {
 
     pages: {
         signIn: '/login',
-        signOut: '/login'
+        signOut: '/'
     },
-    trustHost: process.env.NODE_ENV === 'development' || ['localhost']
+    trustHost: ['localhost']
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
