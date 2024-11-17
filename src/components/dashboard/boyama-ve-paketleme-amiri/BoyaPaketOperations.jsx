@@ -8,7 +8,7 @@ const BoyaPaketOperations = ({ order }) => {
     const { returnBody, returnBody2, returnBody3 } = order;
     return (
         <>
-            <PageHeader>Boya Ve Paket Amiri</PageHeader>
+            <PageHeader>Boya Ve Paket Amİrİ</PageHeader>
             <main className={styles.main_page}>
                 <Spacer height={5} />
                 <OrderForOperation order={returnBody} />

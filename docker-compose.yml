@@ -22,7 +22,10 @@ services:
     container_name: front-end-gasan
     image: mikailozkan/frontend-gasan:latest
     ports:
-      - "3000:3000"
+      - "80:80"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://spring-boot-gasan:8080  # Dynamic URL passed here
+      - PORT=80  # Dynamic port
     depends_on:
       - spring-boot-gasan
     networks:

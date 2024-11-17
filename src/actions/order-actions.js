@@ -45,13 +45,30 @@ export const createOrderAction = async (formData) => {
 
 export const updateOrderAction = async (formData) => {
     if (!formData.get('id')) throw new Error('Id is missing');
+    console.log('formData in Action', formData);
     try {
         const fields = convertFormDataToJSON(formData);
 
         const res = await updateOrder(fields);
 
+        console.log('res in Action', res);
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            revalidatePath('/dashboard/uretim');
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
+        }
+
+
         revalidatePath('/dashboard/urun-planlama');
-        return response(true, 'Sipariş başarıyla güncellendi');
+        return {
+            success: true,
+            message: data.message || 'Sipariş başarıyla güncellendi'
+        }
     } catch (err) {
         if (err instanceof YupValidationError) {
             return transformYupErrors(err.inner);
@@ -70,7 +87,7 @@ export const deleteOrderAction = async (orderNumber) => {
                 message: data.message || 'Bir hata oluştu'
             };
         }
-        revalidatePath('/dashboard/urretim');
+        revalidatePath('/dashboard/uretim');
         return {
             success: true, 
             message: 'Sipariş başarıyla silindi'
@@ -96,9 +113,12 @@ export const updateOrderStatus = async (orderId) => {
     try {
         const res = await updateStatus(orderId);
 
+        console.log('res', res);
+
         const data = await res.json();
 
         if (!res.ok) {
+            revalidatePath('/dashboard/uretim');
             return {
                 success: false,
                 message: data.message || 'Bir hata oluştu'
@@ -109,6 +129,9 @@ export const updateOrderStatus = async (orderId) => {
 
     
     } catch (err) {
+        if (err instanceof YupValidationError) {
+            return transformYupErrors(err.inner);
+        }
         throw err;
     }
 };

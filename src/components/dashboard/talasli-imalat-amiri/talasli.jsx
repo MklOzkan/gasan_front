@@ -71,7 +71,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
 
     return (
         <>
-            <PageHeader>Talasli Imalat Amiri</PageHeader>
+            <PageHeader>Talaşlİ İmalat Amİrİ</PageHeader>
             <Spacer height={30} />
             <main className={styles.main_container}>
                 <div className={styles.table_responsive}>

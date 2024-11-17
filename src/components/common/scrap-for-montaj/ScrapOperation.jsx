@@ -100,7 +100,7 @@ export default function ScrapOperation({ operations, order }) {
                         onChange={(e) => setScrapField(e.target.value)}
                         value={scrapField || ''}
                     >
-                        <option value="">Seciniz</option>
+                        <option value="">Seçiniz</option>
                         {order.orderType === 'BLOKLIFT'
                             ? blOperation.map((operation) => (
                                   <option key={operation} value={operation}>

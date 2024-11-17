@@ -17,7 +17,7 @@ export default function DateSection({
         <div className={styles.filter_container}>
             <div className={styles.start_date}>
                 <label htmlFor="startDate" className="me-2">
-                    Başlangıç T.
+                    Başlangıç
                 </label>
                 <div className={styles.search_clear}>
                     <input
@@ -39,7 +39,7 @@ export default function DateSection({
             </div>
             <div className={styles.end_date}>
                 <label htmlFor="endDate" className="me-2">
-                    Bitiş T.
+                    Bitiş
                 </label>
                 <div className={styles.search_clear}>
                     <input

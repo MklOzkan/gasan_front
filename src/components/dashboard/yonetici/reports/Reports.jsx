@@ -6,6 +6,7 @@ import DateSection from './DateSection.jsx';
 import styles from './reports.module.scss';
 import ReportSection from './ReportSection.jsx';
 import PageHeader from '@/components/common/page-header.jsx';
+import Spacer from '@/components/common/spacer.jsx';
 
 const reportsOrder = ['LIFT', 'DAMPER', 'BLOKLIFT', 'PASLANMAZ'];
 
@@ -62,7 +63,6 @@ export default function Reports({ data }) {
             reportsOrder.indexOf(b.orderType)
         );
     });
-    
 
     const handleSubmit = async (start, end) => {
         const response = await getAllReportAction(start, end);
@@ -73,36 +73,37 @@ export default function Reports({ data }) {
     return (
         <>
             <PageHeader>Raporlar</PageHeader>
+            <Spacer height={20} />
+            <DateSection
+                startDate={startDate}
+                endDate={endDate}
+                setStartDate={setStartDate}
+                setEndDate={setEndDate}
+                resetStartDate={resetStartDate}
+                resetEndDate={resetEndDate}
+                handleSubmit={handleSubmit}
+            />
+
             <main className={styles.container}>
+                <ReportSection
+                    sortedReports={filteredContent}
+                    totalOrders={totalOrders}
+                    totalOrderQuantity={totalOrderQuantity}
+                    totalCompletedOrderQuantity={totalCompletedOrderQuantity}
+                    totalScrapCount={totalScrapCount}
+                    section={tamamlanan}
+                />
+
                 <ReportSection
                     sortedReports={sortedReports}
                     totalOrders={totalOrdersActive}
                     totalOrderQuantity={totalOrderQuantityActive}
-                    totalCompletedOrderQuantity={totalCompletedOrderQuantityActive}
+                    totalCompletedOrderQuantity={
+                        totalCompletedOrderQuantityActive
+                    }
                     totalScrapCount={totalScrapCountActive}
                     section={devamEden}
                 />
-                <div className={styles.copletedContainer}>
-                    <DateSection
-                        startDate={startDate}
-                        endDate={endDate}
-                        setStartDate={setStartDate}
-                        setEndDate={setEndDate}
-                        resetStartDate={resetStartDate}
-                        resetEndDate={resetEndDate}
-                        handleSubmit={handleSubmit}
-                    />
-                    <ReportSection
-                        sortedReports={filteredContent}
-                        totalOrders={totalOrders}
-                        totalOrderQuantity={totalOrderQuantity}
-                        totalCompletedOrderQuantity={
-                            totalCompletedOrderQuantity
-                        }
-                        totalScrapCount={totalScrapCount}
-                        section={tamamlanan}
-                    />
-                </div>
             </main>
         </>
     );

@@ -35,11 +35,13 @@ export const createOrder = async (orderData) => {
 };
 
 export const updateOrder = async (payload) => {
-    return fetch(`${API_URL}/orders/updateOrder/${payload.id}`, {
-        method: 'put',
+    const response = await fetch(`${API_URL}/orders/updateOrder/${payload.id}`, {
+        method: 'PUT',
         body: JSON.stringify(payload),
         headers: await getAuthHeader()
     });
+    return response;
+    
 };
 
 export const deleteOrder = async (orderNumber) => {

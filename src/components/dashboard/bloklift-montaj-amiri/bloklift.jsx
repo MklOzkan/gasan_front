@@ -41,7 +41,7 @@ const BlockLift = ({ data, currentPage, sortBy, sortOrder }) => {
 
     return (
         <>
-            <PageHeader>Blok Lift Amiri</PageHeader>
+            <PageHeader>Blok Lİft Amİrİ</PageHeader>
             <Spacer height={20} />
             <main className={styles.main_container}>
                 <div className={styles.table_responsive}>

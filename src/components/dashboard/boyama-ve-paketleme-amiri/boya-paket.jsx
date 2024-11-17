@@ -40,7 +40,7 @@ const BoyaPaket = ({ data, currentPage, sortBy, sortOrder }) => {
 
     return (
         <>
-            <PageHeader>Boya ve Paketleme Amiri </PageHeader>
+            <PageHeader>Boya ve Paketleme Amİrİ </PageHeader>
             <Spacer height={20} />
             <main className={styles.main_container}>
                 <div className={styles.table_responsive}>

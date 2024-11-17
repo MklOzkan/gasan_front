@@ -1,53 +1,59 @@
-.container{
+.container {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     gap: 20px;
-    padding: 0;
+    width: 100%;
+    &:first-child {
+            margin-left: 90px;
+            margin-right: 0;
+        }
+        &:last-child {
+            margin-right: 90px;
+            margin-left: 0;
+        }
 }
 
-.sectionContainer{
+.sectionContainer {
     display: flex;
-    width: 200px;
-    height: 100%;
+    justify-content: center;
+    align-items: center;
     border: 1px solid #e0e0e0;
-    padding: 10;
+    background-color: bisque;
+    width: 100%;
+    padding: 10px;
 }
 
-.products_container{
+.products_container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%; 
+    width: 100%;
 }
 
 .products_container table {
     border-spacing: 0;
 }
 
-.table{
-    border-collapse: separate; /* Needed to enable border-spacing */
-    border-spacing: 0 10px; 
+.table {
     width: 100%;
     gap: 20px;
 }
 
-.tableHead, .tableBody, .totalContainer{
+.tableHead,
+.tableBody,
+.totalContainer {
     align-items: center;
     justify-content: center;
-    height: 50px;
     border: 1px solid #e0e0e0;
     margin-top: 20px;
     table-layout: fixed;
-    padding: 20px;
     text-align: center;
 }
 
-
-
-.tableBody{
+.tableBody {
     margin-bottom: 10px; /* Spacing between rows */
 }
 
@@ -66,128 +72,226 @@
     white-space: normal;
 }
 
-.tableHead th{
-    box-shadow: 1px 2px 5px rgb(245, 1, 1); /* Subtle shadow between rows */
+.tableHead th {
+    box-shadow: 1px 2px 5px rgb(105, 105, 105); /* Subtle shadow between rows */
     margin-bottom: 10px;
     border: 1px solid #d6d1d1;
-     white-space: nowrap;
+    white-space: nowrap;
 }
 
-.tableBody td:first-child{
+.tableBody td:first-child {
+    box-shadow: 1px 2px 5px rgb(105, 105, 105);
     border: 1px solid #e0e0e0;
     font-weight: bolder;
 }
 
-.totalContainer td{
-    box-shadow: 1px 2px 5px rgb(245, 1, 1);
+.totalContainer td {
+    box-shadow: 1px 2px 5px rgb(105, 105, 105);
     border: 1px solid #d6d1d1;
 }
 
-.totalContainer td{
-    content: "";
+.totalContainer td {
+    content: '';
     font-weight: bolder;
+}
+
+@media screen and (max-width: 1250px) {
+    .container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &:first-child {
+            margin-left: 90px;
+            margin-right: 0;
+        }
+        &:last-child {
+            margin-right: 90px;
+            margin-left: 0;
+        }
+    }
+
+    .sectionContainer {
+        width: 80%;
+        font-size: 12;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+    .products_container {
+        width: 100%;
+    }
+
+    .tableHead th,
+    .tableBody td,
+    .totalContainer td {
+        text-align: center;
+        padding: 8px;
+    }
+
+    .tableHead th {
+        margin-bottom: 10px;
+        white-space: nowrap;
+    }
+
+    .tableBody td:first-child {
+        font-weight: bolder;
+    }
 }
 
 @media screen and (max-width: 1024px) {
     .container {
         flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        &:first-child {
+            margin-left: 10px;
+            margin-right: 0;
+        }
+        &:last-child {
+            margin-right: 10px;
+            margin-left: 0;
+        }
     }
 
-    .sectionContainer{
+    .sectionContainer {
+        max-width: 800px;
+        font-size: 12;
+        padding: 5px;
+    }
+    .table {
         width: 100%;
     }
-    .tableWrapper {
-        overflow-x: auto; /* Enables only the table to scroll horizontally */
-    }
 
-    .table {
-        min-width: 600px; /* Minimum width to trigger scrolling */
-    }
-
-    .products_container{
+    .products_container {
         width: 100%;
     }
 
     .tableHead th,
     .tableBody td,
     .totalContainer td {
-        padding: 0;
+        padding: 20px;
         text-align: center;
     }
 
-    .tableHead th{
-        box-shadow: 1px 2px 3px rgb(245, 1, 1); /* Subtle shadow between rows */
+    .tableHead th {
         margin-bottom: 10px;
-        border: 1px solid #d6d1d1;
         white-space: nowrap;
     }
 
-    .tableBody td:first-child{
-        border: 1px solid #e0e0e0;
+    .tableBody td:first-child {
         font-weight: bolder;
     }
-
-    .totalContainer td{
-        box-shadow: 1px 2px 5px rgb(245, 1, 1);
-        border: 1px solid #d6d1d1;
-    }
-    
 }
 
 @media screen and (max-width: 768px) {
     .container {
         flex-direction: column;
-        margin-right: auto;
+        margin: 0 auto;
     }
 
-    .sectionContainer{
-        width: 100%;
+    .sectionContainer {
+        max-width: 600px;
         font-size: 12;
     }
 
-    .products_container{
+    .products_container {
         width: 100%;
-        
-
     }
 
     .table {
         width: 100%;
     }
 
-    .tableHead, .tableBody, .totalContainer{
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #e0e0e0;
-    margin-top: 20px;
-    table-layout: fixed;
-    padding: 5px;
-    white-space: normal;
-}
+    .tableHead,
+    .tableBody,
+    .totalContainer {
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e0e0e0;
+        margin-top: 20px;
+        table-layout: fixed;
+        white-space: normal;
+    }
 
     .tableHead th,
     .tableBody td,
     .totalContainer td {
-        
         text-align: center;
-        padding: 2px; /* Reduced padding for smaller screens */
+        padding-bottom: 10px;
+        padding-top: 10px;
         font-size: 12px; /* Smaller font size for smaller screens */
     }
 
-    .tableHead th{
-        box-shadow: 1px 2px 2px rgb(245, 1, 1); /* Subtle shadow between rows */
+    .tableHead th {
         margin-bottom: 10px;
         border: 1px solid #d6d1d1;
     }
 
-    .tableBody td:first-child{
+    .tableBody td:first-child {
         border: 1px solid #e0e0e0;
         font-weight: bold;
     }
+}
 
-    .totalContainer td{
-        box-shadow: 1px 2px 5px rgb(245, 1, 1);
+@media screen and (max-width: 540px) {
+    .container {
+        flex-direction: column;
+        margin: 0 auto;
+        &:first-child {
+            margin-left: 5px;
+            margin-right: 25px;
+        }
+        &:last-child {
+            margin-right: 25px;
+            margin-left: 5px;
+        }
+
+    }
+
+    .sectionContainer {
+        width: 100%;
+        font-size: 12;
+        padding: 5px;
+        max-width: 400px;
+    }
+
+    .products_container {
+        width: 100%;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+    .tableHead,
+    .tableBody,
+    .totalContainer {
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e0e0e0;
+        margin-top: 20px;
+        table-layout: fixed;
+        padding: 5px;
+        white-space: normal;
+    }
+
+    .tableHead th,
+    .tableBody td,
+    .totalContainer td {
+        text-align: center;
+        padding: 2px; /* Reduced padding for smaller screens */
+        font-size: 14px; /* Smaller font size for smaller screens */
+    }
+
+    .tableHead th {
+        margin-bottom: 10px;
         border: 1px solid #d6d1d1;
     }
-    
+
+    .tableBody td:first-child {
+        border: 1px solid #e0e0e0;
+        font-weight: bold;
+    }
 }

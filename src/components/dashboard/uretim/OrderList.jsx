@@ -28,7 +28,7 @@ const OrderList = ({
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => handleSorting('customerName')}
                             >
-                                Müşter Adı
+                                Müşteri Adı
                                 {sortBy === 'customerName' &&
                                     (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                             </th>

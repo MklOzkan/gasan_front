@@ -61,12 +61,34 @@
   display: flex;
   border: 1px solid #00aaff;
   padding: 10px;
-  height: 300px;
   @media screen and (max-width: 768px) {
     flex-direction: column;
     margin-bottom: 20px;
     height: 100%;
   }
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .order_container {
+    width: 100%;
+  }
+  .blok_container {
+    width: 100%;
+    max-height: unset;
+  }
+  .chart_container {
+    width: 100%;
+    height: 100%;
+  }
+  .others_container {
+    width: 100%;
+    height: 100%;
+  }
+  
 }
 
 
@@ -88,6 +110,7 @@
   }
   .chart_container {
     width: 100%;
+    height: 100%;
   }
   .others_container {
     width: 100%;

@@ -41,7 +41,7 @@ const LiftMontaj = ({ data, currentPage, sortBy, sortOrder }) => {
 
     return (
         <>
-            <PageHeader>Lift Montaj Amiri </PageHeader>
+            <PageHeader>Lİft Montaj Amİrİ </PageHeader>
             <Spacer height={20} />
             <main className={styles.main_container}>
                 <div className={styles.table_responsive}>

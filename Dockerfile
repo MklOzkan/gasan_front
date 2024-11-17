@@ -14,14 +14,16 @@ COPY .env .env
 # Copy the rest of the application code
 COPY . .
 
+COPY start.sh ./start.sh
+RUN chmod +x start.sh
+
 # Build the Next.js app
 RUN npm run build
 
 # Expose the port that Next.js will run on
-EXPOSE 3000
+EXPOSE ${PORT}
 
 # Define environment variables for Next.js
-# ENV NEXT_PUBLIC_API_URL=http://spring-boot-gasan:8080 
 
 # Start the Next.js app
-CMD ["npm", "start"]
+CMD ["./start.sh"]

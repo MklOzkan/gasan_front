@@ -104,7 +104,7 @@ const OrderForm = () => {
             >
                 <Card style={{ maxWidth: '600px', width: '100%' }}>
                     <Card.Body>
-                        <Card.Title>Yeni Siparis</Card.Title>
+                        <Card.Title>Yeni Sipariş</Card.Title>
                         <Form noValidate onSubmit={handleSubmit}>
                             <TextInput
                                 type="text"
