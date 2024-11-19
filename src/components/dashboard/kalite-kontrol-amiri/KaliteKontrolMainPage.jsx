@@ -63,7 +63,7 @@ const KaliteKontrol = ({ data, currentPage, sortBy, sortOrder }) => {
                                         handleSorting('customerName')
                                     }
                                 >
-                                    Müşter Adı
+                                    Müşteri Adı
                                     {sortBy === 'customerName' &&
                                         (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                                 </th>

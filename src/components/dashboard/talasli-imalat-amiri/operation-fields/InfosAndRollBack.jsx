@@ -3,6 +3,7 @@ import styles from './infos-and-rollback.module.scss';
 import { Button } from 'react-bootstrap';
 import { swAlert, swConfirm } from '@/helpers/swal';
 import { rollBackLastChangeAction } from '@/actions/talasli-actions';
+import { config } from '@/helpers/config';
 
 const OperationsInfo = ({ operations, order }) => {
     const [completedQty, setCompletedQty] = useState(0);
@@ -32,12 +33,10 @@ const OperationsInfo = ({ operations, order }) => {
         const res = await rollBackLastChangeAction(operation.id);
 
         if (res.success) {
-            setTimeout(()=>{
-                swAlert(res.message, 'success');}, 1000);
-            window.location.reload();
+                swAlert(res.message, 'success', '', 4000);
             
         } else {
-            swAlert(res.message, 'error');
+            swAlert(res.message, 'error', '', 4000);
         }
     };
 
@@ -64,7 +63,7 @@ const OperationsInfo = ({ operations, order }) => {
                                 </tr>
                             )}
                             <tr className={styles.table_body}>
-                                <td>{operation.operationType}</td>
+                                <td>{config.talasliList[operation.operationType]}</td>
                                 <td>
                                     <Button
                                         className={styles.edit_button}

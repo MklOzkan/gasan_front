@@ -40,7 +40,7 @@ const LoginForm = () => {
         <main className="login-form">
             <Row className="justify-content-center">
                 <Col md={8} lg={6}>
-                    <Card className="card ms-3 me-3">
+                    <Card className="card">
                         <Card.Body>
                             <h4>Lütfen Şifrenizi Girin</h4>
 

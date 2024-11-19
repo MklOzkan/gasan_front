@@ -8,13 +8,13 @@ const OrderForOperation = ({ order }) => {
                     <table >
                         <thead>
                             <tr className={styles.table_head}>
-                                    <th >Müşter Adı</th>
+                                    <th >Müşteri Adı</th>
                                     <th >Gasan No</th>
                                     <th >Teslim Tarihi</th>
                                     <th >Sipariş Türü</th>
                                     <th >Sipariş Adedi</th>
                                     <th >Sipariş Durumu</th>
-                                    {order.orderType === 'LIFT' ? (
+                                    {order.orderType === 'Lift' ? (
                                         <th>Hazır Mil Adedi</th>
                                     ) : null}
                                 </tr>
@@ -27,7 +27,7 @@ const OrderForOperation = ({ order }) => {
                                     <th>{order.orderType}</th>
                                     <th>{order.orderQuantity}</th>
                                     <th>{order.orderStatus}</th>
-                                    {order.orderType === 'LIFT' ? (
+                                    {order.orderType === 'Lift' ? (
                                     <th>{order.readyMilCount}</th>
                                     ) : null}
                                 </tr>

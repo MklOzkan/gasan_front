@@ -16,15 +16,6 @@ import { useRouter } from 'next/navigation';
 import PageHeader from '@/components/common/page-header';
 import styles from './order-form.module.scss';
 
-const orderTypes = ['Lift', 'Damper', 'Blok Lift', 'Paslanmaz'];
-
-const orders = {
-    LIFT: 'Lift',
-    DAMPER: 'Damper',
-    BLOK_LIFT: 'Blok Lift',
-    PASLANMAZ: 'Paslanmaz'
-};
-
 const orderStatuses = ['İşlenmeyi Bekliyor', 'İşlenmekte', 'İptal Edildi', 'Beklemede'];
 
 const OrderEdit = ({ order}) => {
@@ -56,8 +47,6 @@ const OrderEdit = ({ order}) => {
      }
 
     const { returnBody } = order;
-    console.log('return.orderType', returnBody.orderType);
-    console.log('milCount', milCount);
 
     const calculatedReadyMilCount =
         orderType !== 'Lift'
@@ -67,14 +56,12 @@ const OrderEdit = ({ order}) => {
      const handleSubmit = async (e) => {
          e.preventDefault();
          const formData = new FormData(e.target);
-         console.log('formData in orderEdit', formData);
          const response = await updateOrderAction(formData);
-            console.log('response', response);
          if (response.success) {
-             swAlert(response.message, 'success');
+             swAlert(response.message, 'success', '', 4000);
              router.push('/dashboard/uretim');
          } else {
-             swAlert(response.message, 'error', '', 3000);
+             swAlert(response.message, 'error', '', 4000);
              router.push('/dashboard/uretim');
          }
      };

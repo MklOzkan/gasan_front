@@ -39,7 +39,11 @@ export const config = {
         AFTER_POLISAJ: 'Polisaj Sonrası',
         AFTER_MONTAJ: 'Montaj Sonrası',
         AFTER_EZME: 'Ezme Sonrası',
-        AFTER_MIL_TASLAMA: 'Mil Taşlama Sonrası'
+        AFTER_MIL_TASLAMA: 'Mil Taşlama Sonrası',
+        LIFT: 'Lift',
+        DAMPER: 'Damper',
+        BLOKLIFT: 'Blok Lift',
+        PASLANMAZ: 'Paslanmaz'
     },
     liftOperations: [
         'BORU_KAPAMA',

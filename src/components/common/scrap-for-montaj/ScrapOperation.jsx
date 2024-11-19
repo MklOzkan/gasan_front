@@ -28,13 +28,13 @@ export default function ScrapOperation({ operations, order }) {
         
         e.preventDefault();
         if (!afterTest) {
-            swAlert('Hurda miktarı bos olamaz', 'error');
+            swAlert('Hurda miktarı bos olamaz', 'error', '', 4000);
             return;
         }
         const formData = new FormData();
         console.log('scrapField', scrapField);
         if (scrapField === null) {
-            swAlert('Islem tipi seciniz', 'error');
+            swAlert('Islem tipi seciniz', 'error', '', 4000);
             return;
         }
             
@@ -43,18 +43,18 @@ export default function ScrapOperation({ operations, order }) {
         const orderType = 'Blok Lift';
 
         if (!operationId) {
-            swAlert('Operation ID not found', 'error');
+            swAlert('Operation ID not found', 'error', '', 4000);
             return;
         }
 
         const response = await scrapAction(formData, operationId, orderType, order.id);
 
         if (response.success) {
-            swAlert(response.message, 'success');
+            swAlert(response.message, 'success', '', 4000);
             setAfterTest('');
             setScrapField('');
         } else {
-            swAlert( response.message, 'error');
+            swAlert( response.message, 'error', '', 4000);
             setAfterTest('');
             setScrapField('');
         }
@@ -67,9 +67,9 @@ export default function ScrapOperation({ operations, order }) {
         if (!answer.isConfirmed) return;
         const res = await rollBackAction(operation.id, order.id);
         if (res.success) {
-            swAlert(res.message, 'success');
+            swAlert(res.message, 'success', '', 4000);
         } else {
-            swAlert(res.message, 'error');
+            swAlert(res.message, 'error', '', 4000);
         }
     };
 

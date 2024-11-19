@@ -53,11 +53,18 @@ const BoyaPaket = ({ data, currentPage, sortBy, sortOrder }) => {
                                         handleSorting('customerName')
                                     }
                                 >
-                                    Müşter Adı
+                                    Müşteri Adı
                                     {sortBy === 'customerName' &&
                                         (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                                 </th>
-                                <th>Gasan No</th>
+                                <th
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => handleSorting('gasanNo')}
+                                >
+                                    Gasan No{' '}
+                                    {sortBy === 'gasanNo' &&
+                                        (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
+                                </th>
                                 <th>Sipariş No</th>
                                 <th
                                     style={{ cursor: 'pointer' }}

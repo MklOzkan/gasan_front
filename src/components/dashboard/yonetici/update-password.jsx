@@ -64,10 +64,10 @@ const UpdatePassword = () => {
 
    useEffect(() => {
        if (state.ok) {
-           swAlert('Şifre Güncellendi');
+           swAlert('Şifre Güncellendi', 'success', '', 4000);
            router.push('/dashboard/yonetici-menu');
        } else if (state.message) {
-           swAlert('Şifre Güncellenemedi', 'error');
+           swAlert('Şifre Güncellenemedi', 'error', '', 4000);
        }
    }, [state, router]);
 

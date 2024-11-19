@@ -35,12 +35,11 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
         try {
             const response = await updateOrderStatus(order.id, newStatus); 
             if (response && response.success) {
-                swAlert(response.message, 'success');
-                await wait(2000);
+                swAlert(response.message, 'success', '', 4000);
             } else {
             }
         } catch (error) {
-            swAlert('Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+            swAlert('Bir hata oluştu. Lütfen tekrar deneyin.', 'error', '', 4000);
         }
     };
 
@@ -63,15 +62,9 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
         window.location.href = url.toString();
     };
 
-    const handlePageChange = (pageIn) => {
-        const url = new URL(window.location);
-        url.searchParams.set('currentPage', pageIn); // Set the new page number
-        router.push(url.toString()); // Use router.push for navigation
-    };
-
     return (
         <>
-            <PageHeader>Talaşlİ İmalat Amİrİ</PageHeader>
+            <PageHeader>Talaşli İmalat Amİrİ</PageHeader>
             <Spacer height={30} />
             <main className={styles.main_container}>
                 <div className={styles.table_responsive}>
@@ -84,7 +77,7 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
                                         handleSorting('customerName')
                                     }
                                 >
-                                    Müşter Adı
+                                    Müşteri Adı
                                     {sortBy === 'customerName' &&
                                         (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                                 </th>

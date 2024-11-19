@@ -85,12 +85,12 @@ const OperationsInfo = ({ stage }) => {
         }
 
         if (response.success) {
-            swAlert(response.message, 'success');
+            swAlert(response.message, 'success', '', 4000);
             setTimeout(() => {
                 window.location.reload();
             }, 1000);
         } else {
-            swAlert(response.message, 'error');
+            swAlert(response.message, 'error',  '', 4000);
         }
     };
 
