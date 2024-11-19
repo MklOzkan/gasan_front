@@ -30,6 +30,8 @@ const OrderToolbar = ({
         };
     }, [order, currentPage, currentUrl]);
 
+    console.log(order)
+
     const finishOrder = async () => {
         let answer;
         if (order.finalProductQuantity >= order.orderQuantity) {
@@ -41,9 +43,8 @@ const OrderToolbar = ({
                 'Nihai üretim, Sipariş miktarından az olduğu için, Sipariş tamamlanamaz',
                 'error',
                 '',
-                2000 // Close after 2 seconds
+                4000
             );
-            await wait(1000);
             answer = { isConfirmed: false };
         }
         if (!answer.isConfirmed) return;
@@ -51,9 +52,9 @@ const OrderToolbar = ({
         const res = await finishOrderAction(order.id);
 
         if (res.success) {
-            swAlert(res.message, 'success');
+            swAlert(res.message, 'success', '', 4000);
         } else {
-            swAlert(res.message, 'error', '', 2000);
+            swAlert(res.message, 'error', '', 4000);
         }
 
 
@@ -69,9 +70,9 @@ const OrderToolbar = ({
         const res = await deleteOrderAction(order.orderNumber);
 
         if (res.success) {
-            swAlert(res.message, 'success');
+            swAlert(res.message, 'success', '', 4000);
         } else {
-            swAlert(res.message, 'error');
+            swAlert(res.message, 'error', '', 4000);
         }
     };
 
@@ -80,7 +81,7 @@ const OrderToolbar = ({
             <button
                 variant="warning"
                 className={`${styles.outer_pencil}`}
-                onClick={() => router.push(`/dashboard/uretim/${order.id}`)}	
+                onClick={() => router.push(`/dashboard/uretim/${order.id}`)}
             >
                 <div className={`${styles.inner_pencil}`}>
                     <TfiPencil />
@@ -91,14 +92,17 @@ const OrderToolbar = ({
                 className="btn-link"
                 variant="danger"
                 onClick={handleDelete}
+                disabled={order.orderStatus === 'Tamamlandı'}
             >
                 <div>
                     <TfiTrash />
                 </div>
             </Button>
 
-            <button className={`${styles.outer_check}`} onClick={finishOrder}
-            disabled={order.status === 'Tamamlandi'}
+            <button
+                className={`${styles.outer_check}`}
+                onClick={finishOrder}
+                disabled={order.orderStatus === 'Tamamlandı'}
             >
                 <div className={`${styles.inner_check}`}>
                     <FaCheck />

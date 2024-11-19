@@ -8,7 +8,7 @@ import { Suspense } from 'react';
 const LoginPage = () => {
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <PageHeader className='sticky-top'>Giriş</PageHeader>
+            <PageHeader className='sticky-top'>Gİrİş</PageHeader>
             <Spacer height={150} />
             <LoginForm />
         </Suspense>

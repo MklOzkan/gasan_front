@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export const swAlert = (title, icon = 'info', text = '', timer = 1000) => {
+export const swAlert = (title, icon = 'info', text = '', timer = 4000) => {
     Swal.fire({
         title,
         text,

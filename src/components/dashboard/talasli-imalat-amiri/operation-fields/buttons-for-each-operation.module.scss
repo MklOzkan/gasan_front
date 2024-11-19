@@ -33,6 +33,13 @@
     position: relative; /* Positioned relative to the backdrop */
 }
 
+.inputNumber::-webkit-inner-spin-button,
+.inputNumber::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
 .popup_button{
     display: flex;
     justify-content: center;

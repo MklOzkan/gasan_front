@@ -54,7 +54,7 @@ const BlockLift = ({ data, currentPage, sortBy, sortOrder }) => {
                                         handleSorting('customerName')
                                     }
                                 >
-                                    Müşter Adı
+                                    Müşteri Adı
                                     {sortBy === 'customerName' &&
                                         (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                                 </th>
@@ -118,7 +118,7 @@ const BlockLift = ({ data, currentPage, sortBy, sortOrder }) => {
                                     }
                                 >
                                     <td>{order.customerName}</td>
-                                    <td>{order.orderDate}</td>
+                                    <td>{order.gasanNo}</td>
                                     <td>{order.deliveryDate}</td>
                                     <td>{order.orderType}</td>
                                     <td>{order.orderQuantity}</td>

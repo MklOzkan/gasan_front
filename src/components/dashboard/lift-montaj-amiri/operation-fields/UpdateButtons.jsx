@@ -107,12 +107,12 @@ const UpdateButtons = ({ order, operations }) => {
             }
 
             if (response.success) {
-                swAlert(response.message, 'success');
+                swAlert(response.message, 'success', '', 4000);
             } else {
-                swAlert(response.message, 'error');
+                swAlert(response.message, 'error', '', 4000);
             }
         } catch (error) {
-            swAlert(error.message, 'error');
+            swAlert(error.message, 'error', '', 4000);
         } finally {
             togglePopup();
             setProductionQuantity('');

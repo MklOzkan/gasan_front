@@ -62,7 +62,7 @@ const Polisaj = ({ data, currentPage, sortBy, sortOrder }) => {
                                         handleSorting('customerName')
                                     }
                                 >
-                                    Müşter Adı
+                                    Müşteri Adı
                                     {sortBy === 'customerName' &&
                                         (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                                 </th>

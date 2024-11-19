@@ -83,15 +83,12 @@ const OrderForm = () => {
         setState(response);
 
         if (response.ok) {
-            swAlert(response.message, 'success');
+            swAlert(response.message, 'success', '', 4000);
             
             localStorage.removeItem('orderFormData');// localStorage'daki form verisini temizler
             router.push('/dashboard/uretim');
         } else if (response.message) {
-            swAlert(response.message, 'error');
-            setTimeout(() => {
-                window.location.reload(); // Hata mesajini gösterdikten sonra sayfayi yeniler
-            }, 5000); // Hata mesajını belli bir süre görünür olmaisini sağlar
+            swAlert(response.message, 'error', '', 4000);
         }
     };
 

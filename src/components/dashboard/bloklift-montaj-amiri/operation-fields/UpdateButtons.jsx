@@ -32,12 +32,12 @@ const UpdateButtons = ({order, operations}) => {
     const [isPopupOpen, setIsPopupOpen] = useState(null); 
     const [productionQuantity, setProductionQuantity] = useState('');
     const [operationColors, setOperationColors] = useState([]);
-    let damperOperations = [];
-    let blokliftOperations = [];
+    const [sortedOperations, setSortedOperations] = useState([]);
+    const [operationOrder, setOperationOrder] = useState([]);     
     
 
     useEffect(() => {
-
+        
         const setColor = (operation) => {
             if (
                 operation.completedQuantity >= order.orderQuantity &&
@@ -54,37 +54,16 @@ const UpdateButtons = ({order, operations}) => {
             }
         };
 
-        const updatedColors = operations.map((operation) =>setColor(operation));
+        const updatedColors = operations.map((operation) =>
+            setColor(operation)
+        );
         setOperationColors(updatedColors);
+        
 
     }, [operations, order]);
 
-    const compareOperations = (a, b) => {
-        
-            if (order && order.orderType === 'DAMPER') {
+    
 
-                return (
-                operationOrderForDamper.indexOf(a.operationType) -
-                operationOrderForDamper.indexOf(b.operationType));
-            } else if (order && order.orderType === 'BLOKLIFT') {
-                return (
-                operationOrderForBlokLift.indexOf(a.operationType) -
-                operationOrderForBlokLift.indexOf(b.operationType));
-            }
-        
-    };
-
-    const sortedOperations = operations.sort(compareOperations);
-
-    if (order && order.orderType === 'DAMPER') {
-        sortedOperations.filter((operation) => damperOperations.push(operation));
-    } else if (order && order.orderType === 'BLOK_LIFT') {
-        operations.filter((operation) => {
-            if (operation.operationType !== 'BORU_KAYNAK') {
-                blokliftOperations.push(operation);
-            }
-        });
-    }
 
     const togglePopup = (operationId) => {
         setIsPopupOpen((prev) => (prev === operationId ? null : operationId)); 
@@ -130,9 +109,9 @@ const UpdateButtons = ({order, operations}) => {
             }
 
             if (response.success) {
-                swAlert(response.message, 'success');
+                swAlert(response.message, 'success', '', 4000);
             } else {
-                swAlert(response.message, 'error');
+                swAlert(response.message, 'error', '', 4000);
             }
         } catch (error) {
             swAlert(error.message, 'error');
@@ -146,8 +125,8 @@ const UpdateButtons = ({order, operations}) => {
       <main className={styles.main_container}>
           <div className={styles.inner_container}>
               {Array.isArray(sortedOperations) &&
-              sortedOperations.length > 0 ? (
-                  sortedOperations.map((operation, index) => (
+              operations.length > 0 ? (
+                  operations.map((operation, index) => (
                       <div key={index}>
                           <div>
                               <button
@@ -205,16 +184,6 @@ const UpdateButtons = ({order, operations}) => {
                                   </div>
                               </div>
                           )}
-                          {operation.operationType === 'BLOK_LIFT_MONTAJ' &&
-                              order.orderType === 'DAMPER' && (
-                                  <button
-                                      onClick={() => togglePopup(operation.id)}
-                                      className={`${styles.kalite_kontrol_button}`}
-                                      disabled={true}
-                                  >
-                                      Kalite Kontrol
-                                  </button>
-                              )}
                       </div>
                   ))
               ) : (
@@ -222,7 +191,7 @@ const UpdateButtons = ({order, operations}) => {
               )}
           </div>
           <div className={styles.info_container}>
-              <div className={styles.table_container}>
+              {/* <div className={styles.table_container}>
                   <table className={styles.mil_pipe}>
                       <tbody>
                           <tr className={styles.mil}>
@@ -267,10 +236,10 @@ const UpdateButtons = ({order, operations}) => {
                           </tr>
                       </tbody>
                   </table>
-              </div>
-              <InfoAndRollBack order={order} operations={sortedOperations} />
+              </div> */}
+              <InfoAndRollBack order={order} operations={operations} />
           </div>
-          <ScrapOperation operations={sortedOperations} order={order} />
+          <ScrapOperation operations={operations} order={order} />
       </main>
   );
 }

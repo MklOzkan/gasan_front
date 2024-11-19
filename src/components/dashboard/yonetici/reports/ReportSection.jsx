@@ -1,4 +1,4 @@
-import React from 'react';
+import { config } from '@/helpers/config';
 import styles from './reportSection.module.scss';
 
 const reportsOrder = ['LIFT', 'DAMPER', 'BLOKLIFT', 'PASLANMAZ'];
@@ -40,7 +40,7 @@ export default function ReportSection({
                                         key={index}
                                         className={styles.tableBody}
                                     >
-                                        <td>{orderType}</td>
+                                        <td>{config.talasliList[orderType]}</td>
                                         <td>{report.totalOrderCount || 0}</td>
                                         <td>
                                             {report.totalOrderQuantity || 0}
