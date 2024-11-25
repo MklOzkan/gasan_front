@@ -104,14 +104,13 @@
         background-color: rgba(236, 209, 157, 0.685); /* Change color on hover */
     }
     
+    
 }
 
 .green {
     background-color: green;
     color: white;
-    :disabled{
-        cursor: not-allowed;
-    }
+    
 }
 
 .yellow{
@@ -124,7 +123,7 @@
     color: white;
     cursor: not-allowed;
 
-    :disabled{
+    &:disabled{
         cursor: not-allowed;
     }
 }
@@ -141,6 +140,10 @@
         50% 100%,/* Bottom point of triangle */
         0% 70%   /* Left side of rectangle */
     );
+
+    &:disabled{
+        cursor: not-allowed;
+    }
 }
 
 /* Chevron shape for subsequent buttons (Index 1, 2, 3...) */
@@ -156,31 +159,10 @@
     50% 100%,  /* Bottom middle inward point */
     0% 70%     /* Bottom left */
     );
-}
 
-.kalite_kontrol_button{
-    width: 350px; /* CHANGED: Limit max width */
-    height: 80px;
-    font-size: 18px;
-    font-weight: bold;
-    font-family: Arial, sans-serif;
-    color: white;
-    border: none;
-    position: relative;
-    text-align: center;
-    line-height: 90px; /* Centers text vertically */
-    transition: background-color 0.3s ease; /* Smooth transitions */
-    background-color: red;
-    margin-bottom: -40px;
-    
-    clip-path: polygon(
-        0% 0%,    /* Top left */
-        50% 45%,    /* Top middle inward point */
-        100% 0%,  /* Top right */
-        100% 55%,  /* Bottom right */
-        50% 100%,  /* Bottom middle inward point */
-        0% 55%     /* Bottom left */
-    );
+    &:disabled{
+        cursor: not-allowed;
+    }
 }
 
     @media screen  and (max-width: 767px) {
@@ -234,9 +216,5 @@
     margin-right: auto;
     width: auto;
     font-weight: bolder;
-
-}
-
-.pipe{
 
 }

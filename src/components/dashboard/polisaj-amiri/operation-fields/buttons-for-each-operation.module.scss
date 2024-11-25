@@ -93,6 +93,9 @@
     &:hover {
         background-color: orange; /* Change color on hover */
     }
+    &:disabled{
+        cursor: not-allowed;
+    }
 
     
 }
