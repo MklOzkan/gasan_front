@@ -1,4 +1,4 @@
-const { config } = require('@/helpers/config');
+import { config } from '@/helpers/config';
 
 const API_URL = config.api.baseUrl;
 
