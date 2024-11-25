@@ -18,9 +18,9 @@ const OperationsInfo = ({ operation, productionProcess, order }) => {
         const res = await rollBackLastChangeAction(operation.id, order.id);
 
         if (res.success) {
-                swAlert(res.message, 'success', '', 2000)
+                swAlert(res.message, 'success', '', 4000)
         } else {
-            swAlert(res.message, 'error');
+            swAlert(res.message, 'error', '', 4000);
         }
     };
 

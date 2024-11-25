@@ -19,10 +19,36 @@ const CustomerPage = ({data, searchParams}) => {
     } = data;
     
     const totalHurda = returnBody8.reduce((acc, item) => acc + item.scrapCount, 0);
+    // console.log('blok', returnBody6)
+    // let scrapCount = 0;
+    // if (returnBody1.orderType === 'DAMPER') {
+    //     scrapCount = returnBody6
+    //         .filter(
+    //             (item) =>
+    //                 item.operationType === 'BORU_KAPAMA' &&
+    //                 item.operationType === 'BORU_KAYNAK'
+    //         )
+    //         .reduce((acc, item) => acc + item.scrapCountAfterTest, 0);
+    // }
+    // let scrapCountAfterMontaj = 0;
+    // if (returnBody1.orderType === 'DAMPER') {
+    //     scrapCountAfterMontaj = returnBody6
+    //         .filter(
+    //             (item) =>
+    //                 item.operationType !== 'BORU_KAPAMA' ||
+    //                 item.operationType !== 'BORU_KAYNAK'
+    //         )
+    //         .reduce((acc, item) => acc + item.scrapCountAfterTest, 0);
+    // }
+
+    // console.log('scrapCountAfterMontaj', scrapCountAfterMontaj);
+
+
+    
 
   return (
       <>
-          <PageHeader> Müşteri İşlemleri </PageHeader>
+          <PageHeader> Müşterİ İşlemlerİ </PageHeader>
           <Spacer height={20} />
           <div className={styles.container}>
               <div className={styles.order_container}>
@@ -64,4 +90,4 @@ const CustomerPage = ({data, searchParams}) => {
   );
 }
 
-export default CustomerPage
+export default CustomerPage;

@@ -1,0 +1,48 @@
+services:
+  spring-boot-gasan:
+    container_name: spring-boot-gasan
+    image: mikailozkan/backend-gasan:latest
+    ports:
+      - "8090:8090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/stajProje
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: 1234
+    depends_on:
+      - db
+    volumes:
+      - C:/Users/ozkan/Downloads/Documents/private.key:/app/private.key
+      - C:/Users/ozkan/Downloads/Documents/certificate.crt:/app/certificate.crt
+    networks:
+      - app-network
+
+  front-end-gasan:
+    container_name: front-end-gasan
+    image: mikailozkan/frontend-gasan:latest
+    ports:
+      - "80:80"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://spring-boot-gasan:8090  # Dynamic URL passed here
+      - PORT=80  # Dynamic port
+    depends_on:
+      - spring-boot-gasan
+    networks:
+      - app-network
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: stajProje
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
+    driver: bridge
+    name: app-network
+    

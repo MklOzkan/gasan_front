@@ -26,9 +26,11 @@ const OrderToolbar = ({
             // your client-side logic here
         }
         return () => {
-            console.log('cleanup');
+            
         };
     }, [order, currentPage, currentUrl]);
+
+    console.log(order)
 
     const finishOrder = async () => {
         let answer;
@@ -41,22 +43,18 @@ const OrderToolbar = ({
                 'Nihai üretim, Sipariş miktarından az olduğu için, Sipariş tamamlanamaz',
                 'error',
                 '',
-                2000 // Close after 2 seconds
+                4000
             );
-            await wait(1000);
             answer = { isConfirmed: false };
         }
         if (!answer.isConfirmed) return;
-        console.log('row.id', order.id);
 
         const res = await finishOrderAction(order.id);
 
         if (res.success) {
-            swAlert(res.message, 'success');
-            await wait(1000);
-            window.location.reload();
+            swAlert(res.message, 'success', '', 4000);
         } else {
-            swAlert(res.message, 'error', '', 2000);
+            swAlert(res.message, 'error', '', 4000);
         }
 
 
@@ -68,27 +66,13 @@ const OrderToolbar = ({
             `${order.orderNumber} numaralı siparişi silmek istediğinize emin misiniz?`
         );
         if (!answer.isConfirmed) return;
-        console.log('row.id', order.id);
 
         const res = await deleteOrderAction(order.orderNumber);
 
         if (res.success) {
-            // After successful deletion, check if the page needs to be changed
-
-            let page;
-
-            
-            if (totalElements % 10 === 1 && totalPages > 1) {
-                swAlert(res.message, 'success');
-                await wait(2000);
-                page = currentPage - 1;
-                handlePageChange(page);
-            } else {
-                swAlert(res.message, 'success');
-                window.location.reload();
-            }
+            swAlert(res.message, 'success', '', 4000);
         } else {
-            swAlert(res.message, 'error');
+            swAlert(res.message, 'error', '', 4000);
         }
     };
 
@@ -97,7 +81,7 @@ const OrderToolbar = ({
             <button
                 variant="warning"
                 className={`${styles.outer_pencil}`}
-                onClick={() => router.push(`/dashboard/uretim/${order.id}`)}	
+                onClick={() => router.push(`/dashboard/uretim/${order.id}`)}
             >
                 <div className={`${styles.inner_pencil}`}>
                     <TfiPencil />
@@ -108,14 +92,17 @@ const OrderToolbar = ({
                 className="btn-link"
                 variant="danger"
                 onClick={handleDelete}
+                disabled={order.orderStatus === 'Tamamlandı'}
             >
                 <div>
                     <TfiTrash />
                 </div>
             </Button>
 
-            <button className={`${styles.outer_check}`} onClick={finishOrder}
-            disabled={order.status === 'Tamamlandi'}
+            <button
+                className={`${styles.outer_check}`}
+                onClick={finishOrder}
+                disabled={order.orderStatus === 'Tamamlandı'}
             >
                 <div className={`${styles.inner_check}`}>
                     <FaCheck />

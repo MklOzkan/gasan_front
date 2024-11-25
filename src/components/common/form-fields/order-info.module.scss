@@ -37,7 +37,6 @@
     .table_responsive {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
         align-items: center;
         width: 100%;
     }
@@ -46,24 +45,24 @@
     .table_responsive td {
         display: flex;
         width: 100%;
-        flex-direction: row;
         align-items: center;
-        padding: 20px;
+        padding: 10px;
         justify-content: center;
-        font-size: 1rem;
+        font-size: 10px;
     }
 
     .table_responsive table{
         display: flex;
-        padding: 22px;
         width: 100%;
-        flex-direction: row;
-        align-items: center;
+        flex-direction: column;
 
     }
 
     .table_head, .table_body{
         margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        table-layout: fixed;
         
     }
 
@@ -71,6 +70,44 @@
         content: "";
         display: table-column;
         width: 10px; /* Space between thead and tbody */
+    }
+    
+}
+
+@media screen and (max-width: 564px) {
+    .table_responsive {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .table_head, .table_body{
+        display: flex;
+        flex-direction: column;
+        table-layout: fixed;
+        
+    }
+
+    .table_responsive table{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
+    }
+
+
+    .table_responsive th, 
+    .table_responsive td {
+        font-size: 15px;
+        display: flex;
+        padding-left: 30px;
+        padding-right: 30px;
+        
     }
     
 }

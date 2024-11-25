@@ -12,11 +12,9 @@ const config = {
                 const res = await login(credentials);
 
                 if (!res.ok) {
-                    console.log('login failed', await res.text());
                     return null;
                 }
                 const data = await res.json();
-                console.log('login success', data);
 
                 const payload = {
                     user: { ...data },
@@ -63,7 +61,6 @@ const config = {
         },
         // JWT datasina ihtiyac duyan her yerde
         async jwt({ token, user }) {
-            //console.log("JWT", token, user);
             return { ...user, ...token };
         },
         // Session datasina ihtiyac duyan her yerde
@@ -86,12 +83,9 @@ const config = {
 
     pages: {
         signIn: '/login',
-        signOut: '/login'
+        signOut: '/'
     },
-    trustHost: process.env.NODE_ENV === 'development' || [
-        'localhost',
-        new URL(process.env.NEXT_PUBLIC_API_URL).hostname
-    ]
+    trustHost: ['localhost']
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);

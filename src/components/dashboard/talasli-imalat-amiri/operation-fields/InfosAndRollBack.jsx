@@ -3,6 +3,7 @@ import styles from './infos-and-rollback.module.scss';
 import { Button } from 'react-bootstrap';
 import { swAlert, swConfirm } from '@/helpers/swal';
 import { rollBackLastChangeAction } from '@/actions/talasli-actions';
+import { config } from '@/helpers/config';
 
 const OperationsInfo = ({ operations, order }) => {
     const [completedQty, setCompletedQty] = useState(0);
@@ -24,7 +25,6 @@ const OperationsInfo = ({ operations, order }) => {
 
 
     const rollBack = async (operation) => {
-        console.log('Selected Operation:', operation);
         const answer = await swConfirm(
             `En son girilen ${operation.lastCompletedQty} adetlik üretimi geri almak istediğinize emin misiniz??`
         );
@@ -33,12 +33,10 @@ const OperationsInfo = ({ operations, order }) => {
         const res = await rollBackLastChangeAction(operation.id);
 
         if (res.success) {
-            setTimeout(()=>{
-                swAlert(res.message, 'success');}, 1000);
-            window.location.reload();
+                swAlert(res.message, 'success', '', 4000);
             
         } else {
-            swAlert(res.message, 'error');
+            swAlert(res.message, 'error', '', 4000);
         }
     };
 
@@ -58,14 +56,14 @@ const OperationsInfo = ({ operations, order }) => {
                             {/* Insert total produced MIL row before BORU_KESME_HAVSA */}
                             {operation.operationType === 'BORU_KESME_HAVSA' && (
                                 <tr className={styles.total_row}>
-                                    <th>Toplam Üretilen Mil</th>
+                                    <td>Toplam Üretilen Mil</td>
 
-                                    <th>{completedQty}</th>
-                                    <th></th>
+                                    <td>{completedQty}</td>
+                                    <td></td>
                                 </tr>
                             )}
                             <tr className={styles.table_body}>
-                                <td>{operation.operationType}</td>
+                                <td>{config.talasliList[operation.operationType]}</td>
                                 <td>
                                     <Button
                                         className={styles.edit_button}

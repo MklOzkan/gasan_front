@@ -80,8 +80,16 @@ const CurrentOrder = ({
         return `${day}/${month}/${year}`;
     };
 
+    console.log('talasli', talasli);
+
+    const boruKesme = talasli.find(
+        (operation) => operation.operationType === 'BORU_KESME_HAVSA'
+    );
+
+    console.log('boruKesme', boruKesme);
+
     const calculatePercentage = (completed, remaining) => {
-        const total = order.orderQuantity;
+        const total = order.orderQuantity> boruKesme.completedQuantity ? order.orderQuantity : boruKesme.completedQuantity;
         return total > 0 ? ((completed / total) * 100).toFixed(1) : '0';
     };
 
@@ -184,7 +192,6 @@ const CurrentOrder = ({
                 ))}
             </div>
         );
-    console.log('talasli', talasli);
 
     return (
         <main className={styles.container}>

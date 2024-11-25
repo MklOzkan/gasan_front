@@ -15,20 +15,23 @@ import {
     updateBoruKapama,
     updateGazDolum,
     updateTest,
-    rollBackLastChange
-    
+    rollBackLastChange,
+    updateScrap,
+    rollBackScrap
 } from '@/services/blmontajamiri-service';
+import { swAlert } from '@/helpers/swal';
 
 export const boruKaynakAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from boruKaynakAction:', formData, operationId);
-
         const fields = convertFormDataToJSON(formData);
         const res = await updateBoruKaynak(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
         return {
@@ -45,14 +48,16 @@ export const boruKaynakAction = async (formData, operationId, orderId) => {
 
 export const blMontajAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from blMontajAction:', formData, operationId, orderId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateBLMontaj(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
         return {
@@ -69,7 +74,6 @@ export const blMontajAction = async (formData, operationId, orderId) => {
 
 export const boruKapamaAction = async (formData, operationId, orderType, orderId) => {
     try {
-        console.log('formData from boruKapamaAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         let res;
@@ -81,7 +85,10 @@ export const boruKapamaAction = async (formData, operationId, orderType, orderId
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
         return {
@@ -97,14 +104,16 @@ export const boruKapamaAction = async (formData, operationId, orderType, orderId
 };
 export const gazDolumAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from gazDolumAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateGazDolum(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
         return {
@@ -121,14 +130,16 @@ export const gazDolumAction = async (formData, operationId, orderId) => {
 
 export const testAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from testAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateTest(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
         return {
@@ -145,17 +156,65 @@ export const testAction = async (formData, operationId, orderId) => {
 
 export const rollBackLastChangeAction = async (operationId, orderId) => {
     try {
-        console.log('formData from rollBackLastChangeAction:', operationId);
         const res = await rollBackLastChange(operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
+        };
+    } catch (err) {
+        if (err instanceof YupValidationError) {
+            return transformYupErrors(err.inner);
+        }
+        throw err;
+    }
+};
+
+export const scrapAction = async (formData, operationId, orderId) => {
+    try {
+        const fields = convertFormDataToJSON(formData);
+        const res = await updateScrap(fields, operationId);
+        const data = await res.json();
+
+        if (!res.ok) {
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
+        }
+        revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
+        return {
+            success: true,
+            message: data.message || 'Sipariş başarıyla güncellendi'
+        };
+    } catch (err) {
+        
+    }
+};
+
+export const rollBackAction = async (operationId, orderId) => {
+    try {
+        const res = await rollBackScrap(operationId);
+        const data = await res.json();
+
+        if (!res.ok) {
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
+        }
+        revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
+        return {
+            success: true,
+            message: data.message || 'Güncellendi'
         };
     } catch (err) {
         if (err instanceof YupValidationError) {

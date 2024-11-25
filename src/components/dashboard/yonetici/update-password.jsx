@@ -64,10 +64,10 @@ const UpdatePassword = () => {
 
    useEffect(() => {
        if (state.ok) {
-           swAlert('Şifre Güncellendi');
+           swAlert('Şifre Güncellendi', 'success', '', 4000);
            router.push('/dashboard/yonetici-menu');
        } else if (state.message) {
-           swAlert('Şifre Güncellenemedi', 'error');
+           swAlert('Şifre Güncellenemedi', 'error', '', 4000);
        }
    }, [state, router]);
 
@@ -76,7 +76,7 @@ const UpdatePassword = () => {
         // <div>update password</div>
         <>
             <PageHeader>
-                Şıfre Atama Ekranı 
+                Şİfre Atama Ekranı 
             </PageHeader>
             <Spacer height={50} />
             <Container className="text-center m-auto">
@@ -93,7 +93,7 @@ const UpdatePassword = () => {
                                         onChange={handleUserChange}
                                         required
                                     >
-                                        <option className='option' value="">Seçin...</option>
+                                        <option className='option' value="">Seçiniz...</option>
                                         {data.map((item) => (
                                             <option
                                                 className='option'

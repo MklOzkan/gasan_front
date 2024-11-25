@@ -81,19 +81,14 @@ const OrderForm = () => {
 
         const response = await createOrderAction(formData);
         setState(response);
-        console.log('response from order-form', response);
-        console.log('response from order-form', response.message);
 
         if (response.ok) {
-            swAlert(response.message, 'success');
+            swAlert(response.message, 'success', '', 4000);
             
             localStorage.removeItem('orderFormData');// localStorage'daki form verisini temizler
             router.push('/dashboard/uretim');
         } else if (response.message) {
-            swAlert(response.message, 'error');
-            setTimeout(() => {
-                window.location.reload(); // Hata mesajini gösterdikten sonra sayfayi yeniler
-            }, 5000); // Hata mesajını belli bir süre görünür olmaisini sağlar
+            swAlert(response.message, 'error', '', 4000);
         }
     };
 
@@ -106,7 +101,7 @@ const OrderForm = () => {
             >
                 <Card style={{ maxWidth: '600px', width: '100%' }}>
                     <Card.Body>
-                        <Card.Title>Yeni Siparis</Card.Title>
+                        <Card.Title>Yeni Sipariş</Card.Title>
                         <Form noValidate onSubmit={handleSubmit}>
                             <TextInput
                                 type="text"

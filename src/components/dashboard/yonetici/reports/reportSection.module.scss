@@ -1,0 +1,302 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    &:first-child {
+            margin-left: 90px;
+            margin-right: 0;
+        }
+        &:last-child {
+            margin-right: 90px;
+            margin-left: 0;
+        }
+}
+
+.sectionContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    background-color: bisque;
+    width: 46.5%;
+    padding: 10px;
+    @media screen and (max-width: 2300px) {
+        width: 60%;
+        
+    }
+}
+
+.products_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.products_container table {
+    border-spacing: 0;
+}
+
+.table {
+    width: 100%;
+    gap: 20px;
+}
+
+.tableHead,
+.tableBody,
+.totalContainer {
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e0e0e0;
+    margin-top: 20px;
+    table-layout: fixed;
+    text-align: center;
+}
+
+.tableBody {
+    margin-bottom: 10px; /* Spacing between rows */
+}
+
+.table tbody tr + tr {
+    margin-top: 10px;
+}
+
+.tableHead th,
+.tableBody td,
+.totalContainer td {
+    padding: 20px;
+    text-align: center;
+    white-space: nowrap; /* Prevent text from wrapping in cells */
+    margin-bottom: 20px;
+    width: 50px;
+    white-space: normal;
+}
+
+.tableHead th {
+    box-shadow: 1px 2px 5px rgb(105, 105, 105); /* Subtle shadow between rows */
+    margin-bottom: 10px;
+    border: 1px solid #d6d1d1;
+    white-space: nowrap;
+}
+
+.tableBody td:first-child {
+    box-shadow: 1px 2px 5px rgb(105, 105, 105);
+    border: 1px solid #e0e0e0;
+    font-weight: bolder;
+}
+
+.totalContainer td {
+    box-shadow: 1px 2px 5px rgb(105, 105, 105);
+    border: 1px solid #d6d1d1;
+}
+
+.totalContainer td {
+    content: '';
+    font-weight: bolder;
+}
+
+@media screen and (max-width: 1250px) {
+    .container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &:first-child {
+            margin-left: 90px;
+            margin-right: 0;
+        }
+        &:last-child {
+            margin-right: 90px;
+            margin-left: 0;
+        }
+    }
+
+    .sectionContainer {
+        width: 80%;
+        font-size: 12;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+    .products_container {
+        width: 100%;
+    }
+
+    .tableHead th,
+    .tableBody td,
+    .totalContainer td {
+        text-align: center;
+        padding: 8px;
+    }
+
+    .tableHead th {
+        margin-bottom: 10px;
+        white-space: nowrap;
+    }
+
+    .tableBody td:first-child {
+        font-weight: bolder;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+        gap: 10px;
+        width: 77%;
+        &:first-child {
+            margin-left: 10px;
+            margin-right: 0;
+        }
+        &:last-child {
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+
+    .sectionContainer {
+        max-width: 800px;
+        font-size: 12;
+        padding: 5px;
+    }
+    .table {
+        width: 100%;
+    }
+
+    .products_container {
+        width: 100%;
+    }
+
+    .tableHead th,
+    .tableBody td,
+    .totalContainer td {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .tableHead th {
+        margin-bottom: 10px;
+        white-space: nowrap;
+    }
+
+    .tableBody td:first-child {
+        font-weight: bolder;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        margin: 0 auto;
+    }
+
+    .sectionContainer {
+        width: 87%;
+        max-width: 600px;
+        font-size: 12;
+    }
+
+    .products_container {
+        width: 100%;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+    .tableHead,
+    .tableBody,
+    .totalContainer {
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e0e0e0;
+        margin-top: 20px;
+        table-layout: fixed;
+        white-space: normal;
+    }
+
+    .tableHead th,
+    .tableBody td,
+    .totalContainer td {
+        text-align: center;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-size: 12px; /* Smaller font size for smaller screens */
+    }
+
+    .tableHead th {
+        margin-bottom: 10px;
+        border: 1px solid #d6d1d1;
+    }
+
+    .tableBody td:first-child {
+        border: 1px solid #e0e0e0;
+        font-weight: bold;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .container {
+        flex-direction: column;
+        margin: 0 auto;
+        &:first-child {
+            margin-left: 5px;
+            margin-right: 25px;
+        }
+        &:last-child {
+            margin-right: 25px;
+            margin-left: 5px;
+        }
+
+    }
+
+    .sectionContainer {
+        width: 100%;
+        font-size: 12;
+        padding: 5px;
+        max-width: 400px;
+    }
+
+    .products_container {
+        width: 100%;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+    .tableHead,
+    .tableBody,
+    .totalContainer {
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e0e0e0;
+        margin-top: 20px;
+        table-layout: fixed;
+        padding: 5px;
+        white-space: normal;
+    }
+
+    .tableHead th,
+    .tableBody td,
+    .totalContainer td {
+        text-align: center;
+        padding: 2px; /* Reduced padding for smaller screens */
+        font-size: 14px; /* Smaller font size for smaller screens */
+    }
+
+    .tableHead th {
+        margin-bottom: 10px;
+        border: 1px solid #d6d1d1;
+    }
+
+    .tableBody td:first-child {
+        border: 1px solid #e0e0e0;
+        font-weight: bold;
+    }
+}

@@ -23,11 +23,13 @@ export const updateQuantity = async (producedQuantity,orderId, processId) => {
     try {
         const res = await updateStatus(orderId); // Renamed from response to res
 
-        // Determine content type to parse correctly
-        const data = await res.json(); // Gelecek olan response'ı json formatına çeviriyoruz
+        const data = await res.json(); 
 
         if (!res.ok) {
-            throw new Error(data.message|| 'Bir hata oluştu');
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
 
         revalidatePath('/dashboard/talasli-imalat-amiri');
@@ -36,21 +38,22 @@ export const updateQuantity = async (producedQuantity,orderId, processId) => {
             message: data.message || 'Sipariş başarıyla güncellendi'
         };
     } catch (err) {
-        console.error('Error in updateOrderStatus:', err);
         throw err;
     }
 };
 
 export const milKoparmaAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from milKoparmaAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateMilKoparma(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {
@@ -67,14 +70,16 @@ export const milKoparmaAction = async (formData, operationId, orderId) => {
 
 export const milTornalamaAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from milTornalamaAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateMilTornalama(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {
@@ -82,7 +87,6 @@ export const milTornalamaAction = async (formData, operationId, orderId) => {
             message: data.message || 'Sipariş başarıyla güncellendi'
         };
     } catch (err) {
-        console.error('Error in milTornalamaAction:', err);
         if (err instanceof YupValidationError) {
             return transformYupErrors(err.inner);
         }
@@ -92,14 +96,16 @@ export const milTornalamaAction = async (formData, operationId, orderId) => {
 
 export const milTaslamaAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from milTaslamaAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateMilTaslama(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {
@@ -116,14 +122,16 @@ export const milTaslamaAction = async (formData, operationId, orderId) => {
 
 export const isilIslemAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from milTaslamaAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateisilIslem(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {
@@ -140,14 +148,16 @@ export const isilIslemAction = async (formData, operationId, orderId) => {
 
 export const boruKesmeAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from boruKesmeActıon:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateboruKesme(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {
@@ -164,14 +174,16 @@ export const boruKesmeAction = async (formData, operationId, orderId) => {
 
 export const ezmeAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from ezmeAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateEzme(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {
@@ -188,12 +200,14 @@ export const ezmeAction = async (formData, operationId, orderId) => {
 
 export const rollBackLastChangeAction = async ( operationId, orderId) => {
     try {
-        console.log('formData from boruKesmeActıon:', operationId);
         const res = await rollBackLastChange(operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/talasli-imalat-amiri/lift/${orderId}`);
         return {

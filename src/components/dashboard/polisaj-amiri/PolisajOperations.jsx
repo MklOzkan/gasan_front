@@ -10,11 +10,10 @@ import styles from '@/styles/pages/main-page.module.scss'
 
 const PolisajProduction = ({ order }) => {
     const { returnBody, returnBody2, returnBody3 } = order;
-    console.log('returnBody', returnBody2);
 
     return (
         <main className={styles.main_container}>
-            <PageHeader>Polisaj Amiri </PageHeader>
+            <PageHeader>Polİsaj Amİrİ </PageHeader>
             <Spacer height={5} />
             <OrderForOperation order={returnBody} />
             <Spacer height={5} />

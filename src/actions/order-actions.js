@@ -7,7 +7,8 @@ import {
     deleteOrder,
     downloadOrders,
     updateStatus,
-    finishOrder
+    finishOrder,
+    downloadExcelFile
 } from '@/services/uretimplanlama-service';
 import {
     YupValidationError,
@@ -16,23 +17,20 @@ import {
     transformYupErrors
 } from '@/helpers/form-validation';
 import { OrderSchema } from '@/helpers/schemas/order-schema';
-import { wait } from '@/utils/wait';
 
 export const createOrderAction = async (formData) => {
     try {
-        console.log(
-            'formData from createOrderAction======================',
-            formData
-        );
         const fields = convertFormDataToJSON(formData);
-
         OrderSchema.validateSync(fields, { abortEarly: false });
 
         const res = await createOrder(fields);
         const data = await res.json();
 
-        if(!res.ok) {
-            return response(false, data.message || 'Bir hata oluştu');
+        if (!res.ok) {
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
 
         revalidatePath('/dashboard/urun-planlama');
@@ -47,13 +45,30 @@ export const createOrderAction = async (formData) => {
 
 export const updateOrderAction = async (formData) => {
     if (!formData.get('id')) throw new Error('Id is missing');
+    console.log('formData in _Update Order Action', formData);
     try {
         const fields = convertFormDataToJSON(formData);
 
         const res = await updateOrder(fields);
 
+        console.log('res in Action', res);
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            revalidatePath('/dashboard/uretim');
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
+        }
+
+
         revalidatePath('/dashboard/urun-planlama');
-        return response(true, 'Sipariş başarıyla güncellendi');
+        return {
+            success: true,
+            message: data.message || 'Sipariş başarıyla güncellendi'
+        }
     } catch (err) {
         if (err instanceof YupValidationError) {
             return transformYupErrors(err.inner);
@@ -72,6 +87,7 @@ export const deleteOrderAction = async (orderNumber) => {
                 message: data.message || 'Bir hata oluştu'
             };
         }
+        revalidatePath('/dashboard/uretim');
         return {
             success: true, 
             message: 'Sipariş başarıyla silindi'
@@ -94,23 +110,28 @@ export const downloadOrdersAction = async (filters) => {
 };
 
 export const updateOrderStatus = async (orderId) => {
-    console.log('orderId in Update Order Status', orderId);
     try {
         const res = await updateStatus(orderId);
-        console.log('res in Update Order Status', res);
+
+        console.log('res', res);
 
         const data = await res.json();
-        console.log( 'data in Update Order Status', data.message);
 
-        if(!res.ok){
-            throw new Error(data?.message || 'Bir hata oluştu');
+        if (!res.ok) {
+            revalidatePath('/dashboard/uretim');
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
             revalidatePath('/dashboard/talasli-imalat-amiri');
             return { success: true, message: data?.message || 'Sipariş durumu başarıyla güncellendi' };
 
     
     } catch (err) {
-        console.error('Error in updateOrderStatus:', err);
+        if (err instanceof YupValidationError) {
+            return transformYupErrors(err.inner);
+        }
         throw err;
     }
 };
@@ -120,9 +141,10 @@ export const finishOrderAction = async (orderId) => {
         const res = await finishOrder(orderId);
         const data = await res.json();
         if (!res.ok) {
-            
-              throw new Error(data.message || 'Bir hata oluştu');
-            
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath('/dashboard/uretim');
         return {
@@ -136,5 +158,32 @@ export const finishOrderAction = async (orderId) => {
         throw err;
     }
 };
+
+// export const downloadction = async (formData) => {
+
+//     console.log('formData', formData);
+//     try {
+//         const fields = convertFormDataToJSON(formData);
+
+//         console.log('fields', fields);
+
+//         const res = await downloadExcelFile(fields);
+       
+
+//         if (!res.ok) {
+//             return {
+//                 success: false,
+//                 message: 'Dosya indirme işlemi sırasında bir hata oluştu'
+//             };
+//         }
+
+//         return response(true, 'Excel dosyası başarıyla indirildi');
+//     } catch (err) {
+//         if (err instanceof YupValidationError) {
+//             return transformYupErrors(err.inner);
+//         }
+//         throw err;
+//     }
+// };
 
 

@@ -2,12 +2,14 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import styles from './buttons-for-each-operation.module.scss';
+import { config } from '@/helpers/config'; 
 const operationsThatDisable = [
     'MIL_TORNALAMA',
     'MIL_TASLAMA',
     'ISIL_ISLEM',
     'EZME'
 ];
+
 
 const OperationCol = ({
     operation,
@@ -80,7 +82,7 @@ const OperationCol = ({
                 data-operation-type={operation.operationType}
                 //disabled={handleNextOperationButton()}
             >
-                <span>{operation.operationType}</span>
+                <span>{config.talasliList[operation.operationType]}</span>
             </Button>
             {isPopupOpen === operation.id && ( // **Highlight: Ensure the popup is open only for the specific operation**
                 <div className={styles.popup}>
@@ -95,6 +97,25 @@ const OperationCol = ({
                             min={0}
                             value={productionQuantity}
                             onChange={handleQuantityChange}
+                            className={styles.inputNumber}
+                            onKeyDown={(e) => {
+                                if (
+                                    !/^\d$|Backspace|ArrowLeft|ArrowRight|Delete|Tab/.test(
+                                        e.key
+                                    )
+                                ) {
+                                    e.preventDefault();
+                                }
+                            }}
+                            onPaste={(e) => {
+                                if (
+                                    !/^\d+$/.test(
+                                        e.clipboardData.getData('Text')
+                                    )
+                                ) {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                         <div className={styles.popup_button}>
                             <button
@@ -108,8 +129,7 @@ const OperationCol = ({
                                 }
                                 className={styles.onay_button}
                                 disabled={productionQuantity === ''}
-                                type='number'
-                                min={0}
+                                type="button"
                             >
                                 Onayla
                             </button>

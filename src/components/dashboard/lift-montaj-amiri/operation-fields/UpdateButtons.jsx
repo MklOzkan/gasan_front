@@ -53,7 +53,6 @@ const UpdateButtons = ({ order, operations }) => {
         const updatedColors = operations.map((operation) =>setColor(operation));
         setOperationColors(updatedColors);
 
-        console.log('Operations:', operations);
     }, [operations, order]);
 
     const compareOperations = (a, b) => {
@@ -71,7 +70,8 @@ const UpdateButtons = ({ order, operations }) => {
 
     const handleQuantityChange = (e) => {
         const value = e.target.value;
-        if (value > 0) {
+        const isNumeric = /^\d+$/.test(value);
+        if (value > 0 && isNumeric) {
             setProductionQuantity(value);
         } else {
             setProductionQuantity('');
@@ -84,8 +84,6 @@ const UpdateButtons = ({ order, operations }) => {
 
             formData.append('operationType', operationType);
             formData.append('completedQuantity', parseInt(producedAmount, 10));
-
-            console.log('Form Data:', formData);
 
             let response;
 
@@ -110,15 +108,19 @@ const UpdateButtons = ({ order, operations }) => {
             }
 
             if (response.success) {
-                swAlert(response.message);
+                swAlert(response.message, 'success', '', 4000);
+            } else {
+                swAlert(response.message, 'error', '', 4000);
             }
         } catch (error) {
-            swAlert(error.message, 'error');
+            swAlert(error.message, 'error', '', 4000);
         } finally {
             togglePopup();
             setProductionQuantity('');
         }
     };
+
+    console.log('operations', operations);
 
     return (
         <main className={styles.main_container}>
@@ -135,7 +137,12 @@ const UpdateButtons = ({ order, operations }) => {
                                     }
                                       ${styles[operationColors[index]]}
                                       `}
-                                    disabled={operation.remainingQuantity === 0}
+                                    disabled={
+                                        operation.remainingQuantity === 0 &&
+                                        operationOrder.includes(
+                                            operation.operationType
+                                        )
+                                    }
                                 >
                                     {operationList[operation.operationType]}
                                 </button>
@@ -153,6 +160,26 @@ const UpdateButtons = ({ order, operations }) => {
                                             min={0}
                                             value={productionQuantity}
                                             onChange={handleQuantityChange}
+                                            onKeyDown={(e) => {
+                                                if (
+                                                    !/^\d$|Backspace|ArrowLeft|ArrowRight|Delete|Tab/.test(
+                                                        e.key
+                                                    )
+                                                ) {
+                                                    e.preventDefault();
+                                                }
+                                            }}
+                                            onPaste={(e) => {
+                                                if (
+                                                    !/^\d+$/.test(
+                                                        e.clipboardData.getData(
+                                                            'Text'
+                                                        )
+                                                    )
+                                                ) {
+                                                    e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <div className={styles.popup_button}>
                                             <button
@@ -183,15 +210,6 @@ const UpdateButtons = ({ order, operations }) => {
                                     </div>
                                 </div>
                             )}
-                            {operation.operationType === 'LIFT_MONTAJ' && (
-                                <button
-                                    onClick={() => togglePopup(operation.id)}
-                                    className={`${styles.kalite_kontrol_button}`}
-                                    disabled={true}
-                                >
-                                    Kalite Kontrol
-                                </button>
-                            )}
                         </div>
                     ))
                 ) : (
@@ -203,7 +221,7 @@ const UpdateButtons = ({ order, operations }) => {
                     <table className={styles.mil_pipe}>
                         <tbody>
                             <tr className={styles.mil}>
-                                <td>Üretilen Toplam Mil</td>
+                                <td>Montaja Hazır Mil</td>
                                 <td>=</td>
                                 {operations
                                     .filter(
@@ -218,32 +236,17 @@ const UpdateButtons = ({ order, operations }) => {
                                     ))}
                             </tr>
                             <tr className={styles.mil}>
-                                <td>Üretilen Toplam Boru</td>
+                                <td>Montaja Hazır Boru</td>
                                 <td>=</td>
                                 {operations
                                     .filter(
                                         (operation) =>
                                             operation.operationType ===
-                                            'BORU_KAYNAK'
+                                            'LIFT_MONTAJ'
                                     )
                                     .map((operation, index) => (
                                         <td key={index}>
-                                            {operation.completedQuantity}
-                                        </td>
-                                    ))}
-                            </tr>
-                            <tr className={styles.mil}>
-                                <td>Biten Montaj</td>
-                                <td>=</td>
-                                {operations
-                                    .filter(
-                                        (operation) =>
-                                            operation.operationType ===
-                                            'BASLIK_TAKMA'
-                                    )
-                                    .map((operation, index) => (
-                                        <td key={index}>
-                                            {operation.completedQuantity}
+                                            {operation.pipeCount}
                                         </td>
                                     ))}
                             </tr>

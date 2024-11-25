@@ -30,7 +30,8 @@ const OperationButton = ({order,  stage}) => {
 
     const handleQuantityChange = (e) => {
         const value = e.target.value;
-        if (value > 0) {
+        const isNumeric = /^\d+$/.test(value);
+        if (value > 0 && isNumeric) {
             setProductionQuantity(value);
         } else {
             setProductionQuantity('');
@@ -38,10 +39,6 @@ const OperationButton = ({order,  stage}) => {
     };
 
     const handleSubmit = async (operationId, kaliteKontrolStage, producedAmount, buttonName) => {
-        console.log('operationId:', operationId);
-        console.log('operationType:', kaliteKontrolStage);
-        console.log('producedAmount:', producedAmount);
-        console.log('buttonName:', buttonName);
     
         try {
             // Construct the payload
@@ -51,8 +48,6 @@ const OperationButton = ({order,  stage}) => {
             formData.append('kaliteKontrolStage', kaliteKontrolStage);
             formData.append('operationField', buttonName);
             formData.append(`${buttonName}`, parseInt(producedAmount, 10));
-
-            console.log('FORMDATA IN OP_BUTTON', kaliteKontrolStage, buttonName, producedAmount);
 
             // Declare response variable
             let response;
@@ -67,13 +62,12 @@ const OperationButton = ({order,  stage}) => {
             }
 
             if (response.success) {
-                swAlert(response.message ,'success');
-                // setTimeout(() => {   
-                //     window.location.reload();
-                // }, 2000);
+                swAlert(response.message, 'success', '', 4000);
+            } else {
+                swAlert(response.message, 'error', '', 4000);
             }
         } catch (error) {
-            swAlert(error.message, 'error');
+            swAlert(error.message, 'error', '', 4000);
         } finally {
             togglePopup();
             setProductionQuantity('');

@@ -9,9 +9,12 @@ export const getOrders = async (
     page = 0,
     size = 10,
     sort = 'orderDate',
-    type = 'desc'
+    type = 'desc',
+    searchTerm,
+    startDate,
+    endDate
 ) => {
-    const qs = `page=${page}&size=${size}&sort=${sort}&type=${type}`;
+    const qs = `page=${page}&size=${size}&sort=${sort}&type=${type}&searchTerm=${searchTerm}&startDate=${startDate}&endDate=${endDate}`;
     const response = await fetch(`${API_URL}/orders/getAllOrders?${qs}`, {
         method: 'GET',
         headers: await getAuthHeader()
@@ -32,11 +35,13 @@ export const createOrder = async (orderData) => {
 };
 
 export const updateOrder = async (payload) => {
-    return fetch(`${API_URL}/orders/updateOrder/${payload.id}`, {
-        method: 'put',
+    const response = await fetch(`${API_URL}/orders/updateOrder/${payload.id}`, {
+        method: 'PUT',
         body: JSON.stringify(payload),
         headers: await getAuthHeader()
     });
+    return response;
+    
 };
 
 export const deleteOrder = async (orderNumber) => {
@@ -82,8 +87,6 @@ export const updateStatus = async (orderId) => {
         method: 'PUT',
         headers:  await getAuthHeader()
     });
-    
-    console.log('response', response);
     return response;
 };
 
@@ -102,16 +105,22 @@ export const finishOrder = async (orderId) => {
 };
 
 export const downloadExcelFile = async (startDate = '', endDate = '') => {
+
     const response = await fetch(
         `${API_URL}/orders/download?startDate=${startDate}&endDate=${endDate}`,
         {
+            method: 'GET',
             headers: await getAuthHeader()
         }
     );
     if (!response.ok) {
-        throw new Error(`Error downloading orders: ${response.statusText}`);
+        return {
+            success: false,
+            message: 'İndirme işlemi sırasında bir hata oluştu.'
+        }
     }
-    const blob = await response.blob();
+    try {
+        const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -119,8 +128,12 @@ export const downloadExcelFile = async (startDate = '', endDate = '') => {
     document.body.appendChild(a);
     a.click();
     a.remove();
+    }catch(err){
+        console.log(err);
+    }
+    
 
-    return response; // For downloading the Excel file
+    return response;
 };
 
 

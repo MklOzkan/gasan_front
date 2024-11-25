@@ -1,8 +1,7 @@
 'use client';
-import DataTable, { Column } from '@/components/common/form-fields/data-table';
+
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import OrderToolbar from './OrderToolbar';
 import PageHeader from '@/components/common/page-header';
 import Spacer from '@/components/common/spacer';
 import { FaPlus } from 'react-icons/fa';
@@ -10,7 +9,6 @@ import styles from './uretim-list.module.scss';
 import OrderList from './OrderList';
 import { useRouter } from 'next/navigation';
 import { RxReset } from 'react-icons/rx';
-import { BiReset } from 'react-icons/bi';
 import DownloadButton from '@/components/common/form-fields/DownloadButton';
 
 const Uretim = ({ data, sortBy, sortOrder }) => {
@@ -27,33 +25,20 @@ const Uretim = ({ data, sortBy, sortOrder }) => {
     const resetEndDate = () => setEndDate('');
 
     useEffect(() => {
-        setCurrentUrl(new URL(window.location.href).pathname);
+       const url = new URL(window.location.href);
 
-        let filteredData = content;
+       setCurrentUrl(url.pathname);
 
-        // Apply search filter
-        if (searchTerm) {
-            filteredData = filteredData.filter((order) =>
-                order.customerName
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase())
-            );
-        }
+        if (searchTerm) url.searchParams.set('searchTerm', searchTerm);
+        else url.searchParams.delete('searchTerm');
+        if (startDate) url.searchParams.set('startDate', startDate);
+        else url.searchParams.delete('startDate');
+        if (endDate) url.searchParams.set('endDate', endDate);
+        else url.searchParams.delete('endDate');
 
-        // Apply date range filter
-        if (startDate) {
-            filteredData = filteredData.filter(
-                (order) => new Date(order.orderDate) >= new Date(startDate)
-            );
-        }
-        if (endDate) {
-            filteredData = filteredData.filter(
-                (order) => new Date(order.orderDate) <= new Date(endDate)
-            );
-        }
-
-        setFilteredContent(filteredData);
-    }, [data, searchTerm, startDate, endDate, content]);
+        setFilteredContent(content);
+        router.push(url.toString());
+    }, [data, searchTerm, startDate, endDate, content, router]);
 
    
 
@@ -175,36 +160,14 @@ const Uretim = ({ data, sortBy, sortOrder }) => {
                     currentUrl={currentUrl}
                     orders={filteredContent}
                     totalPages={totalPages}
-                    currentpage={number}
+                    currentPage={number+1}
                     totalElements={totalElements}
                     sortBy={sortBy}
                     sortOrder={sortOrder}
                     handlePageChange={handlePageChange}
                     handleSorting={handleSorting}
+                    size={size}
                 />
-
-                {/* <DataTable
-                    name="uretimList"
-                    title="Sipariş Listesi"
-                    dataSource={content}
-                    dataKey="id"
-                    totalPages={totalPages}
-                    currentPage={number}
-                    pageSize={size}
-                >
-                    <Column index={true}>#</Column>
-                    <Column dataField="customerName">Müşteri Adı</Column>
-                    <Column dataField="gasanNo">Gasan No</Column>
-                    <Column dataField="orderNumber">Sipariş No</Column>
-                    <Column dataField="orderDate">Sipariş Tarihi</Column>
-                    <Column dataField="deliveryDate">Teslim Tarihi</Column>
-                    <Column dataField="orderType">Sipariş Türü</Column>
-                    <Column dataField="orderQuantity">Sipariş Miktarı</Column>
-                    <Column dataField="readyMilCount">Hazir Mil Miktarı</Column>
-                    <Column dataField="orderStatus">Sipariş Durumu</Column>
-
-                    <Column template={handleToolbar}></Column>
-                </DataTable> */}
             </main>
         </>
     );

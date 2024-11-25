@@ -3,17 +3,17 @@ import { fetchOrders } from '@/services/talasliimalamiri-service';
 import React from 'react';
 import styles from '@/styles/pages/main-page.module.scss';
 
-const Talasli = async ({ searchParams }) => {
-    const currentPage = parseInt(searchParams.currentPage, 10) || 0;
+const Talasli = async (props) => {
+    const searchParams = await props.searchParams;
+    const currentPage = Math.max(parseInt(searchParams.page, 10) || 1, 1);
     const sortBy = searchParams.sortBy || 'orderDate';
     const sortOrder = searchParams.sortOrder || 'desc';
 
-    // Databaseden verileri çeker
-    const res = await fetchOrders(currentPage, 10, sortBy, sortOrder);
-    // Ensure that res is a proper Response object and use res.json() only if it is
-
-    const data = await res.json(); 
+    const res = await fetchOrders(currentPage-1, 10, sortBy, sortOrder);
     if (!res.ok) throw new Error(data.message);
+    const data = await res.json(); 
+    
+
     return (
         <>
             <TalasliPage

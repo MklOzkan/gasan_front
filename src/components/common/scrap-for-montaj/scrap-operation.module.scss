@@ -1,0 +1,81 @@
+@use '@/styles/variables' as *;
+
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid #d48c8c;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: rgb(228, 228, 228);
+    margin-left: 70px;
+}
+
+.innerContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+    
+}
+
+.innerContainer p:first-child{
+    font-weight: bolder;
+}
+
+.innerContainer button{
+    text-align: center;
+    width: 50px;
+    border: 1px solid #d48c8c;
+    border-radius: 5px;
+    background-color: white;
+}
+
+
+.inputGroup{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.inputGroup select{
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.inputGroup option{
+    padding: px;
+}
+
+.input{
+    border: 1px solid #d48c8c;
+    border-radius: 5px;
+    padding: 5px;
+}
+.button{
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-image: linear-gradient(270deg, $color1-op-50, $color1, $color1-op-50);
+    &:hover{
+        background-image: linear-gradient(270deg, $color4-op-50, $color4, $color4-op-50);
+        font-weight: bolder;
+    }
+}
+
+@media screen and (max-width: 1024px){
+    .container{
+        margin-left: 0;
+    }
+    
+}
+
+@media screen and (max-width: 768px){
+    .container{
+        margin-left: 0;
+    }
+    
+}

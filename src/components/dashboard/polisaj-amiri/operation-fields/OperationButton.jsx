@@ -12,7 +12,6 @@ const OperationButton = ({order, operation, productionProcess}) => {
     const [productionQuantity, setProductionQuantity] = useState('');
     
     useEffect(() => {
-        console.log('Operations:', operation);
     }, [operation]);
 
 
@@ -24,7 +23,8 @@ const OperationButton = ({order, operation, productionProcess}) => {
 
     const handleQuantityChange = (e) => {
         const value = e.target.value;
-        if (value > 0) {
+        const isNumeric = /^\d+$/.test(value);
+        if (value > 0 && isNumeric) {
             setProductionQuantity(value);
         } else {
             setProductionQuantity('');
@@ -47,10 +47,12 @@ const OperationButton = ({order, operation, productionProcess}) => {
             const response = await polisajAction(formData, operationId, order.id); 
 
             if (response.success) {
-                swAlert(response.message);
+                swAlert(response.message, 'success', '', 4000);
+            }else {
+                swAlert(response.message, 'error', '', 4000);
             }
         } catch (error) {
-            swAlert(error.message, 'error');
+            swAlert(error.message, 'error', '', 4000);
         } finally {
             togglePopup();
             setProductionQuantity('');

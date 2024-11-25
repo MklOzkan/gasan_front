@@ -26,7 +26,7 @@ const KaliteKontrolOperations = ({ responses }) => {
 
     return (
         <main >
-            <PageHeader>Kalite Kontrol Amiri</PageHeader>
+            <PageHeader>Kalİte Kontrol Amİrİ</PageHeader>
             <Spacer height={5} />
             <OrderForOperation order={returnBody} />
                 <div className={styles.table_container}>

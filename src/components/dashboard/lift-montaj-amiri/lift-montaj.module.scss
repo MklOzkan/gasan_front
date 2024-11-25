@@ -1,4 +1,5 @@
 @use "@/styles/variables" as v;
+@use '@/styles/variables' as *;
 
 .main_container{
     display: flex;
@@ -93,6 +94,18 @@
 .table_head{
     margin-bottom: 10px;
     background-color: rgba(0, 255, 255, 0.185);
+}
+
+.islenmekte{
+    background-color: $clr-warning-light;
+}
+
+.tamamlandi{
+    background-color: $clr-success-light;
+}
+
+.iptal{
+    background-color: $clr-danger-light;
 }
 
 .table_body:hover{

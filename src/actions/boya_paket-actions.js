@@ -17,14 +17,16 @@ import {
 
 export const boyaAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from boruKaynakAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateBoya(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/boya-paketleme-amiri/${orderId}`);
         return {
@@ -41,14 +43,16 @@ export const boyaAction = async (formData, operationId, orderId) => {
 
 export const paketlemeAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from updateLiftMontaj:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updatePaketleme(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/boya-paketleme-amiri/${orderId}`);
         return {
@@ -69,7 +73,10 @@ export const rollBackLastChangeAction = async (operationId, orderId) => {
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/boya-paketleme-amiri/${orderId}`);
         return {

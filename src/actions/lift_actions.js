@@ -20,14 +20,16 @@ import {
 
 export const boruKaynakAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from boruKaynakAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateBoruKaynak(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/lift-montaj-amiri/${orderId}`);
         return {
@@ -44,14 +46,16 @@ export const boruKaynakAction = async (formData, operationId, orderId) => {
 
 export const liftMontajAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from updateLiftMontaj:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateLiftMontaj(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/lift-montaj-amiri/${orderId}`);
         return {
@@ -68,14 +72,16 @@ export const liftMontajAction = async (formData, operationId, orderId) => {
 
 export const boruKapamaAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from boruKapamaAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateBoruKapama(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/lift-montaj-amiri/${orderId}`);
         return {
@@ -91,14 +97,16 @@ export const boruKapamaAction = async (formData, operationId, orderId) => {
 };
 export const gazDolumAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from gazDolumAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateGazDolum(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/lift-montaj-amiri/${orderId}`);
         return {
@@ -115,14 +123,16 @@ export const gazDolumAction = async (formData, operationId, orderId) => {
 
 export const baslikTakmaAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from testAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateBaslikTakma(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/lift-montaj-amiri/${orderId}`);
         return {
@@ -139,12 +149,14 @@ export const baslikTakmaAction = async (formData, operationId, orderId) => {
 
 export const rollBackLastChangeAction = async (operationId, orderId) => {
     try {
-        console.log('formData from rollBackLastChangeAction:', operationId);
         const res = await rollBackLastChange(operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/lift-montaj-amiri/${orderId}`);
         return {

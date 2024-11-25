@@ -20,7 +20,6 @@ export const getAllOrdersByPage = async (
         }
         return response.json(); // Automatically parse JSON response
     } catch (error) {
-        console.error(error);
         throw error;
     }
 };
@@ -48,3 +47,15 @@ export const getReports = async (orderId) => {
 
     return response;
 }
+
+export const getAllReports = async (startDate = '', endDate = '') => {
+    const response = fetch(
+        `${API_URL}/yonetici/getCompletedAndActiveReports?startDate=${startDate}&endDate=${endDate}`,
+        {
+            method: 'GET',
+            headers: await getAuthHeader()
+        }
+    );
+
+    return response;
+};

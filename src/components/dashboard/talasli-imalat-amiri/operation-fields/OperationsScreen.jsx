@@ -25,7 +25,6 @@ const OperationButton = ({order, operations, productionProcess}) => {
     ];
 
     useEffect(() => {
-        console.log('Operations:', operations);
     }, [operations, order]);
 
     const compareOperations = (a, b) => {
@@ -44,7 +43,8 @@ const OperationButton = ({order, operations, productionProcess}) => {
 
     const handleQuantityChange = (e) => {
         const value = e.target.value;
-        if (value > 0) {
+        const isNumeric = /^\d+$/.test(value);
+        if (value > 0 && isNumeric) {
             setProductionQuantity(value);
         } else {
             setProductionQuantity('');
@@ -90,16 +90,14 @@ const OperationButton = ({order, operations, productionProcess}) => {
                     throw new Error(`Unknown operation type: ${operationType}`);
             }
 
-            console.log('Response:', response);
-
             if (response.success) {
-                swAlert(response.message, 'success');
-                // setTimeout(() => {   
-                //     window.location.reload();
-                // }, 2000);
+                swAlert(response.message, 'success', '', 4000);
+            }else{
+                swAlert(response.message, 'error', '', 4000);
             }
+
         } catch (error) {
-            swAlert(error.message, 'error');
+            swAlert(error.message, 'error', '', 4000);
         } finally {
             togglePopup();
             setProductionQuantity('');

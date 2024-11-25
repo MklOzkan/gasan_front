@@ -39,7 +39,38 @@
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1440px) {
+    .page_header_container {
+        padding: 10px;
+    }
+
+    .page_header {
+        font-size: 2rem;
+    }
+
+    .signout-button {
+        font-size: 1.5rem;
+    }
+    
+}
+
+@media screen and (max-width: 1024px) {
+    .page_header_container {
+        padding: 10px;
+    }
+
+    .page_header {
+        font-size: 1.5rem;
+    }
+
+    .signout-button {
+        padding: 5px 10px;
+        font-size: 1.2rem;
+    }
+    
+}
+
+@media screen and (max-width: 767px) {
     .page_header_container {
         padding: 10px;
     }
@@ -51,6 +82,23 @@
     .signout-button {
         padding: 5px 10px;
         font-size: 1;
+    }
+    
+}
+
+@media screen and (max-width: 480px) {
+    .page_header_container {
+        padding: 10px;
+    }
+
+    .page_header {
+        font-size: 0.8rem;
+    }
+
+    .signout-button {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+        margin-left: 0;
     }
     
 }

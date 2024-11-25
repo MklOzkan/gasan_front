@@ -22,14 +22,16 @@ import {
 
 export const afterEzmeAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from afterEzme:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateAFterEzme(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
@@ -46,18 +48,16 @@ export const afterEzmeAction = async (formData, operationId, orderId) => {
 
 export const afterMilTaslamaAction = async (formData, operationId, orderId) => {
     try {
-        console.log(
-            'formData from afterMilTaslamaAction:',
-            formData,
-            operationId
-        );
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateAFterMilTaslama(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
@@ -74,14 +74,16 @@ export const afterMilTaslamaAction = async (formData, operationId, orderId) => {
 
 export const afterMontajAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from afterMontajAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateAFterMontaj(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
@@ -98,14 +100,16 @@ export const afterMontajAction = async (formData, operationId, orderId) => {
 
 export const afterPolisajAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from afterPolisajAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await updateAFterPolisaj(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
@@ -122,14 +126,16 @@ export const afterPolisajAction = async (formData, operationId, orderId) => {
 
 export const rollBackPolisajAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from milKoparmaAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await rollbackAfterPolisaj(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
@@ -146,14 +152,16 @@ export const rollBackPolisajAction = async (formData, operationId, orderId) => {
 
 export const rollBackMontajAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from milKoparmaAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
         const res = await rollbackAfterMontaj(fields, operationId);
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
@@ -170,16 +178,16 @@ export const rollBackMontajAction = async (formData, operationId, orderId) => {
 
 export const rollBackEzmeAction = async (formData, operationId, orderId) => {
     try {
-        console.log('formData from rolBackEzmeAction:', formData, operationId);
 
         const fields = convertFormDataToJSON(formData);
-        console.log('operationField:', fields.operationField);
         const res = await rollbackAfterEzme(fields, operationId);
         const data = await res.json();
-        console.log('RES in action', res);
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {
@@ -196,20 +204,16 @@ export const rollBackEzmeAction = async (formData, operationId, orderId) => {
 
 export const rollBackMilTaslamaAction = async (formData, operationId, orderId) => {
     try {
-        console.log(
-            'formData from rolBackMilTaslamaAction:',
-            formData,
-            operationId
-        );
 
         const fields = convertFormDataToJSON(formData);
-        console.log('operationField:', fields.operationField);
         const res = await rollbackAfterMilTaslama(fields, operationId);
         const data = await res.json();
-        console.log('RES in action', res);
 
         if (!res.ok) {
-            throw new Error(`${data.message}`);
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
         }
         revalidatePath(`/dashboard/kalite-kontrol-amiri/stage/${orderId}`);
         return {

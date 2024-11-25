@@ -1,3 +1,5 @@
+@use '@/styles/variables' as *;
+
 .main_container{
     display: flex;
     flex-direction: column;
@@ -19,6 +21,20 @@
     align-items: center;
     gap:40px;
 }
+
+.link{
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    background-image: linear-gradient(270deg, $color1-op-50, $color1, $color1-op-50);
+    padding: 15px;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 3px 7px $color1;
+    &:hover{
+        background-image: linear-gradient(270deg, $color4-op-50, $color4, $color4-op-50);
+    }
+}
 .search_input{
     margin-right: 5px;
     padding: 5px;
@@ -27,7 +43,7 @@
 }
 
 .clear_button{
-    background-color: #d48c8c;
+    background-color: $clr-danger-light;
     color: white;
     border: none;
     border-radius: 5px;
@@ -35,7 +51,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     &:hover{
-        background-color: #c75f5f;
+        background-color: $clr-danger-dark;
     }
 }
 
@@ -147,22 +163,16 @@
     margin: 0 auto;
 }
 
-.processing{
-    background-color: #e7f706ad;
-    color: #050505;
-    font-weight: bolder;
+.islenmekte{
+    background-color: $clr-warning-light;
 }
 
-.completed{
-    background-color: #3ae05e;
-    color: white;
-    font-weight: bolder;
+.tamamlandi{
+    background-color: $clr-success-light;
 }
 
-.cancelled{
-    background-color: #e05e5e;
-    color: white;
-    font-weight: bolder;
+.iptal{
+    background-color: $clr-danger-light;
 }
 
 .table_head{

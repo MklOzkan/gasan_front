@@ -32,18 +32,40 @@
 }
 
 .table_body td {
-    padding: 10px 15px; /* Padding inside table cells */
     border-bottom: 1px solid #f18e8e; /* Light border between rows */
 }
 
-/* Highlight the total row */
-.total_row th {
+.total_row{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    text-align: center;
+    align-items: center;
+    gap: 20px;
+    
+    
+}
+
+.total_row td:first-child {
+    font-weight: bold; /* Bold text */
+    padding-right: 10px;
+}
+
+.total_row td {
+    margin-top: 10px;
+    font-weight: bold; /* Bold text */
+    padding-top: 10px;
+}
+
+.total_row td {
     margin-top: 10px;
     font-weight: bold; /* Bold text */
     padding-top: 10px;
     border-bottom: 1px solid #218838;
     
 }
+
+
 
 /* Edit button inside table cells */
 .edit_button {

@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import { Pagination } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
+
 import styles from './other-orders.module.scss';
+import { Paginations } from '@/components/common/Paginations';
 
 const OtherOrders = ({ orders, searchParams }) => {
     const { content, page } = orders;
@@ -15,14 +17,19 @@ const OtherOrders = ({ orders, searchParams }) => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [filteredContent, setFilteredContent] = useState(content);
+    const [currentUrl, setCurrentUrl] = useState('');
 
     const resetSearch = () => setSearchTerm('');
     const resetStartDate = () => setStartDate('');
     const resetEndDate = () => setEndDate('');
 
     useEffect(() => {
+        const url = new URL(window.location.href);
+
+        setCurrentUrl(url.pathname);
+        router.push(url.toString());
         
-    }, [searchTerm, startDate, endDate, content]);
+    }, [searchTerm, startDate, endDate, content, router]);
 
     const handleRowClick = (order) => {
         router.push(`/dashboard/yonetici-menu/musteri-islemleri/${order.id}`);
@@ -58,7 +65,7 @@ const OtherOrders = ({ orders, searchParams }) => {
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => handleSorting('customerName')}
                             >
-                                Müşter Adı
+                                Müşteri Adı
                                 {sortBy === 'customerName' &&
                                     (sortOrder === 'asc' ? ' 🔼' : ' 🔽')}
                             </th>
@@ -131,17 +138,12 @@ const OtherOrders = ({ orders, searchParams }) => {
                     </tbody>
                 </table>
             </div>
-            <Pagination className={styles.pagination}>
-                {[...Array(totalPages).keys()].map((pageIn) => (
-                    <Pagination.Item
-                        key={pageIn}
-                        active={pageIn === number - 1}
-                        onClick={() => handlePageChange(pageIn)}
-                    >
-                        {pageIn + 1}
-                    </Pagination.Item>
-                ))}
-            </Pagination>
+            <Paginations
+                baseUrl={currentUrl}
+                currentPage={number+1}
+                size={size}
+                totalPages={totalPages}
+            />
         </main>
     );
 };
