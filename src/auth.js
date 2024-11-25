@@ -85,7 +85,11 @@ const config = {
         signIn: '/login',
         signOut: '/'
     },
-    trustHost: ['localhost']
+    trustHost: [
+        'localhost',
+        'https://3.75.205.100:8090',
+        'https://gasan-app.vercel.app'
+    ]
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
