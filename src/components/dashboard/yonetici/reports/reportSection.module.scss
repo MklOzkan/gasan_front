@@ -21,8 +21,12 @@
     align-items: center;
     border: 1px solid #e0e0e0;
     background-color: bisque;
-    width: 100%;
+    width: 46.5%;
     padding: 10px;
+    @media screen and (max-width: 2300px) {
+        width: 60%;
+        
+    }
 }
 
 .products_container {
@@ -144,7 +148,7 @@
     .container {
         flex-direction: column;
         gap: 10px;
-        width: 100%;
+        width: 77%;
         &:first-child {
             margin-left: 10px;
             margin-right: 0;
@@ -192,6 +196,7 @@
     }
 
     .sectionContainer {
+        width: 87%;
         max-width: 600px;
         font-size: 12;
     }

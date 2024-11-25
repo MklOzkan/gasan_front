@@ -19,7 +19,7 @@ export default function ReportSection({
 
     return (
         <div className={styles.container}>
-            <div className={styles.sectionContainer}>{section}</div>
+            <div className={styles.sectionContainer}> {section}</div>
             <div className={styles.products_container}>
                 <div className={styles.tableWrapper}>
                     <table className={styles.table}>

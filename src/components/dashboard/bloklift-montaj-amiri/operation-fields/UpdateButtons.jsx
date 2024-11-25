@@ -20,24 +20,12 @@ const operationList = {
     TEST: 'TEST'
 };
 
-const operationOrderForBlokLift = [
-    'BLOK_LIFT_MONTAJ',
-    'BORU_KAPAMA',
-    'GAZ_DOLUM',
-    'TEST',
-];
-const operationOrderForDamper = ['BORU_KAPAMA','BORU_KAYNAK','BLOK_LIFT_MONTAJ', 'GAZ_DOLUM', 'TEST'];
-
-const UpdateButtons = ({order, operations}) => {
-    const [isPopupOpen, setIsPopupOpen] = useState(null); 
+const UpdateButtons = ({ order, operations }) => {
+    const [isPopupOpen, setIsPopupOpen] = useState(null);
     const [productionQuantity, setProductionQuantity] = useState('');
     const [operationColors, setOperationColors] = useState([]);
-    const [sortedOperations, setSortedOperations] = useState([]);
-    const [operationOrder, setOperationOrder] = useState([]);     
-    
 
     useEffect(() => {
-        
         const setColor = (operation) => {
             if (
                 operation.completedQuantity >= order.orderQuantity &&
@@ -58,26 +46,21 @@ const UpdateButtons = ({order, operations}) => {
             setColor(operation)
         );
         setOperationColors(updatedColors);
-        
-
     }, [operations, order]);
 
-    
-
-
     const togglePopup = (operationId) => {
-        setIsPopupOpen((prev) => (prev === operationId ? null : operationId)); 
+        setIsPopupOpen((prev) => (prev === operationId ? null : operationId));
     };
 
     const handleQuantityChange = (e) => {
         const value = e.target.value;
-        if (value > 0) {
+        const isNumeric = /^\d+$/.test(value);
+        if (value > 0 && isNumeric) {
             setProductionQuantity(value);
         } else {
             setProductionQuantity('');
         }
     };
-
 
     const handleSubmit = async (operationId, operationType, producedAmount) => {
         try {
@@ -90,19 +73,40 @@ const UpdateButtons = ({order, operations}) => {
 
             switch (operationType) {
                 case 'BORU_KAYNAK':
-                    response = await boruKaynakAction(formData, operationId, order.id);
+                    response = await boruKaynakAction(
+                        formData,
+                        operationId,
+                        order.id
+                    );
                     break;
                 case 'BLOK_LIFT_MONTAJ':
-                    response = await blMontajAction(formData, operationId, order.id);
+                    response = await blMontajAction(
+                        formData,
+                        operationId,
+                        order.id
+                    );
                     break;
                 case 'BORU_KAPAMA':
-                    response = await boruKapamaAction(formData,operationId,order.orderType, order.id);
+                    response = await boruKapamaAction(
+                        formData,
+                        operationId,
+                        order.orderType,
+                        order.id
+                    );
                     break;
                 case 'GAZ_DOLUM':
-                    response = await gazDolumAction(formData, operationId, order.id);
+                    response = await gazDolumAction(
+                        formData,
+                        operationId,
+                        order.id
+                    );
                     break;
                 case 'TEST':
-                    response = await testAction(formData, operationId, order.id);
+                    response = await testAction(
+                        formData,
+                        operationId,
+                        order.id
+                    );
                     break;
                 default:
                     throw new Error(`Unknown operation type: ${operationType}`);
@@ -121,127 +125,136 @@ const UpdateButtons = ({order, operations}) => {
         }
     };
 
-  return (
-      <main className={styles.main_container}>
-          <div className={styles.inner_container}>
-              {Array.isArray(sortedOperations) &&
-              operations.length > 0 ? (
-                  operations.map((operation, index) => (
-                      <div key={index}>
-                          <div>
-                              <button
-                                  onClick={() => togglePopup(operation.id)}
-                                  className={`${styles.polygon_button} ${
-                                      styles[`index-${index}`]
-                                  }
+    return (
+        <main className={styles.main_container}>
+            <div className={styles.inner_container}>
+                {Array.isArray(operations) && operations.length > 0 ? (
+                    operations.map((operation, index) => (
+                        <div key={index}>
+                            <div>
+                                <button
+                                    onClick={() => togglePopup(operation.id)}
+                                    className={`${styles.polygon_button} ${
+                                        styles[`index-${index}`]
+                                    }
                                       ${styles[operationColors[index]]}
                                       `}
-                                  disabled={operation.remainingQuantity <= 0}
-                              >
-                                  {operationList[operation.operationType]}
-                              </button>
-                          </div>
-                          {isPopupOpen === operation.id && (
-                              <div className={styles.popup}>
-                                  <div
-                                      className={styles.popup_backdrop}
-                                      onClick={() => togglePopup(null)}
-                                  ></div>
-                                  <div className={styles.popup_inner}>
-                                      <h2>Üretilen Adedi Giriniz</h2>
-                                      <input
-                                          type="number"
-                                          min={0}
-                                          value={productionQuantity}
-                                          onChange={handleQuantityChange}
-                                      />
-                                      <div className={styles.popup_button}>
-                                          <button
-                                              onClick={() =>
-                                                  // Log entire operation object
-                                                  handleSubmit(
-                                                      operation.id,
-                                                      operation.operationType,
-                                                      productionQuantity
-                                                  )
-                                              }
-                                              className={styles.onay_button}
-                                              disabled={
-                                                  productionQuantity === ''
-                                              }
-                                              type="number"
-                                              min={0}
-                                          >
-                                              Onayla
-                                          </button>
-                                          <button
-                                              onClick={togglePopup}
-                                              className={styles.iptal_button}
-                                          >
-                                              İptal
-                                          </button>
-                                      </div>
-                                  </div>
-                              </div>
-                          )}
-                      </div>
-                  ))
-              ) : (
-                  <p>Mevcut işlem yok.</p>
-              )}
-          </div>
-          <div className={styles.info_container}>
-              {/* <div className={styles.table_container}>
-                  <table className={styles.mil_pipe}>
-                      <tbody>
-                          <tr className={styles.mil}>
-                              <td>Üretilen Toplam Mil</td>
-                              <td>=</td>
-                              {operations
-                                  .filter(
-                                      (operation) =>
-                                          operation.operationType ===
-                                          'BLOK_LIFT_MONTAJ'
-                                  )
-                                  .map((operation, index) => (
-                                      <td key={index}>{operation.milCount}</td>
-                                  ))}
-                          </tr>
-                          <tr className={styles.mil}>
-                              <td>Üretilen Toplam Boru</td>
-                              <td>=</td>
-                              {operations
-                                  .filter(
-                                      (operation) =>
-                                          operation.operationType ===
-                                          'BLOK_LIFT_MONTAJ'
-                                  )
-                                  .map((operation, index) => (
-                                      <td key={index}>{operation.pipeCount}</td>
-                                  ))}
-                          </tr>
-                          <tr className={styles.mil}>
-                              <td>Biten Montaj</td>
-                              <td>=</td>
-                              {operations
-                                  .filter(
-                                      (operation) =>
-                                          operation.operationType === 'TEST'
-                                  )
-                                  .map((operation, index) => (
-                                      <td key={index}>
-                                          {operation.completedQuantity}
-                                      </td>
-                                  ))}
-                          </tr>
-                      </tbody>
-                  </table>
-              </div> */}
-              <InfoAndRollBack order={order} operations={operations} />
-          </div>
-          <ScrapOperation operations={operations} order={order} />
-      </main>
-  );
-}
+                                    disabled={operation.remainingQuantity <= 0}
+                                >
+                                    {operationList[operation.operationType]}
+                                </button>
+                            </div>
+                            {isPopupOpen === operation.id && (
+                                <div className={styles.popup}>
+                                    <div
+                                        className={styles.popup_backdrop}
+                                        onClick={() => togglePopup(null)}
+                                    ></div>
+                                    <div className={styles.popup_inner}>
+                                        <h2>Üretilen Adedi Giriniz</h2>
+                                        <input
+                                            type="number"
+                                            min={0}
+                                            value={productionQuantity}
+                                            onChange={handleQuantityChange}
+                                            onKeyDown={(e) => {
+                                                if (
+                                                    !/^\d$|Backspace|ArrowLeft|ArrowRight|Delete|Tab/.test(
+                                                        e.key
+                                                    )
+                                                ) {
+                                                    e.preventDefault();
+                                                }
+                                            }}
+                                            onPaste={(e) => {
+                                                if (
+                                                    !/^\d+$/.test(
+                                                        e.clipboardData.getData(
+                                                            'Text'
+                                                        )
+                                                    )
+                                                ) {
+                                                    e.preventDefault();
+                                                }
+                                            }}
+                                        />
+                                        <div className={styles.popup_button}>
+                                            <button
+                                                onClick={() =>
+                                                    // Log entire operation object
+                                                    handleSubmit(
+                                                        operation.id,
+                                                        operation.operationType,
+                                                        productionQuantity
+                                                    )
+                                                }
+                                                className={styles.onay_button}
+                                                disabled={
+                                                    productionQuantity === ''
+                                                }
+                                                type="number"
+                                                min={0}
+                                            >
+                                                Onayla
+                                            </button>
+                                            <button
+                                                onClick={togglePopup}
+                                                className={styles.iptal_button}
+                                            >
+                                                İptal
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <p>Mevcut işlem yok.</p>
+                )}
+            </div>
+            <div className={styles.info_container}>
+                <div className={styles.table_container}>
+                    <table className={styles.mil_pipe}>
+                        <tbody>
+                            <tr className={styles.mil}>
+                                <td>Montaja Hazır Mil</td>
+                                <td>=</td>
+                                {operations
+                                    .filter(
+                                        (operation) =>
+                                            operation.operationType ===
+                                            'BLOK_LIFT_MONTAJ'
+                                    )
+                                    .map((operation, index) => (
+                                        <td key={index}>
+                                            {operation.milCount}
+                                        </td>
+                                    ))}
+                            </tr>
+                            <tr className={styles.mil}>
+                                <td>Montaja Hazır Boru</td>
+                                <td>=</td>
+                                {operations
+                                    .filter(
+                                        (operation) =>
+                                            operation.operationType ===
+                                            'BLOK_LIFT_MONTAJ'
+                                    )
+                                    .map((operation, index) => (
+                                        <td key={index}>
+                                            {operation.pipeCount}
+                                        </td>
+                                    ))}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <InfoAndRollBack order={order} operations={operations} />
+            </div>
+            <ScrapOperation operations={operations} order={order} />
+        </main>
+    );
+};
 
-export default UpdateButtons
+export default UpdateButtons;

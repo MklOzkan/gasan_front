@@ -55,13 +55,33 @@ const OperationCol = ({
                         onClick={() => togglePopup(null)}
                     ></div>
                     <div className={styles.popup_inner}>
-                        <h2 className={styles.input_label}>Üretilen Adedi Giriniz</h2>
+                        <h2 className={styles.input_label}>
+                            Üretilen Adedi Giriniz
+                        </h2>
                         <input
                             type="number"
                             min={0}
                             value={productionQuantity}
                             onChange={handleQuantityChange}
                             className={styles.input}
+                            onKeyDown={(e) => {
+                                if (
+                                    !/^\d$|Backspace|ArrowLeft|ArrowRight|Delete|Tab/.test(
+                                        e.key
+                                    )
+                                ) {
+                                    e.preventDefault();
+                                }
+                            }}
+                            onPaste={(e) => {
+                                if (
+                                    !/^\d+$/.test(
+                                        e.clipboardData.getData('Text')
+                                    )
+                                ) {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                         <div className={styles.popup_button}>
                             <button

@@ -76,6 +76,7 @@ export default function ScrapOperation({ operations, order }) {
 
     return (
         <main className={styles.container}>
+            <h3 className='text-center'>Hurda İşlemleri</h3>
             {operations.map((operation, index) => (
                 <div key={index} className={styles.innerContainer}>
                     <p>{config.talasliList[operation.operationType]}</p>

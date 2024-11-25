@@ -56,10 +56,10 @@ const OperationsInfo = ({ operations, order }) => {
                             {/* Insert total produced MIL row before BORU_KESME_HAVSA */}
                             {operation.operationType === 'BORU_KESME_HAVSA' && (
                                 <tr className={styles.total_row}>
-                                    <th>Toplam Üretilen Mil</th>
+                                    <td>Toplam Üretilen Mil</td>
 
-                                    <th>{completedQty}</th>
-                                    <th></th>
+                                    <td>{completedQty}</td>
+                                    <td></td>
                                 </tr>
                             )}
                             <tr className={styles.table_body}>

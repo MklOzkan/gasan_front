@@ -98,6 +98,24 @@ const OperationCol = ({
                             value={productionQuantity}
                             onChange={handleQuantityChange}
                             className={styles.inputNumber}
+                            onKeyDown={(e) => {
+                                if (
+                                    !/^\d$|Backspace|ArrowLeft|ArrowRight|Delete|Tab/.test(
+                                        e.key
+                                    )
+                                ) {
+                                    e.preventDefault();
+                                }
+                            }}
+                            onPaste={(e) => {
+                                if (
+                                    !/^\d+$/.test(
+                                        e.clipboardData.getData('Text')
+                                    )
+                                ) {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                         <div className={styles.popup_button}>
                             <button

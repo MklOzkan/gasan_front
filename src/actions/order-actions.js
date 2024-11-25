@@ -45,7 +45,7 @@ export const createOrderAction = async (formData) => {
 
 export const updateOrderAction = async (formData) => {
     if (!formData.get('id')) throw new Error('Id is missing');
-    console.log('formData in Action', formData);
+    console.log('formData in _Update Order Action', formData);
     try {
         const fields = convertFormDataToJSON(formData);
 

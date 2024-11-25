@@ -6,10 +6,7 @@ import InfoAndRollBack from './InfosAndRollBack';
 import { boyaAction, paketlemeAction } from '@/actions/boya_paket-actions';
 import { swAlert } from '@/helpers/swal';
 
-const operationOrder = [
-    'BOYA',
-    'PAKETLEME'
-];
+const operationOrder = ['BOYA', 'PAKETLEME'];
 
 const UpdateButtons = ({ order, operations }) => {
     const [isPopupOpen, setIsPopupOpen] = useState(null);
@@ -17,7 +14,6 @@ const UpdateButtons = ({ order, operations }) => {
     const [operationColors, setOperationColors] = useState([]);
 
     useEffect(() => {
-
         const setColor = (operation) => {
             if (
                 operation.completedQuantity >= order.orderQuantity &&
@@ -34,9 +30,10 @@ const UpdateButtons = ({ order, operations }) => {
             }
         };
 
-        const updatedColors = operations.map((operation) =>setColor(operation));
+        const updatedColors = operations.map((operation) =>
+            setColor(operation)
+        );
         setOperationColors(updatedColors);
-
     }, [operations, order]);
 
     const compareOperations = (a, b) => {
@@ -54,7 +51,8 @@ const UpdateButtons = ({ order, operations }) => {
 
     const handleQuantityChange = (e) => {
         const value = e.target.value;
-        if (value > 0) {
+        const isNumeric = /^\d+$/.test(value);
+        if (value > 0 && isNumeric) {
             setProductionQuantity(value);
         } else {
             setProductionQuantity('');
@@ -72,10 +70,18 @@ const UpdateButtons = ({ order, operations }) => {
 
             switch (operationType) {
                 case 'BOYA':
-                    response = await boyaAction(formData, operationId, order.id);
+                    response = await boyaAction(
+                        formData,
+                        operationId,
+                        order.id
+                    );
                     break;
                 case 'PAKETLEME':
-                    response = await paketlemeAction(formData, operationId, order.id);
+                    response = await paketlemeAction(
+                        formData,
+                        operationId,
+                        order.id
+                    );
                     break;
                 default:
                     throw new Error(`Bilinmeyen islem türü: ${operationType}`);
@@ -127,6 +133,26 @@ const UpdateButtons = ({ order, operations }) => {
                                             min={0}
                                             value={productionQuantity}
                                             onChange={handleQuantityChange}
+                                            onKeyDown={(e) => {
+                                                if (
+                                                    !/^\d$|Backspace|ArrowLeft|ArrowRight|Delete|Tab/.test(
+                                                        e.key
+                                                    )
+                                                ) {
+                                                    e.preventDefault();
+                                                }
+                                            }}
+                                            onPaste={(e) => {
+                                                if (
+                                                    !/^\d+$/.test(
+                                                        e.clipboardData.getData(
+                                                            'Text'
+                                                        )
+                                                    )
+                                                ) {
+                                                    e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <div className={styles.popup_button}>
                                             <button
@@ -173,7 +199,6 @@ const UpdateButtons = ({ order, operations }) => {
                 )}
             </div>
             <div className={styles.info_container}>
-                
                 <InfoAndRollBack order={order} operations={sortedOperations} />
             </div>
         </main>
