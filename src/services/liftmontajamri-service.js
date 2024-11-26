@@ -102,3 +102,14 @@ export const rollBackLastChange = async (operationId) => {
     );
     return response;
 };
+
+export const rollBackScrap = async (operationId) => {
+    const response = await fetch(
+        `${API_URL}/montaj/rollBackScrapForLift/${operationId}`,
+        {
+            method: 'PUT',
+            headers: await getAuthHeader()
+        }
+    );
+    return response;
+};

@@ -100,9 +100,9 @@ export const rollBackLastChange = async (operationId) => {
     return response;
 };
 
-export const updateScrap = async (payload, id) => {
+export const updateScrap = async (payload, id, orderType) => {
     const response = await fetch(
-        `${API_URL}/montaj/updateScrapCount/${id}`,
+        `${API_URL}/montaj/updateScrapCount/${id}/${orderType}`,
         {
             method: 'PUT',
             headers: await getAuthHeader(),

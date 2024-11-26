@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { scrapAction, rollBackAction } from '@/actions/bloklift_actions';
+import { scrapAction, rollBackActionforBL } from '@/actions/bloklift_actions';
+import { rollBackActionforLift } from '@/actions/lift_actions';
 import { swAlert, swConfirm } from '@/helpers/swal';
 import { config } from '@/helpers/config';
 import styles from './scrap-operation.module.scss';
 const blOperation = config.blOperationsForBL;
-const damperOperation =config.blOperationsForDamper;
+const damperOperation = config.blOperationsForDamper;
+const liftOperation = config.liftOperations;
 
 export default function ScrapOperation({ operations, order }) {
     const [afterTest, setAfterTest] = useState(null);
@@ -40,12 +42,16 @@ export default function ScrapOperation({ operations, order }) {
             
         formData.append('scrapCountAfterTest', parseInt(afterTest, 10));
         const operationId = testOp?.id;
-        const orderType = 'Blok Lift';
+        const orderType = order?.orderType;
+
+        console.log('orderType', orderType);
 
         if (!operationId) {
             swAlert('Operation ID not found', 'error', '', 4000);
             return;
         }
+
+        
 
         const response = await scrapAction(formData, operationId, orderType, order.id);
 
@@ -65,13 +71,20 @@ export default function ScrapOperation({ operations, order }) {
             `En son girilen ${operation.lastCompletedScrapCount} adetlik üretimi geri almak istediğinize emin misiniz??`
         );
         if (!answer.isConfirmed) return;
-        const res = await rollBackAction(operation.id, order.id);
+        let res;
+        if(order?.orderType === 'Blok Lift' || order?.orderType === 'Damper'){
+            res = await rollBackActionforBL(operation.id, order.id);
+        } else {
+            res = await rollBackActionforLift(operation.id, order.id);
+        }
         if (res.success) {
             swAlert(res.message, 'success', '', 4000);
         } else {
             swAlert(res.message, 'error', '', 4000);
         }
     };
+
+    console.log('operations', operations);
 
 
     return (
@@ -102,8 +115,8 @@ export default function ScrapOperation({ operations, order }) {
                         value={scrapField || ''}
                     >
                         <option value="">Seçiniz</option>
-                        {order.orderType === 'BLOKLIFT'
-                            ? blOperation.map((operation) => (
+                        {order.orderType === 'Blok Lift' || order.orderType === 'Damper'
+                            ? ( order.orderType === 'Blok Lift' ? blOperation.map((operation) => (
                                   <option key={operation} value={operation}>
                                       {config.talasliList[operation]}
                                   </option>
@@ -112,7 +125,11 @@ export default function ScrapOperation({ operations, order }) {
                                   <option key={operation} value={operation}>
                                       {config.talasliList[operation]}
                                   </option>
-                              ))}
+                            ))) : liftOperation.map((operation) => (
+                                  <option key={operation} value={operation}>
+                                      {config.talasliList[operation]}
+                                  </option>
+                            ))}
                     </select>
 
                     <input
