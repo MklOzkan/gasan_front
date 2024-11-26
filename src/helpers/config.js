@@ -1,6 +1,6 @@
 export const config = {
     api: {
-        baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://3.120.130.175:8090'
+        baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
     },
     project: {
         name: 'Gasan App',

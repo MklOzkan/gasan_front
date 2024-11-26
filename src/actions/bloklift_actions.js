@@ -178,10 +178,11 @@ export const rollBackLastChangeAction = async (operationId, orderId) => {
     }
 };
 
-export const scrapAction = async (formData, operationId, orderId) => {
+export const scrapAction = async (formData, operationId, orderType, orderId) => {
     try {
         const fields = convertFormDataToJSON(formData);
-        const res = await updateScrap(fields, operationId);
+        console.log('orderType', orderType);
+        const res = await updateScrap(fields, operationId, orderType);
         const data = await res.json();
 
         if (!res.ok) {
@@ -190,7 +191,12 @@ export const scrapAction = async (formData, operationId, orderId) => {
                 message: data.message || 'Bir hata oluştu'
             };
         }
-        revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
+        if (orderType === 'DAMPER' || orderType === 'Blok Lift') {
+            revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
+        } else {
+            revalidatePath(`/dashboard/lift-montaj-amiri/${orderId}`);
+        }
+        
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
@@ -200,7 +206,7 @@ export const scrapAction = async (formData, operationId, orderId) => {
     }
 };
 
-export const rollBackAction = async (operationId, orderId) => {
+export const rollBackActionforBL = async (operationId, orderId) => {
     try {
         const res = await rollBackScrap(operationId);
         const data = await res.json();

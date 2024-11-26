@@ -15,7 +15,8 @@ import {
     updateLiftMontaj,
     updateGazDolum,
     updateBaslikTakma,
-    rollBackLastChange
+    rollBackLastChange,
+    rollBackScrap
 } from '@/services/liftmontajamri-service';
 
 export const boruKaynakAction = async (formData, operationId, orderId) => {
@@ -162,6 +163,30 @@ export const rollBackLastChangeAction = async (operationId, orderId) => {
         return {
             success: true,
             message: data.message || 'Sipariş başarıyla güncellendi'
+        };
+    } catch (err) {
+        if (err instanceof YupValidationError) {
+            return transformYupErrors(err.inner);
+        }
+        throw err;
+    }
+};
+
+export const rollBackActionforLift = async (operationId, orderId) => {
+    try {
+        const res = await rollBackScrap(operationId);
+        const data = await res.json();
+
+        if (!res.ok) {
+            return {
+                success: false,
+                message: data.message || 'Bir hata oluştu'
+            };
+        }
+        revalidatePath(`/dashboard/bloklift-montaj-amiri/${orderId}`);
+        return {
+            success: true,
+            message: data.message || 'Güncellendi'
         };
     } catch (err) {
         if (err instanceof YupValidationError) {

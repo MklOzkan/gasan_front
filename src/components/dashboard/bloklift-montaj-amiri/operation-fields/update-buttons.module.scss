@@ -7,14 +7,19 @@
     margin-top: 10px;
     padding-bottom: 30px;
     @media screen  and (max-width: 1024px) {
-        flex-direction: row;
-        gap: 10px;
-        margin-bottom: 50px;
+        width: 100%;
         
     }
-    @media screen  and (max-width: 767px) {
+
+    @media screen  and (max-width: 900px) {
         flex-direction: column;
-        gap: 20px;
+        gap: 30px;
+        
+    }
+
+    @media screen  and (max-width: 768px) {
+        flex-direction: column;
+        gap: 50px;
         margin-bottom: 50px;
         
     }
@@ -22,13 +27,13 @@
 
 
 .inner_container{
-    margin-right: 100px;
-    @media screen  and (max-width: 924px) {
+    margin-right: 70px;
+    @media screen  and (max-width: 1024px) {
         flex-direction: row;
         margin-right: 0;
         
     }
-    @media screen  and (max-width: 767px) {
+    @media screen  and (max-width: 768px) {
         margin-right: 0;
         
     }
@@ -113,6 +118,11 @@
     margin-bottom: -30px;
     &:hover {
         background-color: rgba(236, 209, 157, 0.685);
+    }
+
+    @media screen  and (max-width: 1024px) {
+        width: 350px;
+        
     }
    
 }
@@ -235,12 +245,14 @@
 }
 @media screen and (max-width: 1024px) {
     .polygon_button{
-        width: 250px;
-        height: 70px;
+        width: 300px;
     }
-    .kalite_kontrol_button{
-        width: 250px;
-        height: 60px;
+    
+}
+
+@media screen and (max-width: 900px) {
+    .polygon_button{
+        width: 350px;
     }
     
 }
@@ -248,11 +260,6 @@
 @media screen and (max-width: 768px) {
     .polygon_button{
         width: 350px;
-        height: 120px;
-    }
-    .kalite_kontrol_button{
-        width: 350px;
-        height: 80px;
     }
     
 }

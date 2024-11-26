@@ -11,6 +11,7 @@ import {
     boruKaynakAction
 } from '@/actions/lift_actions';
 import { swAlert } from '@/helpers/swal';
+import ScrapOperation from '@/components/common/scrap-for-montaj/ScrapOperation';
 const operationList = {
     BORU_KAPAMA: 'BORU KAPAMA',
     BORU_KAYNAK: 'BORU KAYNAK',
@@ -255,6 +256,7 @@ const UpdateButtons = ({ order, operations }) => {
                 </div>
                 <InfoAndRollBack order={order} operations={sortedOperations} />
             </div>
+            <ScrapOperation operations={operations} order={order} />
         </main>
     );
 };

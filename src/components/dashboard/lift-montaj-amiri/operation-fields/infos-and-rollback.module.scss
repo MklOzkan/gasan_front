@@ -11,6 +11,18 @@
     table-layout: fixed; /* Fixed table layout */
     justify-content: center;
     align-items: center;
+
+    @media screen and (max-width: 1024px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0 auto;
+        margin-top: 20px;
+        width: 350px;
+        
+    }
     @media screen and (max-width: 768px) {
         display: flex;
         flex-direction: column;
@@ -19,7 +31,7 @@
         padding: 0;
         margin: 0 auto;
         margin-top: 20px;
-        width: 100%;
+        width: 350px;
         
     }
 }
