@@ -139,7 +139,7 @@ export const config = {
         {
             urlRegex:
                 /\/dashboard\/yonetici-menu\/musteri-islemleri\/musteri-reports$/,
-            roles: ['Yonetici']
+            roles: ['Yonetici', 'UretimPlanlama']
         },
         {
             urlRegex: /\/dashboard\/yonetici-menu\/update-password$/,
