@@ -85,6 +85,14 @@ const Uretim = ({ data, sortBy, sortOrder }) => {
                             Yeni Sipariş
                         </Link>
                         <DownloadButton />
+                        <Link
+                            className={styles.link}
+                            href={
+                                '/dashboard/yonetici-menu/musteri-islemleri/musteri-reports/'
+                            }
+                        >
+                            Rapor
+                        </Link>
                     </div>
 
                     <div className={styles.filter_container}>
@@ -160,7 +168,7 @@ const Uretim = ({ data, sortBy, sortOrder }) => {
                     currentUrl={currentUrl}
                     orders={filteredContent}
                     totalPages={totalPages}
-                    currentPage={number+1}
+                    currentPage={number + 1}
                     totalElements={totalElements}
                     sortBy={sortBy}
                     sortOrder={sortOrder}
