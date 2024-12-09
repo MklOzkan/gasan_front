@@ -76,8 +76,9 @@ const OperationCol = ({
                 }`}
                 style={{ backgroundColor: bgColor, color: txColor }}
                 disabled={
-                    operation.remainingQuantity === 0 &&
-                    operationsThatDisable.includes(operation.operationType)
+                    (order.orderType === 'Blok Lift' && operation.operationType === 'MIL_TASLAMA')?false:
+                    (operation.remainingQuantity === 0 &&
+                    operationsThatDisable.includes(operation.operationType))
                 }
                 data-operation-type={operation.operationType}
                 //disabled={handleNextOperationButton()}

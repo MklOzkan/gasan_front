@@ -14,6 +14,11 @@
         background-image: linear-gradient(270deg, v.$color4-op-50, v.$color4, v.$color4-op-50);
     }
 
+    @media screen and (max-width: 1024px) {
+        width: 250px;
+        
+    }
+
     @media screen and (max-width: 768px) {
         width: 100%;
         

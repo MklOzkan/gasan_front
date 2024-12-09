@@ -101,6 +101,7 @@ export default function ScrapOperation({ operations, order }) {
                         }
                         onClick={() => rollBack(operation)}
                     >
+                        {/* kontrol et bloklift hurda görünmüyor */}
                         {operation.scrapCountAfterTest}
                     </button>
                 </div>
