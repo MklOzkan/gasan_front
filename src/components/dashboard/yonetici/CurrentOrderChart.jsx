@@ -1,6 +1,5 @@
 'use client';
 
-
 import { Bar } from 'react-chartjs-2';
 import {
     Chart,
@@ -11,6 +10,7 @@ import {
 } from 'chart.js';
 import { config } from '@/helpers/config';
 import styles from './current-order.module.scss';
+import { use, useEffect } from 'react';
 
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip);
 
@@ -24,6 +24,10 @@ const CurrentOrder = ({
     boyaPaket,
     kalite
 }) => {
+
+    useEffect(() => {
+    }, [order, production, talasli, polisaj, lift, blok, boyaPaket, kalite]);
+    
     const talasliOperations = config.talasliOperations;
     const liftOperations = config.liftOperations;
     const blokOperations = config.blOperationsForBL;
@@ -54,10 +58,10 @@ const CurrentOrder = ({
             );
         } else {
             return (
-            blokOperations.indexOf(a.operationType) -
-            blokOperations.indexOf(b.operationType)
-        );}
-        
+                blokOperations.indexOf(a.operationType) -
+                blokOperations.indexOf(b.operationType)
+            );
+        }
     };
 
     const compareBoyaPaket = (a, b) => {
@@ -86,18 +90,47 @@ const CurrentOrder = ({
         (operation) => operation.operationType === 'BORU_KESME_HAVSA'
     );
 
-    console.log('boruKesme', boruKesme);
+    let milOp;
+    if (order.orderType === 'Blok Lift') {
+        miltaslama = talasli.find(
+            (operation) => operation.operationType === 'MIL_TASLAMA'
+        );
+    } else {
+        milOp = talasli.find(
+            (operation) => operation.operationType === 'MIL_KOPARMA'
+        );
+    }
 
-    const calculatePercentage = (completed, remaining) => {
-        const total = order.orderQuantity> boruKesme.completedQuantity ? order.orderQuantity : boruKesme.completedQuantity;
-        return total > 0 ? ((completed / total) * 100).toFixed(1) : '0';
+    const comparedCount = Math.max(order.orderQuantity, boruKesme.completedQuantity);
+
+    const maxCount = Math.max(comparedCount, milOp.completedQuantity);
+
+    console.log('maxCount', maxCount);  
+    console.log('op', talasli, polisaj, lift)
+
+    const opTypes = [
+        'MIL_KOPARMA',
+        'MIL_TORNALAMA',
+        'MIL_TASLAMA',
+        'ISIL_ISLEM',
+        'POLISAJ'
+    ];
+
+    const calculatePercentage = (operation) => {
+        
+        return maxCount > 0 ?
+            (order.orderType === 'Lift' &&
+                opTypes.includes(operation.operationType) &&
+                order.orderQuantity > milOp.completedQuantity &&
+                order.orderQuantity > boruKesme.completedQuantity ?
+            (((operation.completedQuantity + order.readyMilCount) / maxCount) * 100).toFixed(1) :
+            ((operation.completedQuantity / maxCount) * 100).toFixed(1)) : '0';
     };
 
     // Helper function to create chart data for each operation
     const createChartData = (operation) => {
         const completedPercentage = calculatePercentage(
-            operation.completedQuantity,
-            operation.remainingQuantity
+            operation
         );
         const remainingPercentage = (100 - completedPercentage).toFixed(1);
 
@@ -171,8 +204,7 @@ const CurrentOrder = ({
                             <span className={styles.completedLabel}>
                                 Tamamlanan:{' '}
                                 {calculatePercentage(
-                                    operation.completedQuantity,
-                                    operation.remainingQuantity
+                                    operation
                                 )}
                                 %
                             </span>
@@ -181,8 +213,7 @@ const CurrentOrder = ({
                                 {(
                                     100 -
                                     calculatePercentage(
-                                        operation.completedQuantity,
-                                        operation.remainingQuantity
+                                        operation
                                     )
                                 ).toFixed(1)}
                                 %
@@ -207,6 +238,13 @@ const CurrentOrder = ({
                     Üretilen: {order.finalProductQuantity}
                 </h2>
             </div>
+            {order.orderType === 'Lift' && (
+                <div className={styles.date_container}>
+                    <h2 className={styles.date}>
+                        Hazır Mil Sayısı: {order.readyMilCount}
+                    </h2>
+                </div>
+            )}
             <div className={styles.date_section}>
                 <div className={styles.date_container}>
                     <h2 className={styles.date}>
