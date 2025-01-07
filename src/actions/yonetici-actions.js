@@ -34,22 +34,6 @@ export const updatePasswordAction = async (prevState, formData) => {
     }
 };
 
-export const getCustomerReport = async (orderId) => {
-    try {
-        const res = await getReports(orderId);
-
-        if (!res.ok) {
-            throw new Error(res.mesage || 'Raporlar getirilirken bir hata oluştu');
-        }
-
-        const data = await res.json();
-        revalidatePath(`/dashboard/yonetici-menu/musteri-islemleri/${orderId}`);
-        return data;
-    } catch (err) {
-        throw err;
-    }
-}
-
 export const getAllReportAction = async (startDate, endDate) => {
     try {
         const res = await getAllReports(startDate, endDate);

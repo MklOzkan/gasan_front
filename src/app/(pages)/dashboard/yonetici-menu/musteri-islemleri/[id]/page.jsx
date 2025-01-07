@@ -1,11 +1,16 @@
 import React from 'react';
-import { getCustomerReport } from '@/actions/yonetici-actions';
 import CustomerPage from '@/components/dashboard/yonetici/CustomerPage';
+import { getReports } from '@/services/yonetici-service';
+import PageHeader from '@/components/common/page-header';
+import ErrorPage from '@/components/common/errors/ErrorPage';
+import Spacer from '@/components/common/spacer';
 
-const YoneticiPage = async({ params, searchParams }) => {
-    if (!params.id) throw new Error('id is required', params.id);
+const YoneticiPage = async ({ params, searchParams }) => {
+    
+    try {
+       if (!params.id) throw new Error('id is required', params.id);
 
-    const res = await getCustomerReport(params.id);
+    const res = await getReports(params.id);
 
     return (
         <>
@@ -14,7 +19,17 @@ const YoneticiPage = async({ params, searchParams }) => {
 
             />
         </>
-    );
+    ); 
+    }catch (error) {
+        return (
+            <>
+                <PageHeader>MÜsterİ Raporlari</PageHeader>
+                <Spacer height={150} />
+                <ErrorPage message={error.message} />
+            </>
+        ); 
+    }
+    
 };
 
 export default YoneticiPage;

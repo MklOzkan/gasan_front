@@ -1,3 +1,5 @@
+"use server";
+
 import { getAuthHeader } from '@/helpers/auth-helpers';
 const { config } = require('@/helpers/config');
 
@@ -104,37 +106,6 @@ export const finishOrder = async (orderId) => {
     return response;
 };
 
-export const downloadExcelFile = async (startDate = '', endDate = '') => {
-
-    const response = await fetch(
-        `${API_URL}/orders/download?startDate=${startDate}&endDate=${endDate}`,
-        {
-            method: 'GET',
-            headers: await getAuthHeader()
-        }
-    );
-    if (!response.ok) {
-        return {
-            success: false,
-            message: 'İndirme işlemi sırasında bir hata oluştu.'
-        }
-    }
-    try {
-        const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'orders.xlsx';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    }catch(err){
-        console.log(err);
-    }
-    
-
-    return response;
-};
 
 
 

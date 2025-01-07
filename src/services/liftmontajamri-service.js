@@ -1,3 +1,5 @@
+"use server";
+
 import { getAuthHeader } from '@/helpers/auth-helpers';
 
 const { config } = require('@/helpers/config');

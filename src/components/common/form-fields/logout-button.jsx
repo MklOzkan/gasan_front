@@ -1,10 +1,18 @@
 "use client";
 import React from "react";
 import { signOut } from 'next-auth/react';
+import { useRouter } from "next/navigation";
 
 const LogoutButton = () => {
-    const handleSignOut = () => {
+    const router = useRouter();
+    const handleSignOut = async () => {
+        //  const result = await signOut({ redirect: false }); // Prevent automatic redirection
+        // const logoutUrl = 'http://192.168.0.100:80';
+        // if (result) {
+        //     router.push(logoutUrl); // Manually redirect to the logout URL
+        // }
         signOut({ callbackUrl: '/' });
+
     };
     return (
         <button className="btn btn-primary" onClick={handleSignOut}>

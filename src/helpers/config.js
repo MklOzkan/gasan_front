@@ -1,6 +1,7 @@
 export const config = {
     api: {
-        baseUrl: process.env.NEXT_PUBLIC_API_URL || 'https://backendapp.link'
+        baseUrl: process.env.NEXT_PUBLIC_API_URL
+        // || 'http://spring-boot-gasan:8090'
     },
     project: {
         name: 'Gasan App',
@@ -151,6 +152,22 @@ export const config = {
         },
         {
             urlRegex: /\/dashboard\/uretim\/[0-9]+$/,
+            roles: ['UretimPlanlama']
+        },
+        {
+            urlRegex: /\/dashboard\/uretim\/raporlar\/genel-raporlar$/,
+            roles: ['UretimPlanlama']
+        },
+        {
+            urlRegex: /\/dashboard\/uretim\/raporlar\/musteri-raporlar$/,
+            roles: ['UretimPlanlama']
+        },
+        {
+            urlRegex: /\/dashboard\/uretim\/raporlar/,
+            roles: ['UretimPlanlama']
+        },
+        {
+            urlRegex: /\/dashboard\/uretim\/raporlar\/musteri-raporlari\/[0-9]+$/,
             roles: ['UretimPlanlama']
         },
         {

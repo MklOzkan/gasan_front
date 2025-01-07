@@ -87,11 +87,9 @@ const Uretim = ({ data, sortBy, sortOrder }) => {
                         <DownloadButton />
                         <Link
                             className={styles.btn}
-                            href={
-                                '/dashboard/yonetici-menu/musteri-islemleri/musteri-reports/'
-                            }
+                            href={'/dashboard/uretim/raporlar'}
                         >
-                            Rapor
+                            Raporlar
                         </Link>
                     </div>
 

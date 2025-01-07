@@ -82,10 +82,9 @@ const config = {
     },
 
     pages: {
-        signIn: '/login',
-        signOut: '/'
+        signIn: '/login'
     },
-    trustHost: ['localhost']
+    trustHost: ['localhost', '192.168.0.100']
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
