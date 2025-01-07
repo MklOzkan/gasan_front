@@ -38,14 +38,13 @@ const OrderToolbar = ({
             answer = await swConfirm(
             `${order.orderNumber} numaralı siparişi tamamlamak istediğinize emin misiniz?`
             );
-        } else {
-            swAlert(
-                'Nihai üretim, Sipariş miktarından az olduğu için, Sipariş tamamlanamaz',
-                'error',
-                '',
-                4000
+        } else if (order.finalProductQuantity >= order.orderQuantity*0.5 && order.finalProductQuantity < order.orderQuantity) {
+            answer = await swConfirm(
+                `Sipariş adedi ${order.orderQuantity} ve üretim adedi ${order.finalProductQuantity}. Yinede siparişi tamamlamak istediğinize emin misiniz?`
             );
-            answer = { isConfirmed: false };
+        } else {
+            swAlert('Üretimin tamamlanması için en az sipariş miktarının yarısı kada üretim yapılmalıdır!', 'error', '', 4000);
+            return;
         }
         if (!answer.isConfirmed) return;
 
@@ -92,7 +91,6 @@ const OrderToolbar = ({
                 className="btn-link"
                 variant="danger"
                 onClick={handleDelete}
-                disabled={order.orderStatus === 'Tamamlandı'}
             >
                 <div>
                     <TfiTrash />
@@ -102,7 +100,6 @@ const OrderToolbar = ({
             <button
                 className={`${styles.outer_check}`}
                 onClick={finishOrder}
-                disabled={order.orderStatus === 'Tamamlandı'}
             >
                 <div className={`${styles.inner_check}`}>
                     <FaCheck />

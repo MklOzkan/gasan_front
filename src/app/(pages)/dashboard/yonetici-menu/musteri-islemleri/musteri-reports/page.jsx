@@ -3,16 +3,18 @@ import Reports from '@/components/dashboard/yonetici/reports/Reports';
 import { getAllReports } from '@/services/yonetici-service';
 
 const ReportsPAge = async () => {
-
-  const response = await getAllReports(); 
-  if (!response.ok) { throw new Error(`Error fetching reports: ${response.statusText}`); }
-  const data = await response.json(); 
+  
+  try {
+    const data = await getAllReports(); 
     return (
-      <>
-      
-          <Reports data={data} />
+        <>
+            <Reports data={data} />
         </>
     );
+  } catch (error) {
+    return <div>Error: {error.message}</div>;
+  }
+    
 };
 
 export default ReportsPAge;

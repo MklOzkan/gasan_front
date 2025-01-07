@@ -2,6 +2,7 @@ services:
   spring-boot-gasan:
     container_name: spring-boot-gasan
     image: mikailozkan/backend-gasan:latest
+    restart: always
     ports:
       - "8090:8090"
     environment:
@@ -18,10 +19,15 @@ services:
 
   front-end-gasan:
     container_name: front-end-gasan
-    image: mikailozkan/frontend-gasan:latest
+    # image: mikailozkan/frontend-gasan:latest
+    build: 
+      context: C:\Users\ozkan\Desktop\Develop-ProductProcess-Fr\Develop-ProductProcess-Fr
+      dockerfile: Dockerfile
+    restart: always
     ports:
       - "80:80"
     environment:
+      - NEXT_LOGUOT_URL=http://192.168.0.100
       - NEXT_PUBLIC_API_URL=http://spring-boot-gasan:8090  # Dynamic URL passed here
       - PORT=80  # Dynamic port
     depends_on:
@@ -31,6 +37,7 @@ services:
 
   db:
     image: postgres:16
+    restart: always
     environment:
       POSTGRES_DB: stajProje
       POSTGRES_USER: user

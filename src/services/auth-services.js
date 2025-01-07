@@ -1,3 +1,5 @@
+"use server";
+
 const { config } = require('@/helpers/config');
 
 const API_URL = config.api.baseUrl;

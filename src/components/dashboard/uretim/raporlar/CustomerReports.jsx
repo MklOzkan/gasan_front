@@ -2,11 +2,11 @@ import PageHeader from '@/components/common/page-header'
 import React from 'react'
 import KaliteKontrolChart from './KaliteKontrolChart'
 import CurrentOrder from './CurrentOrderChart';
-import OtherOrders from './OtherOrders';
+import OtherOrders from './CustomerOrders';
 import Spacer from '@/components/common/spacer';
-import styles from './customer-page.module.scss';
+import styles from '@/styles/dashboard/uretim/raporlar/customer-reports.module.scss';
 
-const CustomerPage = ({data, searchParams}) => {
+const CustomerReports = ({data, searchParams}) => {
     const { returnBody1, 
             returnBody2,
             returnBody3,
@@ -90,4 +90,4 @@ const CustomerPage = ({data, searchParams}) => {
   );
 }
 
-export default CustomerPage;
+export default CustomerReports;

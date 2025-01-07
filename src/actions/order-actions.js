@@ -159,31 +159,4 @@ export const finishOrderAction = async (orderId) => {
     }
 };
 
-// export const downloadction = async (formData) => {
-
-//     console.log('formData', formData);
-//     try {
-//         const fields = convertFormDataToJSON(formData);
-
-//         console.log('fields', fields);
-
-//         const res = await downloadExcelFile(fields);
-       
-
-//         if (!res.ok) {
-//             return {
-//                 success: false,
-//                 message: 'Dosya indirme işlemi sırasında bir hata oluştu'
-//             };
-//         }
-
-//         return response(true, 'Excel dosyası başarıyla indirildi');
-//     } catch (err) {
-//         if (err instanceof YupValidationError) {
-//             return transformYupErrors(err.inner);
-//         }
-//         throw err;
-//     }
-// };
-
 

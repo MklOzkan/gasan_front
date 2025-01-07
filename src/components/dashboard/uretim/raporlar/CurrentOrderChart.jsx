@@ -9,7 +9,7 @@ import {
     Tooltip
 } from 'chart.js';
 import { config } from '@/helpers/config';
-import styles from './current-order.module.scss';
+import styles from '@/styles/dashboard/uretim/raporlar/current-order.module.scss';
 import { use, useEffect } from 'react';
 
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip);

@@ -9,7 +9,7 @@ COPY package*.json ./
 RUN npm install
 
 # Copy the .env.local file to the container
-COPY .env .env
+COPY .env.local ./
 
 # Copy the rest of the application code
 COPY . .
