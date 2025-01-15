@@ -3,20 +3,11 @@
 import { loginAction } from '@/actions/auth-actions';
 import { initialResponse } from '@/helpers/form-validation';
 import React, { useEffect, useState } from 'react';
-import {
-    Alert,
-    Button,
-    Card,
-    Col,
-    Container,
-    Form,
-    Row
-} from 'react-bootstrap';
 import { useFormState } from 'react-dom';
 import { useRouter, useSearchParams } from 'next/navigation';
-import './login-form.scss';
-import PasswordInput from '../common/form-fields/password-input';
-import SubmitButton from '../common/form-fields/submit-button';
+import styles from './login-form.module.scss';
+import TextInput from '../common/form-fields/TextInput';
+import { AlertText } from '../common/AlertText';
 
 const LoginForm = () => {
     const [state, dispatch] = useFormState(loginAction, initialResponse);//Formun durumunu ve dispatch fonksiyonunu tutar
@@ -37,52 +28,42 @@ const LoginForm = () => {
     }, [router, searchParams]);
   
     return (
-        <main className="login-form">
-            <Row className="justify-content-center">
-                <Col md={8} lg={6}>
-                    <Card className="card">
-                        <Card.Body>
-                            <h4>Lütfen Şifrenizi Girin</h4>
-
-                            {state?.message ? (
-                                <Alert variant="danger">{state?.message}</Alert>
-                            ) : null}
-
-                            <Form action={dispatch} noValidate>
-                                <Form.Group className="mb-3" controlId="user">
-                                    <Form.Label>{user}</Form.Label>
-                                </Form.Group>
-                                <Form.Group
-                                    className="mb-3"
-                                    controlId="username"
-                                >
-                                    <Form.Control
-                                        type="hidden"
-                                        name="username"
-                                        value={username}
-                                        readOnly
-                                    />
-                                </Form.Group>
-
-                                <Form.Group
-                                    className="mb-3"
-                                    controlId="password"
-                                >
-                                    <Form.Label>Password</Form.Label>
-                                    <PasswordInput
-                                        name="password"
-                                        placeholder="**********"
-                                        error={state?.errors?.password}
-                                    />
-                                </Form.Group>
-                                <SubmitButton >
-                                    Login
-                                </SubmitButton>
-                            </Form>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
+        <main className={styles.container}>
+            <div className={styles.group_container}>
+                <form action={dispatch} className={styles.form}>
+                    {/* Email Field */}
+                    {state.message && (
+                        <AlertText type="error" text={state.message} />
+                    )}
+                    <TextInput
+                        className="input_group"
+                        labelClassName="label_field"
+                        inputClassName="input_field"
+                        label={user}
+                        name="username"
+                        type="hidden"
+                        existingValue={username}
+                        required
+                        error={state?.errors?.email}
+                    />
+                    {/* Password Field */}
+                    <TextInput
+                        className="input_group"
+                        labelClassName="label_field"
+                        inputClassName="input_field"
+                        label="Şifre"
+                        name="password"
+                        type="password"
+                        passwordVisible={true}
+                        required
+                        error={state?.errors?.password}
+                    />
+                    {/* Submit Button */}
+                    <button type="submit" className={styles.login_button}>
+                        LOGIN
+                    </button>
+                </form>
+            </div>
         </main>
     );
 };

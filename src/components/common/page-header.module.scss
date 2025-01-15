@@ -1,4 +1,4 @@
-@use "../../styles/variables" as v;
+@use "@/styles/variables" as v;
 
 
 .page_header_container {
@@ -22,20 +22,19 @@
     text-align: center;
 }
 
-.signout-button {
-    background-color: v.$color3;
-    color: v.$color1;
+.menu_button {
+    background-color:transparent;
+    color: v.$clr-white;
     border: none;
-    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: bolder;
     text-transform: uppercase;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 
     &:hover {
-        background-color: darken(v.$color3, 10%);
+        color: v.$clr-sky-medium;
     }
 }
 

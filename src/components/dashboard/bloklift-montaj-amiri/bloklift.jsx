@@ -41,8 +41,6 @@ const BlockLift = ({ data, currentPage, sortBy, sortOrder }) => {
 
     return (
         <>
-            <PageHeader>Blok Lİft Amİrİ</PageHeader>
-            <Spacer height={20} />
             <main className={styles.main_container}>
                 <div className={styles.table_responsive}>
                     <table>

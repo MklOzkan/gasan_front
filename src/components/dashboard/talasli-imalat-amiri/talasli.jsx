@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import {
     Button
 } from 'react-bootstrap';
-import PageHeader from '@/components/common/page-header';
 import { useRouter } from 'next/navigation';
 import { Paginations } from '@/components/common/Paginations';
 import { updateOrderStatus } from '@/actions/order-actions';
@@ -64,8 +63,6 @@ const Order = ({ data, currentPage, sortBy, sortOrder }) => {
 
     return (
         <>
-            <PageHeader>Talaşli İmalat Amİrİ</PageHeader>
-            <Spacer height={30} />
             <main className={styles.main_container}>
                 <div className={styles.table_responsive}>
                     <table>

@@ -119,32 +119,32 @@ export const config = {
         },
         {
             urlRegex: /\/dashboard\/yonetici-menu$/,
-            roles: ['Yonetici']
+            roles: ['Yonetici', 'Admin']
         },
         {
             urlRegex: /\/dashboard\/yonetici-menu\/musteri-islemleri$/,
-            roles: ['Yonetici']
+            roles: ['Yonetici', 'Admin']
         },
         {
             urlRegex: /\/dashboard\/yonetici-menu\/musteri-islemleri\/[0-9]+$/,
-            roles: ['Yonetici']
+            roles: ['Yonetici', 'Admin']
         },
         {
             urlRegex: /\/dashboard\/password-update$/,
-            roles: ['Yonetici']
+            roles: ['Yonetici', 'Admin']
         },
         {
             urlRegex: /\/dashboard\/get-orders$/,
-            roles: ['Yonetici']
+            roles: ['Yonetici', 'Admin']
         },
         {
             urlRegex:
                 /\/dashboard\/yonetici-menu\/musteri-islemleri\/musteri-reports$/,
-            roles: ['Yonetici', 'UretimPlanlama']
+            roles: ['Yonetici', 'Admin', 'UretimPlanlama']
         },
         {
             urlRegex: /\/dashboard\/yonetici-menu\/update-password$/,
-            roles: ['Yonetici']
+            roles: ['Yonetici', 'Admin']
         },
         {
             urlRegex: /\/dashboard\/uretim-planlama\/[0-9]+$/,

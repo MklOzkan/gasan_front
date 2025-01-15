@@ -75,28 +75,27 @@ const UpdatePassword = () => {
     return (
         // <div>update password</div>
         <>
-            <PageHeader>
-                Şİfre Atama Ekranı 
-            </PageHeader>
             <Spacer height={50} />
             <Container className="text-center m-auto">
                 <Row className="menuRow">
-                    <div className='inner_container'>
+                    <div className="inner_container">
                         <Form onSubmit={handleSubmit} noValidate>
                             <div className="passwordMenu">
                                 <div controlId="userSelect">
                                     <label>Kullanıcı Seçin</label>
                                     <select
-                                        className='select'
+                                        className="select ms-3"
                                         typeof="select"
                                         value={selectedUsername}
                                         onChange={handleUserChange}
                                         required
                                     >
-                                        <option className='option' value="">Seçiniz...</option>
+                                        <option className="option" value="">
+                                            Seçiniz...
+                                        </option>
                                         {data.map((item) => (
                                             <option
-                                                className='option'
+                                                className="option"
                                                 key={item.id}
                                                 value={item.username}
                                             >
@@ -116,12 +115,14 @@ const UpdatePassword = () => {
                                                     : 'password'
                                             } // Toggle type between text and password
                                             value={newPassword}
+                                            className="password_input"
                                             onChange={handlePasswordChange}
                                             placeholder="Yeni Şifreyi Giriniz"
                                             required
                                         />
                                         <InputGroup.Text
                                             onClick={handleTogglePassword}
+                                            className="eye"
                                         >
                                             {showPassword ? (
                                                 <FaEyeSlash />
@@ -139,7 +140,7 @@ const UpdatePassword = () => {
                                         </Form.Control.Feedback>
                                     </InputGroup>
                                     {!passwordValid && (
-                                        <div className="text-danger mt-2">
+                                        <div className="text-danger mt-2 ">
                                             {invalidPasswordMessage}
                                         </div>
                                     )}

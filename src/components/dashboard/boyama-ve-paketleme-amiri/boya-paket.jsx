@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { Paginations } from '@/components/common/Paginations';
-import PageHeader from '@/components/common/page-header';
 import styles from './boyama-paketleme.module.scss';
 import { useRouter } from 'next/navigation';
 import Spacer from '@/components/common/spacer';
@@ -42,8 +41,6 @@ const BoyaPaket = ({ data, currentPage, sortBy, sortOrder }) => {
 
     return (
         <>
-            <PageHeader>Boya ve Paketleme Amİrİ </PageHeader>
-            <Spacer height={20} />
             <main className={styles.main_container}>
                 <div className={styles.table_responsive}>
                     <table>

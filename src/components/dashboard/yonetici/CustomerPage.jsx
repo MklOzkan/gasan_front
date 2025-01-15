@@ -1,10 +1,12 @@
-import PageHeader from '@/components/common/page-header'
-import React from 'react'
+"use client";
+
+import React, { useEffect, useState } from 'react'
 import KaliteKontrolChart from './KaliteKontrolChart'
 import CurrentOrder from './CurrentOrderChart';
 import OtherOrders from './OtherOrders';
 import Spacer from '@/components/common/spacer';
-import styles from './customer-page.module.scss';
+import styles from '@/styles/dashboard/uretim/raporlar/customer-reports.module.scss';
+import MontajReports from './MontajReports';
 
 const CustomerPage = ({data, searchParams}) => {
     const { returnBody1, 
@@ -18,38 +20,41 @@ const CustomerPage = ({data, searchParams}) => {
             returnBody9
     } = data;
     
-    const totalHurda = returnBody8.reduce((acc, item) => acc + item.scrapCount, 0);
-    // console.log('blok', returnBody6)
-    // let scrapCount = 0;
-    // if (returnBody1.orderType === 'DAMPER') {
-    //     scrapCount = returnBody6
-    //         .filter(
-    //             (item) =>
-    //                 item.operationType === 'BORU_KAPAMA' &&
-    //                 item.operationType === 'BORU_KAYNAK'
-    //         )
-    //         .reduce((acc, item) => acc + item.scrapCountAfterTest, 0);
-    // }
-    // let scrapCountAfterMontaj = 0;
-    // if (returnBody1.orderType === 'DAMPER') {
-    //     scrapCountAfterMontaj = returnBody6
-    //         .filter(
-    //             (item) =>
-    //                 item.operationType !== 'BORU_KAPAMA' ||
-    //                 item.operationType !== 'BORU_KAYNAK'
-    //         )
-    //         .reduce((acc, item) => acc + item.scrapCountAfterTest, 0);
-    // }
+    const [montajHurda, setMontajHurda] = useState(0);
+    const [kaliteHurda, setKaliteHurda] = useState(0);
+    const [toggle, setToggle] = useState(false);
+    const [operations, setOperations] = useState([]);
 
-    // console.log('scrapCountAfterMontaj', scrapCountAfterMontaj);
+    useEffect(() => {
 
+        if (
+            returnBody1.orderType === 'Lift' ||
+            returnBody1.orderType === 'Paslanmaz'
+        ) {
+            setOperations(returnBody5 || []);
+        } else if (returnBody1.orderType === 'Blok Lift') {
+            setOperations(returnBody6 || []);
+        } else if (returnBody1.orderType === 'Damper') {
+            setOperations(returnBody6 || []);
+        } else {
+            setOperations([]);
+        }
+            setKaliteHurda(
+                returnBody8.reduce((acc, item) => acc + item.scrapCount, 0)
+            );
+            setMontajHurda(
+                returnBody5.reduce((acc, item) => acc + item.scrapCountAfterTest, 0)
+            );
+        }, [data, returnBody1, returnBody2, returnBody3, returnBody4, returnBody5, returnBody6, returnBody7, returnBody8]);
+    
+        const handleToggle = () => {
+            setToggle(!toggle);
+        };
 
     
 
   return (
       <>
-          <PageHeader> Müşterİ Raporlari </PageHeader>
-          <Spacer height={20} />
           <div className={styles.container}>
               <div className={styles.order_container}>
                   <CurrentOrder
@@ -66,18 +71,36 @@ const CustomerPage = ({data, searchParams}) => {
               <div className={styles.blok_container}>
                   <div className={styles.outer_container}>
                       <div className={styles.chart_container}>
-                      {returnBody8 &&
-                          returnBody8.map((item, index) => (
-                              <KaliteKontrolChart
-                                  key={index}
-                                  kaliteKontrol={item}
-                              />
-                          ))}
-                      
+                          {returnBody8 &&
+                              returnBody8.map((item, index) => (
+                                  <KaliteKontrolChart
+                                      key={index}
+                                      kaliteKontrol={item}
+                                  />
+                              ))}
                       </div>
-                      <h2 className={styles.h2}>Toplam Hurda: {totalHurda}</h2>
+                      <button
+                          className={styles.button}
+                          onClick={() => {
+                              handleToggle();
+                          }}
+                      >
+                          {`Montaj'dakİ Hurda: ${montajHurda}`}
+                      </button>
+                      {toggle && (
+                          <MontajReports
+                              montaj={operations}
+                              isToggleOpen={toggle}
+                          />
+                      )}
+                      <h2 className={styles.h3}>
+                          {`Kalİte Kontrol'dakİ Hurda: ${kaliteHurda}`}
+                      </h2>
+                      <h2 className={styles.h2}>
+                          {`Toplam Hurda: ${montajHurda + kaliteHurda}`}
+                      </h2>
                   </div>
-                  
+
                   <div className={styles.others_container}>
                       <OtherOrders
                           orders={returnBody9}

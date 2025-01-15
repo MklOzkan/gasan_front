@@ -60,9 +60,18 @@ const OrderToolbar = ({
     };
 
     const handleDelete = async () => {
+
+        let message = '';
+        if (order.orderStatus === 'Tamamlandı') {
+            message = `${order.orderNumber} numaralı sipariş, tamamlanmış siparişler arasında yer almaktadır. Silmek istediğinize emin misiniz?`;
+        } else if (order.orderStatus === 'İşlenmekte') {
+            message = `${order.orderNumber} numaralı sipariş, halen işlenmekte olan siparişler arasında yer almaktadır. Silmek istediğinize emin misiniz?`;
+        } else {
+            message = `${order.orderNumber} numaralı siparişi silmek istediğinize emin misiniz?`;
+        }
         
         const answer = await swConfirm(
-            `${order.orderNumber} numaralı siparişi silmek istediğinize emin misiniz?`
+            message
         );
         if (!answer.isConfirmed) return;
 

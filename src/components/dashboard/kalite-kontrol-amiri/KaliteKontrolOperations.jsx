@@ -1,9 +1,6 @@
 'use client';
 
 import PageHeader from '@/components/common/page-header';
-import React from 'react';
-import Table from 'react-bootstrap/Table';
-import Container from 'react-bootstrap/Container';
 import OrderForOperation from '@/components/common/form-fields/OrderInfo';
 import Spacer from '@/components/common/spacer';
 import { useRouter } from 'next/navigation';
@@ -26,8 +23,6 @@ const KaliteKontrolOperations = ({ responses }) => {
 
     return (
         <main >
-            <PageHeader>Kalİte Kontrol Amİrİ</PageHeader>
-            <Spacer height={5} />
             <OrderForOperation order={returnBody} />
                 <div className={styles.table_container}>
                     <table>

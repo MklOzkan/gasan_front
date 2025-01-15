@@ -66,8 +66,6 @@ const MusteriIslemleri = ({ data, sortBy, sortOrder }) => {
 
     return (
         <>
-            <PageHeader>Müşterİ İşlemlerİ</PageHeader>
-            <Spacer height={30} />
             <div className={styles.filter_container}>
                 <div className={styles.search}>
                     <div className={styles.search_clear}>
