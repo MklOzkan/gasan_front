@@ -86,7 +86,6 @@ const config = {
     },
     trustHost: [
         'localhost',
-        'https://3.75.205.100:8090',
         'https://gasan-app.vercel.app'
     ]
 };
