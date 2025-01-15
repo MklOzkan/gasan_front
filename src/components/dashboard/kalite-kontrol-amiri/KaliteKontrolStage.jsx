@@ -1,6 +1,5 @@
 'use client';
-import { Container } from 'react-bootstrap';
-import React, { useState } from 'react';
+
 import PageHeader from '@/components/common/page-header';
 import Spacer from '@/components/common/spacer';
 import OrderForOperation from '@/components/common/form-fields/OrderInfo';
@@ -18,8 +17,8 @@ const KaliteKontrolStage = ({ responses }) => {
 
     return (
         <>
+            <Spacer height={-20} />
             <main>
-                <PageHeader>Kalİte Kontrol amİrİ</PageHeader>
                 <h1 className={`${styles.kalite_container} ${styles.kalite} border`}>
                     {stages?.[returnBody3?.kaliteKontrolStage] ||
                         'Unknown Stage'}

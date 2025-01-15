@@ -13,8 +13,6 @@ const PolisajProduction = ({ order }) => {
 
     return (
         <main className={styles.main_container}>
-            <PageHeader>Polİsaj Amİrİ </PageHeader>
-            <Spacer height={5} />
             <OrderForOperation order={returnBody} />
             <Spacer height={5} />
             <OperationButton

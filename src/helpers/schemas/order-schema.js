@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 export const OrderSchema = Yup.object().shape({
     customerName: Yup.string()
         .trim() // Removes leading/trailing spaces
-        .min(4, 'Müşteri adı en az 4 karakter olmalı')
+        .min(3, 'Müşteri adı en az 3 karakter olmalı')
         .required('Müşteri adı boş olamaz'),
 
     gasanNo: Yup.string()

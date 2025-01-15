@@ -1,0 +1,117 @@
+.main_container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 250px;
+    position: relative;
+    height: 100%;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
+}
+
+.colum_inner {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #d48c8c;
+    width: 250px;
+    padding: 10px;
+    justify-content: center;
+    margin: 1rem;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        margin: 5px;
+    }
+}
+
+.select {
+    border: 1px solid #d48c8c;
+}
+
+.table_responsive {
+    flex: 1;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-spacing: 0 10px;
+    border-collapse: separate;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.table_responsive table {
+    width: 100%; /* Ensure the table stretches across its container */
+    border-spacing: 0;
+}
+
+.table_responsive tbody::before {
+    content: '';
+    display: table-row;
+    height: 10px;
+}
+
+.table_responsive th,
+.table_responsive td {
+    border: 1px solid black;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.table_responsive td:last-child:hover {
+    background-color: white;
+}
+
+.table_responsive th,
+.table_responsive td {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.table_head,
+.table_body {
+    margin: 0 auto;
+}
+
+.table_head {
+    margin-bottom: 10px;
+    background-color: rgba(0, 255, 255, 0.185);
+}
+
+.table_body:hover {
+    background-color: rgba(0, 255, 255, 0.185);
+    cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin-top: auto;
+    width: 100%;
+}
+
+@media screen and (max-width: 767px) {
+    .table_responsive {
+        display: block;
+        margin: 5px;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .table_responsive table {
+        min-width: 800px;
+    }
+}
+
+.btn_container {
+    width: 100%;
+}
+
+@media (max-width: 767px) {
+    .table th,
+    .table td {
+        font-size: 0.5rem;
+    }
+}

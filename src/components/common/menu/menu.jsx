@@ -1,14 +1,20 @@
 "use client";
 
-import { Col, Row} from "react-bootstrap";
 import styles from "./menu.module.scss";
 import { useRouter } from "next/navigation";
 import PageHeader from "../page-header";
 import Spacer from "../spacer";
 import menuItems from "@/helpers/data/update-password-and-main-menu.json";
+import { useEffect, useState } from "react";
 
-const Menu = () => {
+const Menu = ({session}) => {
     const router = useRouter();
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        setUser(session || null);
+    }, [session]);
+
 
     const handleClick = (username, link, text) => {
         if (typeof username === 'string') {
@@ -23,7 +29,7 @@ const Menu = () => {
 
     return (
         <>
-            <PageHeader>ANA SAYFA</PageHeader>
+            <PageHeader session={user}>ANA SAYFA</PageHeader>
             <Spacer height={25} />
             <main className={styles.container}>
                     {menuItems.map((item) => (

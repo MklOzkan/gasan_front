@@ -5,8 +5,6 @@ import { getAllReportAction } from '@/actions/yonetici-actions';
 import DateSection from './DateSection.jsx';
 import styles from './reports.module.scss';
 import ReportSection from './ReportSection.jsx';
-import PageHeader from '@/components/common/page-header.jsx';
-import Spacer from '@/components/common/spacer.jsx';
 
 const reportsOrder = ['LIFT', 'DAMPER', 'BLOKLIFT', 'PASLANMAZ'];
 
@@ -72,18 +70,7 @@ export default function Reports({ data }) {
 
     return (
         <>
-            <PageHeader>Raporlar</PageHeader>
-            <Spacer height={20} />
             <div className={styles.main_container}>
-                {/* <DateSection
-                startDate={startDate}
-                endDate={endDate}
-                setStartDate={setStartDate}
-                setEndDate={setEndDate}
-                resetStartDate={resetStartDate}
-                resetEndDate={resetEndDate}
-                handleSubmit={handleSubmit}
-            /> */}
 
                 <div className={styles.container}>
                     <ReportSection

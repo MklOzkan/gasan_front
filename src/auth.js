@@ -82,8 +82,7 @@ const config = {
     },
 
     pages: {
-        signIn: '/login',
-        signOut: '/'
+        signIn: '/login'
     },
     trustHost: [
         'localhost',

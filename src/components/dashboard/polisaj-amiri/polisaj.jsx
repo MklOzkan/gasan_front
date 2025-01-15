@@ -49,8 +49,6 @@ const Polisaj = ({ data, currentPage, sortBy, sortOrder }) => {
 
     return (
         <>
-            <PageHeader>Polİsaj Amİrİ </PageHeader>
-            <Spacer height={10} />
             <main className={styles.main_container}>
                 <div className={styles.table_responsive}>
                     <table>

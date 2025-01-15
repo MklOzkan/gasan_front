@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Pagination } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
 
-import styles from './other-orders.module.scss';
+import styles from '@/styles/dashboard/uretim/raporlar/customer-orders.module.scss';
 import { Paginations } from '@/components/common/Paginations';
 
 const OtherOrders = ({ orders, searchParams }) => {
@@ -138,12 +138,14 @@ const OtherOrders = ({ orders, searchParams }) => {
                     </tbody>
                 </table>
             </div>
-            <Paginations
-                baseUrl={currentUrl}
-                currentPage={number+1}
-                size={size}
-                totalPages={totalPages}
-            />
+            <div className={styles.pagination}>
+                <Paginations
+                    baseUrl={currentUrl}
+                    currentPage={number + 1}
+                    size={size}
+                    totalPages={totalPages}
+                />
+            </div>
         </main>
     );
 };

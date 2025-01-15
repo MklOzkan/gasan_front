@@ -1,0 +1,92 @@
+@use '@/styles/variables' as *;
+
+.sidebar {
+  position: fixed;
+  align-items: center;
+  top: 0;
+  right: 10px;
+  height: 95px; // Full height
+  width: 150px;
+  background: transparent;
+  color: $clr-white;
+  z-index: 1100; // Ensures sidebar stays on top
+  transition: transform 0.3s ease-in-out;
+    display: flex;
+    border-radius: 0px 0px 0px 10px ;
+
+  &.closed {
+    transform: translateX(-100%);
+  }
+}
+
+.close_button {
+    align-items: center;
+    background: $clr-white;
+    border: 1px solid transparent;
+    border-radius: 15px;
+    color: $color1; // Match the sidebar background
+    font-size: 24px;
+    cursor: pointer;
+
+    &:hover {
+      color: $clr-white; // Add hover effect
+      background: $color1;
+    }
+}
+
+
+.links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: $gap-md;
+  padding: $padding-sm;
+}
+.logout_container{
+  display: flex;
+  align-items: center;
+}
+
+.home_button {
+  display: flex;
+  align-items: center;
+
+}
+
+.login {
+  background-color: transparent;
+  border: none;
+  color: $clr-white;
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    color: $clr-black;
+  }
+}
+
+
+
+
+
+@media screen and (max-width: $screen-sm) {
+  .sidebar {
+    background-color:  rgba($color1, 0.8);
+    width: 75px;
+    height: 150px;
+  }
+
+
+  .links {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+  }
+
+  .close_button {
+    border-radius: 50%;
+    padding:0 10px;
+  }
+  
+}

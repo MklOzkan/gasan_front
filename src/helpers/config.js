@@ -1,6 +1,7 @@
 export const config = {
     api: {
-        baseUrl: process.env.NEXT_PUBLIC_API_URL || 'https://backendapp.link'
+        baseUrl: process.env.NEXT_PUBLIC_API_URL
+        // || 'http://spring-boot-gasan:8090'
     },
     project: {
         name: 'Gasan App',
@@ -118,32 +119,32 @@ export const config = {
         },
         {
             urlRegex: /\/dashboard\/yonetici-menu$/,
-            roles: ['Yonetici']
+            roles: ['Yonetici', 'Admin']
         },
         {
             urlRegex: /\/dashboard\/yonetici-menu\/musteri-islemleri$/,
-            roles: ['Yonetici']
+            roles: ['Yonetici', 'Admin']
         },
         {
             urlRegex: /\/dashboard\/yonetici-menu\/musteri-islemleri\/[0-9]+$/,
-            roles: ['Yonetici']
+            roles: ['Yonetici', 'Admin']
         },
         {
             urlRegex: /\/dashboard\/password-update$/,
-            roles: ['Yonetici']
+            roles: ['Yonetici', 'Admin']
         },
         {
             urlRegex: /\/dashboard\/get-orders$/,
-            roles: ['Yonetici']
+            roles: ['Yonetici', 'Admin']
         },
         {
             urlRegex:
                 /\/dashboard\/yonetici-menu\/musteri-islemleri\/musteri-reports$/,
-            roles: ['Yonetici', 'UretimPlanlama']
+            roles: ['Yonetici', 'Admin', 'UretimPlanlama']
         },
         {
             urlRegex: /\/dashboard\/yonetici-menu\/update-password$/,
-            roles: ['Yonetici']
+            roles: ['Yonetici', 'Admin']
         },
         {
             urlRegex: /\/dashboard\/uretim-planlama\/[0-9]+$/,
@@ -151,6 +152,22 @@ export const config = {
         },
         {
             urlRegex: /\/dashboard\/uretim\/[0-9]+$/,
+            roles: ['UretimPlanlama']
+        },
+        {
+            urlRegex: /\/dashboard\/uretim\/raporlar\/genel-raporlar$/,
+            roles: ['UretimPlanlama']
+        },
+        {
+            urlRegex: /\/dashboard\/uretim\/raporlar\/musteri-raporlar$/,
+            roles: ['UretimPlanlama']
+        },
+        {
+            urlRegex: /\/dashboard\/uretim\/raporlar/,
+            roles: ['UretimPlanlama']
+        },
+        {
+            urlRegex: /\/dashboard\/uretim\/raporlar\/musteri-raporlari\/[0-9]+$/,
             roles: ['UretimPlanlama']
         },
         {

@@ -1,3 +1,5 @@
+"use server"
+
 import { getAuthHeader } from "@/helpers/auth-helpers";
 
 const { config} = require("@/helpers/config");
@@ -40,22 +42,45 @@ export const updatePassword = async ( payload) => {
 };
 
 export const getReports = async (orderId) => {
-    const response = fetch(`${API_URL}/yonetici/reports/${orderId}`, {
-        method: 'GET',
-        headers: await getAuthHeader()
-    });
+    try {
+        const response = await fetch(`${API_URL}/yonetici/reports/${orderId}`, {
+            method: 'GET',
+            headers: await getAuthHeader()
+        });
 
-    return response;
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(`Raporlar getirilirken hata oluştu.`);
+        }
+
+        return data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 export const getAllReports = async (startDate = '', endDate = '') => {
-    const response = fetch(
+
+    try {
+        const response = await fetch(
         `${API_URL}/yonetici/getCompletedAndActiveReports?startDate=${startDate}&endDate=${endDate}`,
         {
             method: 'GET',
             headers: await getAuthHeader()
         }
-    );
+        );
 
-    return response;
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(`Error fetching reports`);
+        }
+
+    return data;
+    } catch (error) {
+        console.log('error', error);
+        throw error;
+    }
+    
 };

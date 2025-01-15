@@ -1,6 +1,6 @@
 'use client';
 
-import { downloadExcelFile } from '@/services/uretimplanlama-service';
+import { downloadExcelFile } from '@/services/download-service';
 import { FaDownload } from 'react-icons/fa6';
 import DateSelectModal from '@/components/common/form-fields/DateSelectionModal.jsx';
 import React, { useState } from 'react';

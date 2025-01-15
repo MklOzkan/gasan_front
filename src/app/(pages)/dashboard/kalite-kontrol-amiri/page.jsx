@@ -4,18 +4,19 @@ import { fetchDataKaliteKontrol } from '@/services/kalitekontrol-service';
 import styles from '@/styles/pages/main-page.module.scss';
 
 
-const KaliteKontrolAmiri = async ({ searchParams }) => {
-    const currentPage = parseInt(searchParams.currentPage, 10) || 0;
+const KaliteKontrolAmiri = async(props)=> {
+    const searchParams = await props.searchParams;
+    const currentPage = Math.max(parseInt(searchParams.page, 10) || 1, 1);
     const sortBy = searchParams.sortBy || 'orderDate';
     const sortOrder = searchParams.sortOrder || 'desc';
 
-    const res = await fetchDataKaliteKontrol(currentPage, 10, sortBy, sortOrder);
+    const res = await fetchDataKaliteKontrol(currentPage -1, 10, sortBy, sortOrder);
 
     const data = await res.json();
 
     if (res.status !== 200) {
     
-        return <div>Error: {res.statusText}</div>;
+        return <div>Hata: Siparişler getirilirken hata oluştu.</div>;
     }
     return (
         <>
@@ -24,7 +25,7 @@ const KaliteKontrolAmiri = async ({ searchParams }) => {
                 currentPage={currentPage}
                 sortBy={sortBy}
                 sortOrder={sortOrder}
-                className= {styles.main_page}
+                className={styles.main_page}
             />
         </>
     );

@@ -2,8 +2,6 @@
 
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import PageHeader from '@/components/common/page-header';
-import Spacer from '@/components/common/spacer';
 import { FaPlus } from 'react-icons/fa';
 import styles from './uretim-list.module.scss';
 import OrderList from './OrderList';
@@ -70,8 +68,6 @@ const Uretim = ({ data, sortBy, sortOrder }) => {
 
     return (
         <>
-            <PageHeader>Üretİm Planlama</PageHeader>
-            <Spacer height={10} />
             <main className={styles.main_container}>
                 <div className={styles.inner_container}>
                     <div className={styles.button_container}>
@@ -86,12 +82,10 @@ const Uretim = ({ data, sortBy, sortOrder }) => {
                         </Link>
                         <DownloadButton />
                         <Link
-                            className={styles.link}
-                            href={
-                                '/dashboard/yonetici-menu/musteri-islemleri/musteri-reports/'
-                            }
+                            className={styles.btn}
+                            href={'/dashboard/uretim/raporlar'}
                         >
-                            Rapor
+                            Raporlar
                         </Link>
                     </div>
 

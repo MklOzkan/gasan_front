@@ -38,14 +38,13 @@ const OrderToolbar = ({
             answer = await swConfirm(
             `${order.orderNumber} numaralı siparişi tamamlamak istediğinize emin misiniz?`
             );
-        } else {
-            swAlert(
-                'Nihai üretim, Sipariş miktarından az olduğu için, Sipariş tamamlanamaz',
-                'error',
-                '',
-                4000
+        } else if (order.finalProductQuantity >= order.orderQuantity*0.5 && order.finalProductQuantity < order.orderQuantity) {
+            answer = await swConfirm(
+                `Sipariş adedi ${order.orderQuantity} ve üretim adedi ${order.finalProductQuantity}. Yinede siparişi tamamlamak istediğinize emin misiniz?`
             );
-            answer = { isConfirmed: false };
+        } else {
+            swAlert('Üretimin tamamlanması için en az sipariş miktarının yarısı kada üretim yapılmalıdır!', 'error', '', 4000);
+            return;
         }
         if (!answer.isConfirmed) return;
 
@@ -61,9 +60,18 @@ const OrderToolbar = ({
     };
 
     const handleDelete = async () => {
+
+        let message = '';
+        if (order.orderStatus === 'Tamamlandı') {
+            message = `${order.orderNumber} numaralı sipariş, tamamlanmış siparişler arasında yer almaktadır. Silmek istediğinize emin misiniz?`;
+        } else if (order.orderStatus === 'İşlenmekte') {
+            message = `${order.orderNumber} numaralı sipariş, halen işlenmekte olan siparişler arasında yer almaktadır. Silmek istediğinize emin misiniz?`;
+        } else {
+            message = `${order.orderNumber} numaralı siparişi silmek istediğinize emin misiniz?`;
+        }
         
         const answer = await swConfirm(
-            `${order.orderNumber} numaralı siparişi silmek istediğinize emin misiniz?`
+            message
         );
         if (!answer.isConfirmed) return;
 
@@ -92,7 +100,6 @@ const OrderToolbar = ({
                 className="btn-link"
                 variant="danger"
                 onClick={handleDelete}
-                disabled={order.orderStatus === 'Tamamlandı'}
             >
                 <div>
                     <TfiTrash />
@@ -102,7 +109,6 @@ const OrderToolbar = ({
             <button
                 className={`${styles.outer_check}`}
                 onClick={finishOrder}
-                disabled={order.orderStatus === 'Tamamlandı'}
             >
                 <div className={`${styles.inner_check}`}>
                     <FaCheck />

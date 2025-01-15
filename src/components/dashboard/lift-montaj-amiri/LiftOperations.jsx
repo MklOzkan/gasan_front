@@ -9,7 +9,6 @@ const LiftOperations = ({order}) => {
   const { returnBody, returnBody2, returnBody3 } = order;
   return (
       <>
-          <PageHeader>Lİft Montaj Amİrİ</PageHeader>
           <main className={styles.main_page}>
               <Spacer height={5} />
               <OrderForOperation order={returnBody} />

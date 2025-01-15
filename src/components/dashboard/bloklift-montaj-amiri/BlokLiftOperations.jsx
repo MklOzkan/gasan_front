@@ -9,8 +9,6 @@ const BlokLiftOperations = ({ order }) => {
     const { returnBody, returnBody2, returnBody3 } = order;
     return (
         <>
-            <PageHeader>Blok Lİft Montaj Amİrİ</PageHeader>
-            <Spacer height={5} />
             <OrderForOperation order={returnBody} />
             <Spacer height={5} />
             <UpdateButtons order={returnBody} operations={returnBody2} />

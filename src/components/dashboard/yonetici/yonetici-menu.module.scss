@@ -28,6 +28,15 @@
     width: 500px;
     border-radius: 10px;
     border: 1px solid #000;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 17px 17px 5px 0px rgba(50, 50, 50, 0.75) ;
+
+    &:hover{
+        transform: scale(1.1);
+        transition: all 0.3s ease-in-out;
+        opacity: 1.5;
+        box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75) ;
+    }
 
 }
 

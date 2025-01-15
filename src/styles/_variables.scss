@@ -8,6 +8,7 @@ $color2-op-50: rgba($color2, 0.5);
 $color2-op-10: rgba($color2, 0.1);
 $color2-op-5: rgba($color2, 0.05);
 $color4-op-50: rgba($color4, 0.5);
+$color1-op-20: rgba($color1, 0.8);
 
 $vendors: ("", "-webkit-", "-moz-", "-ms-", "-o-");
 
@@ -98,6 +99,9 @@ $gap-md: 16px;
 $gap-lg: 20px;
 $gap-xl: 24px;
 $gap-2xl: 32px;
+$gap-3xl: 40px;
+$gap-4xl: 64px;
+$gap-5xl: 96px;
 
 // PADDING
 $padding-2xs: 2px;
