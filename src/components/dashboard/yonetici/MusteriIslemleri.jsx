@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { Paginations } from '@/components/common/Paginations';
-import PageHeader from '@/components/common/page-header';
 import { useRouter } from 'next/navigation'; // Use Next.js router for redirection
 import Spacer from '@/components/common/spacer';
 import { RxReset } from 'react-icons/rx';
@@ -66,8 +65,6 @@ const MusteriIslemleri = ({ data, sortBy, sortOrder }) => {
 
     return (
         <>
-            <PageHeader>Müşterİ İşlemlerİ</PageHeader>
-            <Spacer height={30} />
             <div className={styles.filter_container}>
                 <div>
                     <Link

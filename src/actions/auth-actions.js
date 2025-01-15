@@ -21,7 +21,7 @@ export const loginAction = async (prevState, formData) => {
         if (err instanceof YupValidationError) {
             return transformYupErrors(err.inner);
         } else if (err instanceof AuthError) {
-            return response(false, 'Girdiğiniz şifre eksik veya hatalı');
+            return response(false, 'Eksik yada hatalı şifre girildiniz!');
         }
 
         throw err;

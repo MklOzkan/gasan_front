@@ -2,6 +2,7 @@
 import React from "react";
 import { signOut } from 'next-auth/react';
 import { useRouter } from "next/navigation";
+import styles from '@/styles/common/form-fields/logout-button.module.scss';
 
 const LogoutButton = () => {
     const router = useRouter();
@@ -15,7 +16,7 @@ const LogoutButton = () => {
 
     };
     return (
-        <button className="btn btn-primary" onClick={handleSignOut}>
+        <button className={styles.button} onClick={handleSignOut}>
             Çıkış
         </button>
     );

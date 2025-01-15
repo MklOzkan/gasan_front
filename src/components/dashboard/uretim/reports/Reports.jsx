@@ -72,8 +72,6 @@ export default function Reports({ data }) {
 
     return (
         <>
-            <PageHeader>Genel Raporlar</PageHeader>
-            <Spacer height={20} />
             <div className={styles.main_container}>
                 {/* <DateSection
                 startDate={startDate}

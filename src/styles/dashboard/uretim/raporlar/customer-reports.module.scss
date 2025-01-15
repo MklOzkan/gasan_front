@@ -1,3 +1,5 @@
+@use '@/styles/variables' as *;
+
 .container {
   display: flex;
   flex-direction: row;
@@ -17,7 +19,6 @@
   flex-direction: column;
   gap: 20px;
   flex: 1; // Allows the right side to be flexible
-  max-height: 100vh; // Ensure it doesn’t exceed viewport height
   overflow-y: auto;
 }
 
@@ -50,13 +51,58 @@
   }
 }
 
-.h2{
-  font-size: 20px;
+.button{
+  align-self: center;
+  padding: 7px;
+  background-color: #FFCE56;
+  color: $clr-black;
+  border: none;
+  border-radius: $rounded-sm;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  width: 350px;
+  box-shadow: 7px 7px 5px 0px rgba(80, 50, 50, 0.75);
+  &:hover{
+    transform: perspective(10rem) scale(1.1);
+    transition: all 0.3s ease;
+    background-color: #f8b202;
+  }
+}
+
+.h3{
+  font-size: 14px;
+  background-color: #FFCE56;
+  color: $clr-black;
+  text-transform: uppercase;
+  align-self: center;
   font-weight: bold;
   margin-bottom: 10px;
   text-align: center;
+  border: none;
+    padding: 10px;
+    width: 350px;
+    border-radius: $rounded-sm;
+    box-shadow: 7px 7px 5px 0px rgba(80, 50, 50, 0.75);
 }
 
+
+.h2{
+  font-size: 14px;
+  background-color: $clr-smoke;
+  color: black;
+  text-transform: uppercase;
+  align-self: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+  border: none;
+    padding: 10px;
+    width: 380px;
+    border-radius: $rounded-sm;
+    box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+}
 .others_container {
   display: flex;
   border: 1px solid #00aaff;
@@ -113,6 +159,13 @@
     height: 100%;
   }
   .others_container {
+    width: 100%;
+  }
+  
+}
+
+@media screen and (max-width: $screen-sm) {
+  .h2{
     width: 100%;
   }
   

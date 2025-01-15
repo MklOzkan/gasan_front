@@ -28,7 +28,6 @@ const CustomerOrders = ({ orders, searchParams }) => {
 
         setCurrentUrl(url.pathname);
         router.push(url.toString());
-        
     }, [searchTerm, startDate, endDate, content, router]);
 
     const handleRowClick = (order) => {
@@ -138,12 +137,14 @@ const CustomerOrders = ({ orders, searchParams }) => {
                     </tbody>
                 </table>
             </div>
-            <Paginations
-                baseUrl={currentUrl}
-                currentPage={number+1}
-                size={size}
-                totalPages={totalPages}
-            />
+            <div className={styles.pagination}>
+                <Paginations
+                    baseUrl={currentUrl}
+                    currentPage={number + 1}
+                    size={size}
+                    totalPages={totalPages}
+                />
+            </div>
         </main>
     );
 };

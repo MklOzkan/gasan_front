@@ -7,7 +7,6 @@ import { swAlert } from '@/helpers/swal';
 import { initialResponse } from '@/helpers/form-validation';
 import { SubmitButton, TextInput } from '@/components/common/form-fields';
 import { useRouter } from 'next/navigation';
-import PageHeader from '@/components/common/page-header';
 import styles from './order-form.module.scss';
 
 const orderTypes = ['Lift', 'Damper', 'Blok Lift', 'Paslanmaz'];
@@ -94,7 +93,6 @@ const OrderForm = () => {
 
     return (
         <>
-            <PageHeader> Yenİ Sİparİş </PageHeader>
             <main 
                 className={styles.main_container}
                 style={{ minHeight: '100vh' }}

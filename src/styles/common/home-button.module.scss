@@ -1,0 +1,18 @@
+@use '@/styles/variables' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  color: $clr-white;
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    color: $clr-black;
+  }
+}

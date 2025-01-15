@@ -1,28 +1,28 @@
 'use client';
 
-import React from 'react';
-import {
-    Container,
-    Row,
-    Col,
-    Table,
-    Pagination,
-    Form,
-    Button
-} from 'react-bootstrap';
-import PageHeader from '@/components/common/page-header';
+import React, { useEffect, useState } from 'react';
 import styles from './kalite-kontrol-main-page.module.scss';
 import { useRouter } from 'next/navigation';
-import Spacer from '@/components/common/spacer';
+import { Paginations } from '@/components/common/Paginations';
 
 const KaliteKontrol = ({ data, currentPage, sortBy, sortOrder }) => {
-    const { content, totalPages } = data;
-    const router = useRouter();
-
+    const { content, page } = data;
+        const { totalPages, number, totalElements, size } = page;
+        const router = useRouter();
+         const [currentUrl, setCurrentUrl] = useState('');
 
     const handleRowClick = (order) => {
         router.push(`/dashboard/kalite-kontrol-amiri/${order.id}`); // Use Next.js router for redirection
     };
+
+    useEffect(() => {
+    
+            const url = new URL(window.location.href);
+    
+            setCurrentUrl(url.pathname);
+            router.push(url.toString());
+            
+        }, [data, router]);
 
     const handleSorting = (sortByField) => {
         const url = new URL(window.location);
@@ -48,11 +48,7 @@ const KaliteKontrol = ({ data, currentPage, sortBy, sortOrder }) => {
 
     return (
         <>
-            <PageHeader>Kalİte Kontrol Amİrİ</PageHeader>
-            <Spacer height={30} />
             <main className={styles.main_container}>
-                
-
                 <div className={styles.table_responsive}>
                     <table>
                         <thead className={styles.table_head}>
@@ -131,19 +127,13 @@ const KaliteKontrol = ({ data, currentPage, sortBy, sortOrder }) => {
                     </table>
                 </div>
                 <div className={styles.pagination}>
-                    <Pagination>
-                    {[...Array(totalPages).keys()].map((page) => (
-                        <Pagination.Item
-                            key={page}
-                            active={page === currentPage}
-                            onClick={() => handlePageChange(page)}
-                        >
-                            {page + 1}
-                        </Pagination.Item>
-                    ))}
-                </Pagination>
+                    <Paginations
+                                        baseUrl={currentUrl}
+                                        currentPage={number + 1}
+                                        size={size}
+                                        totalPages={totalPages}
+                                    />
                 </div>
-                
             </main>
         </>
     );
